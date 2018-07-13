@@ -1,0 +1,296 @@
+<script src="/static/js/md5.js"></script>
+
+
+<div class="row">
+    <div class="col-xs-12">
+        <!-- PAGE CONTENT BEGINS -->
+        <form class="form-horizontal" method="post" role="form">
+            <!-- #section:elements.form -->
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">项目名: </label>
+                <div class="col-sm-9">
+                    <input name="vars[name]" class="col-xs-8 col-sm-2" type="text" value="{{.data.Name}}" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">项目标示: </label>
+                <div class="col-sm-9">
+                    <input id="item_sign" name="vars[sign]" class="col-xs-8 col-sm-4" type="text" value="{{.data.Sign}}" readonly="true">
+                    &nbsp;
+                    <div id="item_sign_make" class="btn btn-sm btn-primary">重新生成</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">项目描述: </label>
+                <div class="col-sm-9">
+                    <textarea class="col-sm-4" name="vars[desc]" rows="3" required>{{.data.Desc}}</textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">邮件通知: </label>
+                <div class="col-sm-9">
+                    <textarea class="col-sm-4" name="vars[mail]" rows="3" required>{{.data.Mail}}</textarea>
+                </div>
+            </div>
+
+
+            <div class="space-4"></div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">类型: </label>
+                <div class="col-sm-9">
+
+                    <label class="inline">
+                        <input name="vars[type]" class="ace" type="radio" value="1" {{if eq 1 .data.Type}}checked{{end}}>
+                        <span class="lbl middle">本地执行</span>
+                    </label>
+                    &nbsp; &nbsp;
+                    <label class="inline">
+                        <input name="vars[type]" class="ace" type="radio"  value="0" {{if eq 0 .data.Type}}checked{{end}}>
+                        <span class="lbl middle">远程执行</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="form-input-readonly">
+                    远程服务器ID:
+                </label>
+                <div class="col-sm-9">
+                    <input id="show_add_server_id" class="col-xs-8 col-sm-2" type="text" name="vars[server_id]" value="{{.data.ServerId}}" onclick="show_add_server(this);">
+                </div>
+            </div>
+
+            <div class="space-4"></div>
+            
+            <input name="id" type="hidden" value="{{.id}}">
+
+            <div class="clearfix form-actions">
+                <div class="col-md-offset-3 col-md-9">
+                    <button class="btn btn-info" type="submit">
+                        <i class="ace-icon fa fa-check bigger-110"></i>提交
+                    </button>
+                    &nbsp; &nbsp; &nbsp;
+                    <button class="btn" type="reset">
+                        <i class="ace-icon fa fa-undo bigger-110"></i>重置
+                    </button>
+                </div>
+            </div>
+
+        </form>
+    </div><!-- /.col -->
+</div>
+
+<!-- 添加服务器弹出页 start -->
+<div id="add_server_id" class="hide">
+    
+    <div class="row">
+        <div id="add_server_id_list" class="tags" style="border:none;">
+            <span class="tag">495590<button type="button" class="close">×</button></span>
+        </div>
+    </div>
+    <hr/>
+    <div class="row">
+        <div>
+            <input id="add_server_seacrch" type="text" name="search_info" placeholder="查询序号或描述">
+            <input onclick="query_search();" type="button" name="search" value="查询" class="btn btn-purple btn-sm">
+        </div>
+
+        <div class="space-4"></div>
+        <div>
+            <table class="table table-bordered table-hover" id='add_server_id_tab'>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>IP</th>
+                        <th>描述</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>489612</td>
+                        <td>裸色风暴眼影盘</td>
+                        <td><a href="#"><i class="glyphicon glyphicon-plus bigger-130"></i><a></td>
+                    </tr>
+                </tbody> 
+            </table>
+        </div>
+    </div>
+</div>
+<!-- 添加服务器弹出页 end -->
+
+
+<script>
+
+//服务器搜索 start
+function show_add_server(obj){
+    var _this = $(obj);
+    var content = $(obj).val();
+
+    //console.log(content);
+    $('#add_server_id_list').html('');
+    $('#add_server_id_tab tbody').html('');
+    if (content != ''){
+        var list_kw = content.split(",");
+        for (i=0; i<list_kw.length ; i++ ){
+            var tmp = '<span class="tag"><span>'+list_kw[i]+'</span><button type="button" class="close" onclick="server_id_close(this);">×</button></span>';
+            $('#add_server_id_list').append(tmp);
+        } 
+    }
+
+    server_search("", function(data){
+        console.log(data);
+        for(var i in data){
+            console.log(i)
+            var tmp =  '<tr><td>'+ data[i]['Id'] + '</td>'
+            + '<td>' + data[i]['Desc'] +'</td>'
+            + '<td>' + data[i]['Port'] +'</td>'
+            +'<td><a href="javascript:void(0);" onclick="add_pro_func(this);"><i class="glyphicon glyphicon-plus bigger-130"></i><a></td></tr>';
+            $('#add_server_id_tab tbody').append(tmp);
+        }
+    });
+
+    var dialog = $( "#add_server_id" ).removeClass('hide').dialog({
+        width: 600,
+        height:700,
+        modal: true,
+        title: "<div class='widget-header widget-header-small'><h4 class='smaller'><i class='ace-icon fa fa-check'></i>远程服务器添加</h4></div>",
+        title_html: true,
+        buttons: [
+            {
+                text: "OK",
+                "class" : "btn btn-primary btn-minier",
+                click: function() {
+                    $(this).dialog("close");
+                } 
+            }
+        ],
+    });
+}
+
+function server_id_close(obj){
+    var content = $('#show_add_server_id').val();
+    var own_pro_id = $(obj).prev().text();
+
+    var list_kw = content.split(",");
+    var list_new = [];
+    for (i=0; i<list_kw.length ; i++){
+        if (list_kw[i] == own_pro_id){
+        } else {
+            list_new.push(list_kw[i]);
+        }
+    }
+
+    var content_new = list_new.join(',');
+    $('#show_add_server_id').val(content_new);
+    $(obj).parent().remove();
+}
+
+
+function query_search(){
+
+    var search_val = $('#add_server_seacrch').val();
+    if (search_val == ""){
+        alert('搜索词不能为空!!!');
+        return;
+    } 
+
+    server_search(search_val, function(data){
+        //console.log(data);
+
+        $('#add_server_id_tab tbody').html('');
+        for(var i in data){
+            console.log(i)
+            var tmp =  '<tr><td>'+ data[i]['Id'] + '</td><td>'
+            + data[i]['Name'] +'</td><td><a href="javascript:void(0);" onclick="add_pro_func(this);"><i class="glyphicon glyphicon-plus bigger-130"></i><a></td></tr>';
+            $('#add_server_id_tab tbody').append(tmp);
+        }
+    });
+}
+
+//产品搜索 start
+function server_search(keyword, callback){
+ 
+    $.ajax({
+        url: '/appserver/searchajax?q='+ keyword,
+        type: 'GET',
+        dataType: 'JSON',
+    })
+    .done(function(data) {
+        if (data['code'] == 0){
+            //console.log(data);
+            callback(data['data'][0]);
+        } else {
+            alert(data['msg']);
+        }
+    })
+    .fail(function() {
+        console.log("error");
+    })
+    .always(function() {
+        console.log("complete");
+    });
+}
+
+function add_pro_id(id){
+    
+    var content = $('#show_add_server_id').val();
+   
+    var list_kw = [];
+    if (content != ''){
+        var list_kw = content.split(",");
+         if (list_kw.length > 0) {
+            alert("一个计划项目只能有一个远程服务器!!!");
+            return;
+        }
+    }
+    var tmp = '<span class="tag"><span>'+id+'</span><button type="button" class="close" onclick="server_id_close(this);">×</button></span>';
+     $('#add_server_id_list').append(tmp);
+    
+    list_kw.push(id);
+    var content_new = list_kw.join(',');
+    $('#show_add_server_id').val(content_new);
+
+}
+//添加产品
+function add_pro_func(obj){
+
+    var content = $('#show_add_server_id').val();
+
+    console.log(content);
+
+
+    var td_list = $(obj).parent().parent().find('td');
+    var pro_id = $(td_list[0]).text();
+    add_pro_id(pro_id);
+}
+//服务器搜索 end
+
+
+
+jQuery(function($) {
+//start
+
+//初始化sign
+var sign = $('#item_sign').val();
+if (sign == ""){
+    var t = new Date().getTime();
+    var md5_v = hex_md5("" + t);
+    $('#item_sign').val(md5_v);
+}
+
+//重新生成Sign
+$('#item_sign_make').click(function(){
+    var t = new Date().getTime();
+    var md5_v = hex_md5("" + t);
+    $('#item_sign').val(md5_v);
+});
+
+
+//end
+})
+</script>

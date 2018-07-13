@@ -1,0 +1,114 @@
+<div class="row">
+    <div class="col-xs-12">
+
+        <form action="" method="POST" class="form-search">
+            <table class="table table-striped table-bordered table-hover">
+                <tr>
+                    <td class="col-xs-3 col-sm-1">
+                        <select id="search_type" name="search_type">
+                      
+                            <option value="id" {{if eq "id" .search_type}}selected="selected"{{end}}>用户ID</option>
+                            <option value="tel" {{if eq "tel" .search_type}}selected="selected"{{end}}>手机号</option>
+                            <option value="username" {{if eq "nick" .search_type}}selected="selected"{{end}}>登录账号</option>
+                            <option value="nick" {{if eq "nick" .search_type}}selected="selected"{{end}}>昵称</option>
+                        </select>
+                    </td>
+
+                    <td class="col-xs-3 col-sm-2">
+                        <input type="text" name="search_word" value="{{.search_word}}" placeholder="关键词">
+                    </td>
+
+                    <td colspan="80">
+                        <input type="button" name="search" onclick="go_search('index');" value="查询" class="btn btn-purple btn-sm"/>
+                    </td>
+                </tr>
+            </table>
+            <script type="text/javascript">
+                function go_search($ac){
+                    $('.form-search').attr('action',$ac).submit();
+                }
+            </script>
+        </form>
+
+
+        <div class="table-responsive">
+            <table id="function-table"
+                   class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th class="col-sm-1">序号</th>
+                    <th class="col-sm-1">用户名</th>
+                    <th class="col-sm-1">昵称</th>
+                    <th class="col-sm-1">性别</th>
+                    <th class="col-sm-1">邮箱</th>
+                    <th class="col-sm-1">手机号</th>
+                    <th class="col-sm-1">角色</th>
+                    <th style="width: 80px;">状态</th>
+                    <th>
+                        <a class="blue" title="新增管理员" href="{{adminPath}}/{{.curController}}/add">
+                            <i class="glyphicon glyphicon-plus bigger-130"></i>
+                        </a>
+                    </th>
+                </tr>
+                </thead>
+
+
+                <tbody>
+                    {{range  $k, $v := .list}}
+                    <tr>
+                        <td>{{$v.Id}}</td>
+                        <td>{{$v.Username}}</td>
+                        <td>{{$v.Nick}}</td>
+                        <td>
+                            {{if eq 1 $v.Sex}} 男
+                            {{else}} 女
+                            {{end}}
+                        </td>
+                        <td>{{$v.Mail}}</td>
+                        <td>{{$v.Tel}}</td>
+                        <td>{{$v.Rolename}}</td>
+                        <td>
+                            {{if eq 1 $v.Status}}
+                            <a class="blue" href="javascript:req('{{adminPath}}/{{$.curController}}/lock?id={{$v.Id}}')">
+                                <span title="点击锁定" class="badge badge-warning">正常</span></a>
+                            {{else}}
+                            <a class="blue" href="javascript:req('{{adminPath}}/{{$.curController}}/lock?id={{$v.Id}}')">
+                                <span title="点击解锁" class="badge">锁定</span></a>
+                            {{end}}
+                        </td>
+                        <td>
+                            <div class="visible-md visible-lg action-buttons">
+                                <a class="blue" title="编辑" href="{{adminPath}}/{{$.curController}}/add?id={{$v.Id}}">
+                                    <i class="fa fa-pencil bigger-130"></i>
+                                </a>
+                                {{if eq 1 $v.Status}} 
+                                <a class="blue" title="点击锁定" href="javascript:req('{{adminPath}}/{{$.curController}}/lock?id={{$v.Id}}')">
+                                    <i class="fa fa-unlock bigger-130"></i>
+                                </a> 
+                                {{else}} 
+                                <a class="blue" title="点击解锁" href="javascript:req('{{adminPath}}/{{$.curController}}/lock?id={{$v.Id}}')">
+                                <i class=" fa fa-lock bigger-130"></i>
+                                </a> 
+                                {{end}}
+                                <a class="blue" title="删除"
+                                   href="javascript:req('{{adminPath}}/{{$.curController}}/del?id={{$v.Id}}')">
+                                    <i class="fa fa-trash-o bigger-130"></i>
+                                </a>
+                        </td>
+                    </tr>
+                    {{end}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="dataTables_paginate paging_bootstrap">{{str2html .pageLink}}</div>
+    </div>
+</div>
+
+<script>
+jQuery(function($) {
+});
+</script>

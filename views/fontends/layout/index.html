@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta charset="utf-8" />
+    <title>{{.siteName}}</title>
+
+    <meta name="description" content="overview &amp; stats" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+
+    <!-- bootstrap & fontawesome -->
+    <link rel="stylesheet" href="/static/css/bootstrap.css" />
+    <link rel="stylesheet" href="/static/css/font-awesome.css" />
+
+    <!-- page specific plugin styles -->
+    <link rel="stylesheet" href="/static/css/jquery-ui.css" />
+
+    <!-- text fonts -->
+    <link rel="stylesheet" href="/static/css/ace-fonts.css" />
+
+    <!-- ace styles -->
+    <link rel="stylesheet" href="/static/css/ace.css" class="ace-main-stylesheet" id="main-ace-style" />
+
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="/static/css/ace-part2.css" class="ace-main-stylesheet" />
+    <![endif]-->
+
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="/static/css/ace-ie.css" />
+    <![endif]-->
+
+    <!-- inline styles related to this page -->
+
+    <!-- ace settings handler -->
+    <script src="/static/js/ace-extra.js"></script>
+
+    <!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
+
+    <!--[if lte IE 8]>
+    <script src="/static/js/html5shiv.js"></script>
+    <script src="/static/js/respond.js"></script>
+    <![endif]-->
+
+    <!-- basic scripts -->
+
+    <!--[if !IE]> -->
+    <script src="/static/js/jquery.js"></script>
+
+    <!-- <![endif]-->
+
+    <!--[if IE]>
+    <script src="/static/js/jquery1x.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+        if('ontouchstart' in document.documentElement) document.write("<script src='../static/js/jquery.mobile.custom.js'>"+"<"+"/script>");
+    </script>
+    <script src="/static/js/bootstrap.js"></script>
+
+    <!-- page specific plugin scripts -->
+    <script src="/static/js/jquery-ui.js"></script>
+
+    <!--[if lte IE 8]>
+    <script src="/static/js/excanvas.js"></script>
+    <![endif]-->
+    <script src="/static/js/jquery-ui.custom.js"></script>
+    <script src="/static/js/jquery.ui.touch-punch.js"></script>
+    <script src="/static/js/jquery.easypiechart.js"></script>
+    <script src="/static/js/jquery.sparkline.js"></script>
+    <script src="/static/js/flot/jquery.flot.js"></script>
+    <script src="/static/js/flot/jquery.flot.pie.js"></script>
+    <script src="/static/js/flot/jquery.flot.resize.js"></script>
+
+    <!-- ace scripts -->
+    <script src="/static/js/ace/elements.scroller.js"></script>
+    <script src="/static/js/ace/elements.colorpicker.js"></script>
+    <script src="/static/js/ace/elements.fileinput.js"></script>
+    <script src="/static/js/ace/elements.typeahead.js"></script>
+    <script src="/static/js/ace/elements.wysiwyg.js"></script>
+    <script src="/static/js/ace/elements.spinner.js"></script>
+    <script src="/static/js/ace/elements.treeview.js"></script>
+    <script src="/static/js/ace/elements.wizard.js"></script>
+    <script src="/static/js/ace/elements.aside.js"></script>
+    <script src="/static/js/ace/ace.js"></script>
+    <script src="/static/js/ace/ace.ajax-content.js"></script>
+    <script src="/static/js/ace/ace.touch-drag.js"></script>
+    <script src="/static/js/ace/ace.sidebar.js"></script>
+    <script src="/static/js/ace/ace.sidebar-scroll-1.js"></script>
+    <script src="/static/js/ace/ace.submenu-hover.js"></script>
+    <script src="/static/js/ace/ace.widget-box.js"></script>
+    <script src="/static/js/ace/ace.settings.js"></script>
+    <script src="/static/js/ace/ace.settings-rtl.js"></script>
+    <script src="/static/js/ace/ace.settings-skin.js"></script>
+    <script src="/static/js/ace/ace.widget-on-reload.js"></script>
+    <script src="/static/js/ace/ace.searchbox-autocomplete.js"></script>
+    
+</head>
+
+<body>
+<!-- inline scripts related to this page -->
+<script type="text/javascript">
+jQuery(function($) {
+    $.widget("ui.dialog", $.extend({}, $.ui.dialog.prototype, {
+        _title: function(title) {
+            var $title = this.options.title || '&nbsp;'
+            if( ("title_html" in this.options) && this.options.title_html == true ){
+                title.html($title);
+            } else {
+                title.text($title);
+            }
+        }
+    }));
+
+    $('.glyphicon.glyphicon-plus').each(function(){
+        $(this).on('click', function(){
+            $(this).toggleClass('glyphicon-minus');
+        });
+    });
+});
+</script>
+
+</body>
+</html>
