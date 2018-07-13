@@ -1,7 +1,7 @@
 package libs
 
 import (
-	_ "fmt"
+	"fmt"
 	"github.com/astaxie/beego"
 	"strconv"
 	"strings"
@@ -9,6 +9,7 @@ import (
 )
 
 func Init() {
+	fmt.Println("libs init")
 
 	beego.AddFuncMap("hi", tplHello)
 	beego.AddFuncMap("isStrInList", tplIsStrInList)

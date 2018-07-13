@@ -1,13 +1,15 @@
 package models
 
 import (
+	"fmt"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
-	_ "github.com/go-sql-driver/mysql"
 	"net/url"
 )
 
 func Init() {
+	fmt.Println("db init")
+
 	dbhost := beego.AppConfig.String("db.host")
 	dbport := beego.AppConfig.String("db.port")
 	dbuser := beego.AppConfig.String("db.user")
@@ -30,6 +32,14 @@ func Init() {
 		orm.Debug = true
 	}
 
+}
+
+func MysqlPing() bool {
+	o := orm.NewOrm()
+	r = o.Raw("mysql ping")
+	fmt.Println(o)
+
+	return false
 }
 
 func TableName(name string) string {
