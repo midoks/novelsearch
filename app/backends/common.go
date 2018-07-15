@@ -1,7 +1,7 @@
 package backends
 
 import (
-	"fmt"
+	_ "fmt"
 	"github.com/astaxie/beego"
 	_ "github.com/astaxie/beego/logs"
 	"github.com/midoks/novelsearch/app/libs"
@@ -72,7 +72,7 @@ func (this *CommonController) initData() {
 func (this *CommonController) auth() {
 
 	arr := strings.Split(this.Ctx.GetCookie("auth"), "|")
-	fmt.Println(arr)
+	//fmt.Println(arr)
 
 	if len(arr) == 2 {
 
@@ -86,7 +86,7 @@ func (this *CommonController) auth() {
 				this.user = user
 				this.Data["user"] = user
 				role, _ := models.RoleGetById(user.Roleid)
-				fmt.Println(role)
+				//fmt.Println(role)
 
 				menuNav, curMenuName, curMenuFuncName, isAuth := models.FuncGetNav(this.controllerName, this.actionName)
 
@@ -187,9 +187,7 @@ func (this *CommonController) display(tpl ...string) {
 	}
 
 	this.Layout = "backends/layout/index.html"
-
-	fmt.Println(this.Layout)
-
+	//fmt.Println(this.Layout)
 	this.TplName = tplname
 }
 

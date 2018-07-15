@@ -139,7 +139,7 @@ func (this *SysUserController) Add() {
 
 			id, err := orm.NewOrm().Insert(data)
 
-			fmt.Println(err)
+			//fmt.Println(err)
 			if err == nil {
 				msg := fmt.Sprintf("添加用户的ID:%d", id)
 				this.uLog(msg)

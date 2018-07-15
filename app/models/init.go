@@ -36,7 +36,7 @@ func Init() {
 
 func MysqlPing() bool {
 	o := orm.NewOrm()
-	r := o.Raw("mysql ping")
+	r := o.Raw("show tables")
 	fmt.Println(r)
 
 	return false
