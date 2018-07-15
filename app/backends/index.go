@@ -12,11 +12,11 @@ type IndexController struct {
 
 func (this *IndexController) Index() {
 
-	o, err := models.FuncGetById(1)
+	_, err := models.FuncGetById(1)
 	if err != nil {
 		fmt.Println(err)
 	} else {
-		fmt.Println(o)
+		//fmt.Println(o)
 	}
 
 	this.display()

@@ -35,7 +35,6 @@ func RemoveDuplicatesAndEmpty(a []string) (ret []string) {
 }
 
 func spiderNovelList() error {
-	// fmt.Println("spiderNovelList", time.Now())
 	req := httplib.Get("https://www.23us.so/")
 
 	str, err := req.String()
@@ -98,12 +97,27 @@ func spiderNovelChapter() error {
 	return nil
 }
 
+func spiderNovelContent() error {
+	req := httplib.Get("https://www.23us.so/files/article/html/0/43/11417212.html")
+
+	str, err := req.String()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	//fmt.Println(str)
+	var validID = regexp.MustCompile(`(?iUs)<dd id="contents">(.*)</dd>`)
+	fmt.Println(validID.FindStringSubmatch(str)[1])
+	return nil
+}
+
 func Init() {
 	fmt.Println("crontab init")
 
 	// spiderNovelList()
 	// spiderNovelInfo()
-	spiderNovelChapter()
+	// spiderNovelChapter()
+	spiderNovelContent()
 
 	toolbox.AddHealthCheck("database", &DatabaseCheck{})
 

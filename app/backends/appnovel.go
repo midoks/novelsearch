@@ -87,7 +87,6 @@ func (this *AppNovelController) SearchAjax() {
 		row["Id"] = v.Id
 		row["Name"] = v.Name
 		row["Desc"] = v.Desc
-		row["Type"] = v.Type
 
 		row["Status"] = v.Status
 		row["UpdateTime"] = beego.Date(time.Unix(v.UpdateTime, 0), "Y-m-d H:i:s")
@@ -114,10 +113,6 @@ func (this *AppNovelController) Add() {
 
 		data.Name = vars["name"]
 		data.Desc = vars["desc"]
-		data.Sign = vars["sign"]
-		data.Mail = vars["mail"]
-		data.ServerId, _ = strconv.Atoi(vars["server_id"])
-		data.Type, _ = strconv.Atoi(vars["type"])
 
 		if id > 0 {
 

@@ -14,12 +14,7 @@
             </div>
 
             <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">项目标示: </label>
-                <div class="col-sm-9">
-                    <input id="item_sign" name="vars[sign]" class="col-xs-8 col-sm-4" type="text" value="{{.data.Sign}}" readonly="true">
-                    &nbsp;
-                    <div id="item_sign_make" class="btn btn-sm btn-primary">重新生成</div>
-                </div>
+               
             </div>
 
             <div class="form-group">
@@ -29,40 +24,8 @@
                 </div>
             </div>
 
-            <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">邮件通知: </label>
-                <div class="col-sm-9">
-                    <textarea class="col-sm-4" name="vars[mail]" rows="3" required>{{.data.Mail}}</textarea>
-                </div>
-            </div>
-
 
             <div class="space-4"></div>
-
-            <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">类型: </label>
-                <div class="col-sm-9">
-
-                    <label class="inline">
-                        <input name="vars[type]" class="ace" type="radio" value="1" {{if eq 1 .data.Type}}checked{{end}}>
-                        <span class="lbl middle">本地执行</span>
-                    </label>
-                    &nbsp; &nbsp;
-                    <label class="inline">
-                        <input name="vars[type]" class="ace" type="radio"  value="0" {{if eq 0 .data.Type}}checked{{end}}>
-                        <span class="lbl middle">远程执行</span>
-                    </label>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="form-input-readonly">
-                    远程服务器ID:
-                </label>
-                <div class="col-sm-9">
-                    <input id="show_add_server_id" class="col-xs-8 col-sm-2" type="text" name="vars[server_id]" value="{{.data.ServerId}}" onclick="show_add_server(this);">
-                </div>
-            </div>
 
             <div class="space-4"></div>
             
