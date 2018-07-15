@@ -117,7 +117,7 @@ func Init() {
 	// spiderNovelList()
 	// spiderNovelInfo()
 	// spiderNovelChapter()
-	spiderNovelContent()
+	//spiderNovelContent()
 
 	toolbox.AddHealthCheck("database", &DatabaseCheck{})
 

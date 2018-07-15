@@ -86,7 +86,6 @@ func (this *AppNovelController) SearchAjax() {
 
 		row["Id"] = v.Id
 		row["Name"] = v.Name
-		row["Desc"] = v.Desc
 
 		row["Status"] = v.Status
 		row["UpdateTime"] = beego.Date(time.Unix(v.UpdateTime, 0), "Y-m-d H:i:s")
@@ -112,7 +111,6 @@ func (this *AppNovelController) Add() {
 		this.Ctx.Input.Bind(&vars, "vars")
 
 		data.Name = vars["name"]
-		data.Desc = vars["desc"]
 
 		if id > 0 {
 

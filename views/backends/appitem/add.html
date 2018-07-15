@@ -9,28 +9,88 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right" for="form-field-1">项目名: </label>
                 <div class="col-sm-9">
-                    <input name="vars[name]" class="col-xs-8 col-sm-2" type="text" value="{{.data.Name}}" required>
+                    <input name="vars[name]" class="col-xs-8 col-sm-4" type="text" value="{{.data.Name}}" required>
                 </div>
             </div>
 
             <div class="form-group">
-               
-            </div>
-
-            <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">项目描述: </label>
+                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">网站地址: </label>
                 <div class="col-sm-9">
-                    <textarea class="col-sm-4" name="vars[desc]" rows="3" required>{{.data.Desc}}</textarea>
+                    <input name="vars[page_index]" class="col-xs-8 col-sm-4" type="text" value="{{.data.PageIndex}}" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">目录页规则: </label>
+                <div class="col-sm-5">
+                    <textarea class="col-sm-12" rows="3" name="vars[path_rule]">{{.data.PathRule}}</textarea>
+                </div>
+                <div class="col-sm-1">
+                    <div id="reg_path_rule_test" class="btn btn-sm btn-primary">匹配</div>
                 </div>
             </div>
 
 
-            <div class="space-4"></div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">小说名规则: </label>
+                <div class="col-sm-5">
+                    <textarea class="col-sm-12" rows="3" name="vars[name_rule]">{{.data.NameRule}}</textarea>
+                </div>
+                <div class="col-sm-1">
+                    <div id="item_sign_make" class="btn btn-sm btn-primary">匹配</div>
+                </div>
+            </div>
 
-            <div class="space-4"></div>
-            
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
+                    小说分类规则: 
+                </label>
+                <div class="col-sm-5">
+                    <textarea class="col-sm-12"rows="3" name="vars[category_rule]">{{.data.CategoryRule}}</textarea>
+                </div>
+                <div class="col-sm-1">
+                    <div id="item_sign_make" class="btn btn-sm btn-primary">匹配</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
+                    小说状态规则: 
+                </label>
+                <div class="col-sm-5">
+                    <textarea class="col-sm-12" rows="3" name="vars[status_rule]">{{.data.StatusRule}}</textarea>
+                </div>
+                <div class="col-sm-1">
+                    <div id="item_sign_make" class="btn btn-sm btn-primary">匹配</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
+                    章节列表规则: 
+                </label>
+                <div class="col-sm-5">
+                    <textarea class="col-sm-12" rows="3" name="vars[chapter_rule]">{{.data.ChapterRule}}</textarea>
+                </div>
+                <div class="col-sm-1">
+                    <div id="item_sign_make" class="btn btn-sm btn-primary">匹配</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
+                    章节内容规则: 
+                </label>
+                <div class="col-sm-5">
+                    <textarea class="col-sm-12" rows="3" name="vars[content_rule]">{{.data.ContentRule}}</textarea>
+                </div>
+                <div class="col-sm-1">
+                    <div id="item_sign_make" class="btn btn-sm btn-primary">匹配</div>
+                </div>
+            </div>
+
+            <!-- <div class="space-4"></div> -->
             <input name="id" type="hidden" value="{{.id}}">
-
             <div class="clearfix form-actions">
                 <div class="col-md-offset-3 col-md-9">
                     <button class="btn btn-info" type="submit">
@@ -39,6 +99,10 @@
                     &nbsp; &nbsp; &nbsp;
                     <button class="btn" type="reset">
                         <i class="ace-icon fa fa-undo bigger-110"></i>重置
+                    </button>
+                    &nbsp; &nbsp; &nbsp;
+                    <button class="btn" type="all_val">
+                        <i class="ace-icon fa fa-check bigger-110"></i>全部匹配
                     </button>
                 </div>
             </div>
@@ -89,150 +153,6 @@
 
 <script>
 
-//服务器搜索 start
-function show_add_server(obj){
-    var _this = $(obj);
-    var content = $(obj).val();
-
-    //console.log(content);
-    $('#add_server_id_list').html('');
-    $('#add_server_id_tab tbody').html('');
-    if (content != ''){
-        var list_kw = content.split(",");
-        for (i=0; i<list_kw.length ; i++ ){
-            var tmp = '<span class="tag"><span>'+list_kw[i]+'</span><button type="button" class="close" onclick="server_id_close(this);">×</button></span>';
-            $('#add_server_id_list').append(tmp);
-        } 
-    }
-
-    server_search("", function(data){
-        console.log(data);
-        for(var i in data){
-            console.log(i)
-            var tmp =  '<tr><td>'+ data[i]['Id'] + '</td>'
-            + '<td>' + data[i]['Desc'] +'</td>'
-            + '<td>' + data[i]['Port'] +'</td>'
-            +'<td><a href="javascript:void(0);" onclick="add_pro_func(this);"><i class="glyphicon glyphicon-plus bigger-130"></i><a></td></tr>';
-            $('#add_server_id_tab tbody').append(tmp);
-        }
-    });
-
-    var dialog = $( "#add_server_id" ).removeClass('hide').dialog({
-        width: 600,
-        height:700,
-        modal: true,
-        title: "<div class='widget-header widget-header-small'><h4 class='smaller'><i class='ace-icon fa fa-check'></i>远程服务器添加</h4></div>",
-        title_html: true,
-        buttons: [
-            {
-                text: "OK",
-                "class" : "btn btn-primary btn-minier",
-                click: function() {
-                    $(this).dialog("close");
-                } 
-            }
-        ],
-    });
-}
-
-function server_id_close(obj){
-    var content = $('#show_add_server_id').val();
-    var own_pro_id = $(obj).prev().text();
-
-    var list_kw = content.split(",");
-    var list_new = [];
-    for (i=0; i<list_kw.length ; i++){
-        if (list_kw[i] == own_pro_id){
-        } else {
-            list_new.push(list_kw[i]);
-        }
-    }
-
-    var content_new = list_new.join(',');
-    $('#show_add_server_id').val(content_new);
-    $(obj).parent().remove();
-}
-
-
-function query_search(){
-
-    var search_val = $('#add_server_seacrch').val();
-    if (search_val == ""){
-        alert('搜索词不能为空!!!');
-        return;
-    } 
-
-    server_search(search_val, function(data){
-        //console.log(data);
-
-        $('#add_server_id_tab tbody').html('');
-        for(var i in data){
-            console.log(i)
-            var tmp =  '<tr><td>'+ data[i]['Id'] + '</td><td>'
-            + data[i]['Name'] +'</td><td><a href="javascript:void(0);" onclick="add_pro_func(this);"><i class="glyphicon glyphicon-plus bigger-130"></i><a></td></tr>';
-            $('#add_server_id_tab tbody').append(tmp);
-        }
-    });
-}
-
-//产品搜索 start
-function server_search(keyword, callback){
- 
-    $.ajax({
-        url: '/appserver/searchajax?q='+ keyword,
-        type: 'GET',
-        dataType: 'JSON',
-    })
-    .done(function(data) {
-        if (data['code'] == 0){
-            //console.log(data);
-            callback(data['data'][0]);
-        } else {
-            alert(data['msg']);
-        }
-    })
-    .fail(function() {
-        console.log("error");
-    })
-    .always(function() {
-        console.log("complete");
-    });
-}
-
-function add_pro_id(id){
-    
-    var content = $('#show_add_server_id').val();
-   
-    var list_kw = [];
-    if (content != ''){
-        var list_kw = content.split(",");
-         if (list_kw.length > 0) {
-            alert("一个计划项目只能有一个远程服务器!!!");
-            return;
-        }
-    }
-    var tmp = '<span class="tag"><span>'+id+'</span><button type="button" class="close" onclick="server_id_close(this);">×</button></span>';
-     $('#add_server_id_list').append(tmp);
-    
-    list_kw.push(id);
-    var content_new = list_kw.join(',');
-    $('#show_add_server_id').val(content_new);
-
-}
-//添加产品
-function add_pro_func(obj){
-
-    var content = $('#show_add_server_id').val();
-
-    console.log(content);
-
-
-    var td_list = $(obj).parent().parent().find('td');
-    var pro_id = $(td_list[0]).text();
-    add_pro_id(pro_id);
-}
-//服务器搜索 end
-
 
 
 jQuery(function($) {
@@ -247,10 +167,8 @@ if (sign == ""){
 }
 
 //重新生成Sign
-$('#item_sign_make').click(function(){
-    var t = new Date().getTime();
-    var md5_v = hex_md5("" + t);
-    $('#item_sign').val(md5_v);
+$('#reg_path_rule_test').click(function(){
+    alert("12312");
 });
 
 

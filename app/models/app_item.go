@@ -9,12 +9,13 @@ import (
 type AppItem struct {
 	Id           int
 	Name         string
-	Desc         string
 	PageIndex    string
 	PathRule     string
 	NameRule     string
 	CategoryRule string
 	StatusRule   string
+	ChapterRule  string
+	ContentRule  string
 	Status       int
 	UpdateTime   int64
 	CreateTime   int64

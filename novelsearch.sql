@@ -1,156 +1,84 @@
--- phpMyAdmin SQL Dump
--- version 4.1.14.4
--- http://www.phpmyadmin.net
---
--- Host: localhost
--- Generation Time: 2018-01-17 16:31:32
--- 服务器版本： 5.6.24
--- PHP Version: 5.5.29
+/*
+ Navicat Premium Data Transfer
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
+ Source Server         : localhost
+ Source Server Type    : MySQL
+ Source Server Version : 50634
+ Source Host           : localhost:3306
+ Source Schema         : novelsearch
 
+ Target Server Type    : MySQL
+ Target Server Version : 50634
+ File Encoding         : 65001
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+ Date: 15/07/2018 22:48:51
+*/
 
---
--- Database: `o_webcron`
---
+SET NAMES utf8mb4;
+SET FOREIGN_KEY_CHECKS = 0;
 
--- --------------------------------------------------------
-
---
--- 表的结构 `app_cron`
---
-
-DROP TABLE IF EXISTS `app_cron`;
-CREATE TABLE IF NOT EXISTS `app_cron` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) NOT NULL DEFAULT '0',
-  `desc` varchar(50) NOT NULL DEFAULT '0',
-  `item_id` int(11) NOT NULL DEFAULT '0',
-  `cron_spec` varchar(100) NOT NULL DEFAULT '0',
-  `cmd` text NOT NULL,
-  `concurrent` tinyint(4) DEFAULT NULL,
-  `exec_num` int(11) NOT NULL DEFAULT '0',
-  `prev_time` int(11) NOT NULL DEFAULT '0',
-  `notify` tinyint(4) NOT NULL DEFAULT '0',
-  `timeout` int(11) NOT NULL DEFAULT '0',
-  `status` tinyint(4) NOT NULL DEFAULT '0',
-  `update_time` int(11) NOT NULL DEFAULT '0',
-  `create_time` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='运行任务' AUTO_INCREMENT=3 ;
-
---
--- 转存表中的数据 `app_cron`
---
-
-INSERT INTO `app_cron` (`id`, `name`, `desc`, `item_id`, `cron_spec`, `cmd`, `concurrent`, `exec_num`, `prev_time`, `notify`, `timeout`, `status`, `update_time`, `create_time`) VALUES
-(1, '本地测试', '本地测试', 2, '0 * * * * ?', 'php -v\r\n', 0, 5780, 1516177620, 2, 10, -1, 1516177627, 1515378291),
-(2, '远程服务', '121', 4, '*/1 * * * * ?', 'ls', 0, 19836, 1516168549, 0, 10, -1, 1516168549, 1515378291);
-
--- --------------------------------------------------------
-
---
--- 表的结构 `app_cron_log`
---
-
-DROP TABLE IF EXISTS `app_cron_log`;
-CREATE TABLE IF NOT EXISTS `app_cron_log` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `cron_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '任务ID',
-  `output` mediumtext NOT NULL COMMENT '任务输出',
-  `error` text NOT NULL COMMENT '错误信息',
-  `status` tinyint(4) NOT NULL COMMENT '状态',
-  `process_time` int(11) NOT NULL DEFAULT '0' COMMENT '消耗时间/毫秒',
-  `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- 表的结构 `app_debug`
---
-
+-- ----------------------------
+-- Table structure for app_debug
+-- ----------------------------
 DROP TABLE IF EXISTS `app_debug`;
-CREATE TABLE IF NOT EXISTS `app_debug` (
+CREATE TABLE `app_debug` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `type` tinyint(4) NOT NULL,
   `msg` text NOT NULL,
   `add_time` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
 
--- --------------------------------------------------------
-
---
--- 表的结构 `app_item`
---
-
+-- ----------------------------
+-- Table structure for app_item
+-- ----------------------------
 DROP TABLE IF EXISTS `app_item`;
-CREATE TABLE IF NOT EXISTS `app_item` (
+CREATE TABLE `app_item` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) NOT NULL DEFAULT '0',
-  `desc` varchar(100) NOT NULL DEFAULT '0',
-  `mail` text NOT NULL,
-  `type` tinyint(4) NOT NULL DEFAULT '0',
-  `sign` char(32) NOT NULL,
-  `server_id` int(11) NOT NULL,
+  `name` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '0' COMMENT '网站名',
+  `page_index` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '首页',
+  `path_rule` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '小说目录路径规则',
+  `name_rule` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '小说名规则',
+  `category_rule` text COMMENT '分类规则',
+  `status_rule` text NOT NULL COMMENT '状态规则',
+  `chapter_rule` text CHARACTER SET utf8 COLLATE utf8_unicode_ci COMMENT '章节规则',
+  `content_rule` text COMMENT '内容规则',
   `status` tinyint(4) NOT NULL DEFAULT '0',
   `update_time` int(11) NOT NULL DEFAULT '0',
   `create_time` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='项目' AUTO_INCREMENT=6 ;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='项目';
 
---
--- 转存表中的数据 `app_item`
---
+-- ----------------------------
+-- Records of app_item
+-- ----------------------------
+BEGIN;
+INSERT INTO `app_item` VALUES (2, '顶点小说', 'https://www.23us.so/', 'https://www.23us.so/xiaoshuo/(\\d*).(html)', '<h1>(.*)全文阅读</h1>', '<th>小说类别</th>\\n<td>&nbsp;<a href=\".*\">(.*)</a></td>', '<th>小说状态</th>\\n<td>&nbsp;(.*)</td>', '(?U)<td class=\"L\"><a href=\"(.*)\">(.*)</a></td>', '(?iUs)<dd id=\"contents\">(.*)</dd>', -1, 1531647641, 1515035827);
+COMMIT;
 
-INSERT INTO `app_item` (`id`, `name`, `desc`, `mail`, `type`, `sign`, `server_id`, `status`, `update_time`, `create_time`) VALUES
-(2, 'test', '测试', 'chenjiangshan@yoka.com', 1, '0abb79cf7b1c688dc904d873579c5104', 0, 1, 1516176817, 1515035827),
-(4, '测试', '192.168.57.186', 'chenjiangshan@yoka.com', 0, '1ad48a0957f19d5f1f110448d3fb7a4b', 1, -1, 1516168395, 1515035914);
-
--- --------------------------------------------------------
-
---
--- 表的结构 `app_server`
---
-
-DROP TABLE IF EXISTS `app_server`;
-CREATE TABLE IF NOT EXISTS `app_server` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `ip` varchar(50) NOT NULL DEFAULT '0',
-  `port` int(11) NOT NULL,
-  `type` tinyint(4) NOT NULL,
-  `desc` varchar(255) NOT NULL,
-  `user` varchar(50) NOT NULL DEFAULT '0',
-  `pwd` varchar(50) NOT NULL DEFAULT '0',
-  `status` tinyint(4) NOT NULL,
-  `update_time` int(11) NOT NULL DEFAULT '0',
-  `create_time` int(11) NOT NULL DEFAULT '0',
+-- ----------------------------
+-- Table structure for app_novel
+-- ----------------------------
+DROP TABLE IF EXISTS `app_novel`;
+CREATE TABLE `app_novel` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `from_id` int(11) DEFAULT NULL,
+  `name` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `desc` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `author` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `list` text COLLATE utf8_unicode_ci,
+  `day_click` int(11) DEFAULT NULL,
+  `status` tinyint(4) DEFAULT NULL,
+  `update_time` int(11) DEFAULT NULL,
+  `add_time` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='服务器管理' AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- 转存表中的数据 `app_server`
---
-
-INSERT INTO `app_server` (`id`, `ip`, `port`, `type`, `desc`, `user`, `pwd`, `status`, `update_time`, `create_time`) VALUES
-(1, '192.168.52.186', 22, 0, '测试服务器', 'chenjiangshan', 'cjscjs123', 1, 1516157243, 0);
-
--- --------------------------------------------------------
-
---
--- 表的结构 `sys_func`
---
-
+-- ----------------------------
+-- Table structure for sys_func
+-- ----------------------------
 DROP TABLE IF EXISTS `sys_func`;
-CREATE TABLE IF NOT EXISTS `sys_func` (
+CREATE TABLE `sys_func` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL COMMENT '名称',
   `pid` int(11) NOT NULL DEFAULT '0' COMMENT '父ID 0顶级',
@@ -166,75 +94,59 @@ CREATE TABLE IF NOT EXISTS `sys_func` (
   `create_time` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `pid` (`pid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='权限列表' AUTO_INCREMENT=38 ;
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8 COMMENT='权限列表';
 
---
--- 转存表中的数据 `sys_func`
---
+-- ----------------------------
+-- Records of sys_func
+-- ----------------------------
+BEGIN;
+INSERT INTO `sys_func` VALUES (1, '系统设置', 0, 'sys', 'index', 0, 1, 'fa fa-cog', '系统相关参数设置', 0, 1, 1489429439, 1489429439);
+INSERT INTO `sys_func` VALUES (2, '管理员管理', 1, 'sysuser', 'index', 1, 1, 'fa fa-users', '添加、删除、编辑系统管理员的权限。', 0, 1, 1489429439, 1489429439);
+INSERT INTO `sys_func` VALUES (3, '系统功能添加', 1, 'sysfunc', 'add', 1, 0, 'glyphicon glyphicon-th', '系统功能添加', 6, 1, 1489429439, 1489429439);
+INSERT INTO `sys_func` VALUES (4, '功能管理', 1, 'sysfunc', 'index', 1, 1, '', '功能列表', 7, 1, 1489429439, 1489429439);
+INSERT INTO `sys_func` VALUES (5, '系统功能删除', 1, 'sysfunc', 'del', 1, 0, '', '系统功能删除', 8, 1, 1489429439, 1489429439);
+INSERT INTO `sys_func` VALUES (6, '添加管理员', 1, 'sysuser', 'add', 1, 0, 'glyphicon glyphicon-user', '添加管理员', 1, 1, 1489429439, 1489429439);
+INSERT INTO `sys_func` VALUES (7, '管理员删除', 1, 'sysuser', 'del', 1, 0, '', '管理员删除', 2, 1, 1489429439, 1489429439);
+INSERT INTO `sys_func` VALUES (8, '重置管理员密码', 1, 'sysuser', 'repwd', 1, 0, '', '重置管理员密码', 3, 1, 1489429439, 1489429439);
+INSERT INTO `sys_func` VALUES (9, '锁定管理员', 1, 'sysuser', 'lock', 1, 0, '', '锁定管理员', 4, 1, 1489429439, 1489429439);
+INSERT INTO `sys_func` VALUES (10, '系统功能锁定', 1, 'sysfunc', 'lock', 1, 0, '', '系统功能锁定', 9, 1, 1489429439, 1489429439);
+INSERT INTO `sys_func` VALUES (11, '角色管理', 1, 'sysrole', 'index', 1, 1, 'fa fa-users', '系统功能锁定', 10, 1, 1489429439, 1489429439);
+INSERT INTO `sys_func` VALUES (12, '添加角色', 1, 'sysrole', 'add', 1, 0, 'fa fa-users', '添加角色', 11, 1, 1489429439, 1489429439);
+INSERT INTO `sys_func` VALUES (13, '删除角色', 1, 'sysrole', 'del', 1, 0, 'fa fa-users', '删除角色', 12, 1, 1489429439, 1489429439);
+INSERT INTO `sys_func` VALUES (14, '锁定角色', 1, 'sysrole', 'lock', 1, 0, 'fa fa-users', '锁定角色', 13, 1, 1489429439, 1489429439);
+INSERT INTO `sys_func` VALUES (15, '功能设置菜单', 1, 'sysfunc', 'setmenu', 1, 0, '', '功能设置菜单', 9, 1, 1489429439, 1489429439);
+INSERT INTO `sys_func` VALUES (16, '功能升降序', 1, 'sysfunc', 'sort', 1, 0, '', '功能升降序', 5, 1, 1489429439, 1489429439);
+INSERT INTO `sys_func` VALUES (17, '日志管理', 1, 'syslog', 'index', 1, 1, '', '日志管理', 99, 1, 1489429439, 1489429439);
+INSERT INTO `sys_func` VALUES (18, '小说网站管理', 0, 'appitem', 'index', 0, 1, 'glyphicon glyphicon-th-large', '项目管理 - 列表', 0, 1, 1531385434, 1514871452);
+INSERT INTO `sys_func` VALUES (19, '列表', 18, 'appitem', 'index', 0, 1, '', '网站列表', 0, 1, 1531393703, 1514871585);
+INSERT INTO `sys_func` VALUES (20, '添加', 18, 'appitem', 'add', 0, 1, '', '添加网站', 0, 1, 1531393758, 1515033366);
+INSERT INTO `sys_func` VALUES (27, '日志管理', 0, 'appdebug', '', 0, 1, 'fa fa-bell', '异常日志管理', 4, 1, 1531449077, 1515041927);
+INSERT INTO `sys_func` VALUES (28, '列表', 27, 'appdebug', 'index', 0, 1, '', '', 0, 1, 1515041961, 1515041961);
+INSERT INTO `sys_func` VALUES (29, '搜索', 18, 'appitem', 'searchAjax', 0, -1, '', '', 0, 1, 1531393726, 1515382967);
+INSERT INTO `sys_func` VALUES (32, '锁定', 18, 'appitem', 'lock', 0, -1, '', '', 0, 1, 1531393687, 1515400747);
+INSERT INTO `sys_func` VALUES (33, '删除', 18, 'appitem', 'del', 0, -1, '', '', 0, 1, 1531393695, 1515400760);
+INSERT INTO `sys_func` VALUES (38, '小说管理', 0, 'appnovel', '', 0, 1, 'glyphicon glyphicon-file', '小说列表', 0, 1, 1531394032, 1531393922);
+INSERT INTO `sys_func` VALUES (39, '列表', 38, 'appnovel', 'index', 0, 1, '', '小说列表', 0, 1, 1531394020, 1531393957);
+COMMIT;
 
-INSERT INTO `sys_func` (`id`, `name`, `pid`, `controller`, `action`, `type`, `is_menu`, `icon`, `desc`, `sort`, `status`, `update_time`, `create_time`) VALUES
-(1, '系统设置', 0, 'sys', 'index', 0, 1, 'fa fa-cog', '系统相关参数设置', 0, 1, 1489429439, 1489429439),
-(2, '管理员管理', 1, 'sysuser', 'index', 1, 1, 'fa fa-users', '添加、删除、编辑系统管理员的权限。', 0, 1, 1489429439, 1489429439),
-(3, '系统功能添加', 1, 'sysfunc', 'add', 1, 0, 'glyphicon glyphicon-th', '系统功能添加', 6, 1, 1489429439, 1489429439),
-(4, '功能管理', 1, 'sysfunc', 'index', 1, 1, '', '功能列表', 7, 1, 1489429439, 1489429439),
-(5, '系统功能删除', 1, 'sysfunc', 'del', 1, 0, '', '系统功能删除', 8, 1, 1489429439, 1489429439),
-(6, '添加管理员', 1, 'sysuser', 'add', 1, 0, 'glyphicon glyphicon-user', '添加管理员', 1, 1, 1489429439, 1489429439),
-(7, '管理员删除', 1, 'sysuser', 'del', 1, 0, '', '管理员删除', 2, 1, 1489429439, 1489429439),
-(8, '重置管理员密码', 1, 'sysuser', 'repwd', 1, 0, '', '重置管理员密码', 3, 1, 1489429439, 1489429439),
-(9, '锁定管理员', 1, 'sysuser', 'lock', 1, 0, '', '锁定管理员', 4, 1, 1489429439, 1489429439),
-(10, '系统功能锁定', 1, 'sysfunc', 'lock', 1, 0, '', '系统功能锁定', 9, 1, 1489429439, 1489429439),
-(11, '角色管理', 1, 'sysrole', 'index', 1, 1, 'fa fa-users', '系统功能锁定', 10, 1, 1489429439, 1489429439),
-(12, '添加角色', 1, 'sysrole', 'add', 1, 0, 'fa fa-users', '添加角色', 11, 1, 1489429439, 1489429439),
-(13, '删除角色', 1, 'sysrole', 'del', 1, 0, 'fa fa-users', '删除角色', 12, 1, 1489429439, 1489429439),
-(14, '锁定角色', 1, 'sysrole', 'lock', 1, 0, 'fa fa-users', '锁定角色', 13, 1, 1489429439, 1489429439),
-(15, '功能设置菜单', 1, 'sysfunc', 'setmenu', 1, 0, '', '功能设置菜单', 9, 1, 1489429439, 1489429439),
-(16, '功能升降序', 1, 'sysfunc', 'sort', 1, 0, '', '功能升降序', 5, 1, 1489429439, 1489429439),
-(17, '日志管理', 1, 'syslog', 'index', 1, 1, '', '日志管理', 99, 1, 1489429439, 1489429439),
-(18, '项目管理', 0, 'appitem', 'index', 0, 1, 'glyphicon glyphicon-th-large', '项目管理 - 列表', 2, 1, 1515040212, 1514871452),
-(19, '项目列表', 18, 'appitem', 'index', 0, 1, '', '项目列表', 0, 1, 1514970432, 1514871585),
-(20, '添加项目', 18, 'appitem', 'add', 0, 1, '', '', 0, 1, 1515033366, 1515033366),
-(21, '服务器管理', 0, 'appserver', '', 0, 1, 'glyphicon glyphicon-road', '', 1, 1, 1515040219, 1515040192),
-(22, '服务器列表', 21, 'appserver', 'index', 0, 1, '', '', 0, 1, 1515040259, 1515040259),
-(23, '添加服务器', 21, 'appserver', 'add', 0, 1, '', '', 0, 1, 1515040299, 1515040299),
-(24, '任务管理', 0, 'appcron', '', 0, 1, 'glyphicon glyphicon-refresh', '计划任务管理', 3, 1, 1515041719, 1515041701),
-(25, '任务列表', 24, 'appcron', 'index', 0, 1, '', '', 0, 1, 1515041741, 1515041741),
-(26, '添加任务', 24, 'appcron', 'add', 0, -1, '', '', 0, 1, 1515041766, 1515041766),
-(27, '调试日志管理', 0, 'appdebug', '', 0, 1, 'fa fa-bell', '异常日志管理', 4, 1, 1515042025, 1515041927),
-(28, '列表', 27, 'appdebug', 'index', 0, 1, '', '', 0, 1, 1515041961, 1515041961),
-(29, '项目搜索', 18, 'appitem', 'searchAjax', 0, -1, '', '', 0, 1, 1515382967, 1515382967),
-(30, '服务器锁定功能', 21, 'appserver', 'lock', 0, -1, '', '', 0, 1, 1515400454, 1515400454),
-(31, '服务器删除功能', 21, 'appserver', 'del', 0, -1, '', '', 0, 1, 1515400476, 1515400476),
-(32, '项目锁定', 18, 'appitem', 'lock', 0, -1, '', '', 0, 1, 1515400747, 1515400747),
-(33, '项目删除', 18, 'appitem', 'del', 0, -1, '', '', 0, 1, 1515400760, 1515400760),
-(34, '任务锁定', 24, 'appcron', 'lock', 0, -1, '', '', 0, 1, 1515403941, 1515403941),
-(35, '任务删除', 24, 'appcron', 'del', 0, -1, '', '', 0, 1, 1515403953, 1515403953),
-(36, '服务器搜索', 21, 'appserver', 'searchAjax', 0, -1, '', '', 0, 1, 1515405335, 1515405335),
-(37, '执行日志', 24, 'appcronlog', 'index', 0, 1, '', '', 0, 1, 1515491096, 1515491096);
-
--- --------------------------------------------------------
-
---
--- 表的结构 `sys_logs`
---
-
+-- ----------------------------
+-- Table structure for sys_logs
+-- ----------------------------
 DROP TABLE IF EXISTS `sys_logs`;
-CREATE TABLE IF NOT EXISTS `sys_logs` (
+CREATE TABLE `sys_logs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `uid` int(11) NOT NULL,
   `type` tinyint(4) NOT NULL,
   `msg` text NOT NULL,
   `add_time` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
 
--- --------------------------------------------------------
-
---
--- 表的结构 `sys_role`
---
-
+-- ----------------------------
+-- Table structure for sys_role
+-- ----------------------------
 DROP TABLE IF EXISTS `sys_role`;
-CREATE TABLE IF NOT EXISTS `sys_role` (
+CREATE TABLE `sys_role` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL COMMENT '角色名称',
   `desc` varchar(200) DEFAULT NULL COMMENT '角色介绍',
@@ -243,24 +155,21 @@ CREATE TABLE IF NOT EXISTS `sys_role` (
   `update_time` int(10) DEFAULT NULL,
   `create_time` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COMMENT='管理员权限表' AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COMMENT='管理员权限表';
 
---
--- 转存表中的数据 `sys_role`
---
+-- ----------------------------
+-- Records of sys_role
+-- ----------------------------
+BEGIN;
+INSERT INTO `sys_role` VALUES (1, '管理员', '系统总管理员', '2,6,7,8,9,16,3,4,5,10,15,11,12,13,14,17,39,19,20,29,32,33,28', 1, 1531394056, 1489429439);
+INSERT INTO `sys_role` VALUES (2, '编辑', '普通编辑人员', '2,14,15,17,18,23,32', 1, 1489429439, 1489429439);
+COMMIT;
 
-INSERT INTO `sys_role` (`id`, `name`, `desc`, `list`, `status`, `update_time`, `create_time`) VALUES
-(1, '管理员', '系统总管理员', '2,6,7,8,9,16,3,4,5,10,15,11,12,13,14,17,22,23,30,31,36,19,20,29,32,33,25,26,34,35,37,28', 1, 1515491473, 1489429439),
-(2, '编辑', '普通编辑人员', '2,14,15,17,18,23,32', 1, 1489429439, 1489429439);
-
--- --------------------------------------------------------
-
---
--- 表的结构 `sys_user`
---
-
+-- ----------------------------
+-- Table structure for sys_user
+-- ----------------------------
 DROP TABLE IF EXISTS `sys_user`;
-CREATE TABLE IF NOT EXISTS `sys_user` (
+CREATE TABLE `sys_user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(150) NOT NULL COMMENT '登录名',
   `password` varchar(32) NOT NULL COMMENT '密码',
@@ -273,16 +182,14 @@ CREATE TABLE IF NOT EXISTS `sys_user` (
   `update_time` int(10) DEFAULT NULL,
   `create_time` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COMMENT='管理员' AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COMMENT='管理员';
 
---
--- 转存表中的数据 `sys_user`
---
+-- ----------------------------
+-- Records of sys_user
+-- ----------------------------
+BEGIN;
+INSERT INTO `sys_user` VALUES (1, 'admin', '4297f44b13955235245b2497399d7a93', '管理员', 1, '627293072@qq.com', '13000000000', 1, 1, 1531386175, 1489429439);
+INSERT INTO `sys_user` VALUES (2, 'guest', '4297f44b13955235245b2497399d7a93', 'guest', 1, '13800138000@qq.com', '13800138000', 2, 1, 1531386195, 1489429439);
+COMMIT;
 
-INSERT INTO `sys_user` (`id`, `username`, `password`, `nick`, `sex`, `mail`, `tel`, `roleid`, `status`, `update_time`, `create_time`) VALUES
-(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', '管理员', 1, 'admin@localhost', '13000000000', 1, 1, 1489429439, 1489429439),
-(2, 'guest', '084e0343a0486ff05530df6c705c8bb4', 'guest', 1, '13800138000@qq.com', '13800138000', 2, 1, 1514976507, 1489429439);
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+SET FOREIGN_KEY_CHECKS = 1;

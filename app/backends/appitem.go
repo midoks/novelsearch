@@ -44,8 +44,7 @@ func (this *AppItemController) Index() {
 
 		row["Id"] = v.Id
 		row["Name"] = v.Name
-		row["Desc"] = v.Desc
-
+		row["PageIndex"] = v.PageIndex
 		row["Status"] = v.Status
 		row["UpdateTime"] = beego.Date(time.Unix(v.UpdateTime, 0), "Y-m-d H:i:s")
 		row["CreateTime"] = beego.Date(time.Unix(v.CreateTime, 0), "Y-m-d H:i:s")
@@ -85,7 +84,6 @@ func (this *AppItemController) SearchAjax() {
 
 		row["Id"] = v.Id
 		row["Name"] = v.Name
-		row["Desc"] = v.Desc
 
 		row["Status"] = v.Status
 		row["UpdateTime"] = beego.Date(time.Unix(v.UpdateTime, 0), "Y-m-d H:i:s")
@@ -111,9 +109,16 @@ func (this *AppItemController) Add() {
 		this.Ctx.Input.Bind(&vars, "vars")
 
 		data.Name = vars["name"]
-		data.Desc = vars["desc"]
+		data.PageIndex = vars["page_index"]
+		data.PathRule = vars["path_rule"]
+		data.NameRule = vars["name_rule"]
+		data.CategoryRule = vars["category_rule"]
+		data.StatusRule = vars["status_rule"]
+		data.ChapterRule = vars["chapter_rule"]
+		data.ContentRule = vars["content_rule"]
 
 		if id > 0 {
+
 			data.UpdateTime = time.Now().Unix()
 			err := data.Update()
 			if err == nil {
@@ -165,6 +170,10 @@ func (this *AppItemController) Lock() {
 		}
 	}
 	this.retFail("修改失败")
+}
+
+func (this *AppItemController) test() {
+	this.retOk("dd")
 }
 
 func (this *AppItemController) Del() {
