@@ -116,6 +116,7 @@ func (this *AppItemController) Add() {
 		data.PathRule = vars["path_rule"]
 		data.PathPageExp = vars["path_page_exp"]
 		data.NameRule = vars["name_rule"]
+		data.AuthorRule = vars["author_rule"]
 		data.CategoryRule = vars["category_rule"]
 		data.StatusRule = vars["status_rule"]
 		data.ChapterPathRule = vars["chapter_path_rule"]

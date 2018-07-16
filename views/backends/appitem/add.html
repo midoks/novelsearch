@@ -8,15 +8,21 @@
             <!-- #section:elements.form -->
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right" for="form-field-1">项目名: </label>
-                <div class="col-sm-9">
-                    <input name="vars[name]" class="col-xs-8 col-sm-4" type="text" value="{{.data.Name}}" required>
+                <div class="col-sm-6">
+                    <input name="vars[name]" class="col-xs-8 col-sm-6" type="text" value="{{.data.Name}}" required>
+                </div>
+                <div class="col-sm-3">
+                    网站名称
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right" for="form-field-1">网站地址: </label>
-                <div class="col-sm-9">
-                    <input name="vars[page_index]" class="col-xs-8 col-sm-4" type="text" value="{{.data.PageIndex}}" required>
+                <div class="col-sm-6">
+                    <input name="vars[page_index]" class="col-xs-8 col-sm-6" type="text" value="{{.data.PageIndex}}" required>
+                </div>
+                <div class="col-sm-3">
+                    网站地址
                 </div>
             </div>
 
@@ -28,12 +34,20 @@
                 <div class="col-sm-1">
                     <div id="reg_path_rule_test" class="btn btn-sm btn-primary">匹配</div>
                 </div>
+
+                <div class="col-sm-3">
+                    首页上匹配章节首页规则
+                </div>
             </div>
 
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right" for="form-field-1">目录页样本页: </label>
                 <div class="col-sm-6">
-                    <input class="col-sm-12" class="col-xs-8 col-sm-4" type="text" name="vars[path_page_exp]" value="{{.data.PathPageExp}}" required>
+                    <input class="col-sm-12" class="col-xs-8 col-sm-4" type="text" name="vars[path_page_exp]" value="{{.data.PathPageExp}}">
+                </div>
+
+                <div class="col-sm-3">
+                    目录页样本页
                 </div>
             </div>
 
@@ -45,6 +59,24 @@
                 <div class="col-sm-1">
                     <div id="reg_name_rule_test" class="btn btn-sm btn-primary">匹配</div>
                 </div>
+
+                <div class="col-sm-3">
+                    匹配小说名规则
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">作者规则: </label>
+                <div class="col-sm-5">
+                    <textarea class="col-sm-12" rows="3" name="vars[author_rule]">{{.data.AuthorRule}}</textarea>
+                </div>
+                <div class="col-sm-1">
+                    <div id="reg_author_rule_test" class="btn btn-sm btn-primary">匹配</div>
+                </div>
+
+                <div class="col-sm-3">
+                    匹配作者规则
+                </div>
             </div>
 
             <div class="form-group">
@@ -54,6 +86,10 @@
                 </div>
                 <div class="col-sm-1">
                     <div id="reg_category_rule_test" class="btn btn-sm btn-primary">匹配</div>
+                </div>
+
+                <div class="col-sm-3">
+                    匹配分类规则
                 </div>
             </div>
 
@@ -67,6 +103,10 @@
                 <div class="col-sm-1">
                     <div id="reg_status_rule_test" class="btn btn-sm btn-primary">匹配</div>
                 </div>
+
+                <div class="col-sm-3">
+                    匹配状态规则
+                </div>
             </div>
 
             <div class="form-group">
@@ -79,12 +119,20 @@
                 <div class="col-sm-1">
                     <div id="reg_chapter_path_rule_test" class="btn btn-sm btn-primary">匹配</div>
                 </div>
+
+                <div class="col-sm-3">
+                    匹配章节首页规则
+                </div>
             </div>
 
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 章节首页样本页: </label>
                 <div class="col-sm-6">
-                    <input class="col-sm-12" class="col-xs-8 col-sm-4" type="text" name="vars[chapter_path_exp]" value="{{.data.ChapterPathExp}}" required>
+                    <input class="col-sm-12" class="col-xs-8 col-sm-4" type="text" name="vars[chapter_path_exp]" value="{{.data.ChapterPathExp}}">
+                </div>
+
+                <div class="col-sm-3">
+                    章节首页样本页
                 </div>
             </div>
 
@@ -98,12 +146,20 @@
                 <div class="col-sm-1">
                     <div id="reg_chapter_list_rule_test" class="btn btn-sm btn-primary">匹配</div>
                 </div>
+
+                <div class="col-sm-3">
+                    匹配章节列表规则
+                </div>
             </div>
 
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 章节内容样本页: </label>
                 <div class="col-sm-6">
-                    <input class="col-sm-12" class="col-xs-8 col-sm-4" type="text" name="vars[content_exp]" value="{{.data.ContentExp}}" required>
+                    <input class="col-sm-12" class="col-xs-8 col-sm-4" type="text" name="vars[content_exp]" value="{{.data.ContentExp}}">
+                </div>
+
+                <div class="col-sm-3">
+                     章节内容样本页
                 </div>
             </div>
 
@@ -116,6 +172,10 @@
                 </div>
                 <div class="col-sm-1">
                     <div id="reg_content_rule_test" class="btn btn-sm btn-primary">匹配</div>
+                </div>
+
+                <div class="col-sm-3">
+                    章节内容规则
                 </div>
             </div>
 
@@ -179,6 +239,13 @@ $('#reg_path_rule_test').click(function(){
 $('#reg_name_rule_test').click(function(){
     var url = $(".form-group :input[name='vars[path_page_exp]']").val();
     var rule = $(".form-group :input[name='vars[name_rule]']").val();
+    vefiy_rule(url,rule);
+});
+
+//验证小说作者
+$('#reg_author_rule_test').click(function(){
+    var url = $(".form-group :input[name='vars[path_page_exp]']").val();
+    var rule = $(".form-group :input[name='vars[author_rule]']").val();
     vefiy_rule(url,rule);
 });
 
