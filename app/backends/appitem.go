@@ -3,9 +3,12 @@ package backends
 import (
 	"fmt"
 	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/httplib"
 	"github.com/astaxie/beego/orm"
 	"github.com/midoks/novelsearch/app/libs"
 	"github.com/midoks/novelsearch/app/models"
+	"log"
+	"regexp"
 	"strconv"
 	"strings"
 	"time"
@@ -111,10 +114,14 @@ func (this *AppItemController) Add() {
 		data.Name = vars["name"]
 		data.PageIndex = vars["page_index"]
 		data.PathRule = vars["path_rule"]
+		data.PathPageExp = vars["path_page_exp"]
 		data.NameRule = vars["name_rule"]
 		data.CategoryRule = vars["category_rule"]
 		data.StatusRule = vars["status_rule"]
-		data.ChapterRule = vars["chapter_rule"]
+		data.ChapterPathRule = vars["chapter_path_rule"]
+		data.ChapterPathExp = vars["chapter_path_exp"]
+		data.ChapterListRule = vars["chapter_list_rule"]
+		data.ContentExp = vars["content_exp"]
 		data.ContentRule = vars["content_rule"]
 
 		if id > 0 {
@@ -172,8 +179,39 @@ func (this *AppItemController) Lock() {
 	this.retFail("修改失败")
 }
 
-func (this *AppItemController) test() {
-	this.retOk("dd")
+func (this *AppItemController) Verify() {
+
+	if this.isPost() {
+		var url = ""
+		var rule = ""
+		url = this.GetString("url", "")
+		rule = this.GetString("rule", "")
+		url = strings.TrimSpace(url)
+		rule = strings.TrimSpace(rule)
+
+		if strings.EqualFold(url, "") {
+			this.retFail("url不能为空")
+			return
+		}
+
+		if strings.EqualFold(rule, "") {
+			this.retFail("rule不能为空")
+			return
+		}
+
+		req := httplib.Get(url)
+		str, err := req.String()
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		valid := regexp.MustCompile(rule)
+		match := valid.FindAllStringSubmatch(str, -1)
+
+		this.retOk("验证成功", match)
+	} else {
+		this.retFail("非法请求")
+	}
 }
 
 func (this *AppItemController) Del() {

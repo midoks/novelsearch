@@ -12,7 +12,7 @@
                     <th class="col-sm-1">状态</th>
                     <th class="col-sm-1">排序</th>
                     <th class="col-sm-3">
-                        <a class="blue" title="添加功能" href="{{adminPath}}/{{$.curController}}/add">
+                        <a class="blue" title="添加功能" href="/{{adminPath}}/{{$.curController}}/add">
                             <i class="glyphicon glyphicon-plus bigger-130"></i>
                         </a>
                     </th>
@@ -33,7 +33,7 @@
 
                     <td>
                         {{if eq 1 .Info.IsMenu}}
-                            <a class="blue" href="javascript:req('{{adminPath}}/{{$.curController}}/setmenu?id={{.Info.Id}}')">
+                            <a class="blue" href="javascript:req('/{{adminPath}}/{{$.curController}}/setmenu?id={{.Info.Id}}')">
 						      <span title="点击取消菜单显示" class="badge badge-warning">是</span>
                             </a>
                         {{else}} 
@@ -47,11 +47,11 @@
                     <td>根</td>
                     <td>
                         {{if eq 1 .Info.Status}}
-                            <a class="blue" href="javascript:req('{{adminPath}}/{{$.curController}}/lock?id={{.Info.Id}}')">
+                            <a class="blue" href="javascript:req('/{{adminPath}}/{{$.curController}}/lock?id={{.Info.Id}}')">
                                 <span title="点击锁定" class="badge badge-warning">正常</span>
                             </a>
                         {{else}}
-                            <a class="blue" href="javascript:req('{{adminPath}}/{{$.curController}}/lock?id={{.Info.Id}}')">
+                            <a class="blue" href="javascript:req('/{{adminPath}}/{{$.curController}}/lock?id={{.Info.Id}}')">
                                 <span title="点击解锁" class="badge">锁定</span>
                             </a> 
                         {{end}}
@@ -65,17 +65,16 @@
                             <i class="fa fa-pencil bigger-130"></i>
                         </a>
 
-
                         {{if eq .ListCount 0}}
-                            <a class="blue" title="删除" href="javascript:req('{{adminPath}}/{{$.curController}}/del?id={{$v.Info.Id}}')">
+                            <a class="blue" title="删除" href="javascript:req('/{{adminPath}}/{{$.curController}}/del?id={{$v.Info.Id}}')">
                             <i class="fa fa-trash-o bigger-130"></i></a>
                         {{end}}
                        
-                        <a class="blue" href="javascript:req('{{adminPath}}/{{$.curController}}/sort?type=up&id={{$v.Info.Id}}')">
+                        <a class="blue" href="javascript:req('/{{adminPath}}/{{$.curController}}/sort?type=up&id={{$v.Info.Id}}')">
                             <i class="ace-icon glyphicon glyphicon-upload" title="排序上升"></i>
                         </a>
 
-                        <a class="blue" href="javascript:req('{{adminPath}}/{{$.curController}}/sort?type=down&id={{$v.Info.Id}}')">
+                        <a class="blue" href="javascript:req('/{{adminPath}}/{{$.curController}}/sort?type=down&id={{$v.Info.Id}}')">
                             <i class="ace-icon glyphicon glyphicon-download" title="排序下降"></i>
                         </a>
 
@@ -108,11 +107,11 @@
                             </td>
                             <td>
                                 {{if eq 1 .IsMenu}}
-                                <a class="blue" href="javascript:req('{{adminPath}}/{{$.curController}}/setmenu?id={{.Id}}')">
+                                <a class="blue" href="javascript:req('/{{adminPath}}/{{$.curController}}/setmenu?id={{.Id}}')">
                                     <span title="点击取消菜单显示" class="badge badge-warning">是</span>
                                 </a>
                                 {{else}}
-                                <a class="blue" href="javascript:req('{{adminPath}}/{{$.curController}}/setmenu?id={{.Id}}')">
+                                <a class="blue" href="javascript:req('/{{adminPath}}/{{$.curController}}/setmenu?id={{.Id}}')">
                                     <span class="badge" title="点击设置菜单显示">否</span>
                                 </a>
                                 {{end}}
@@ -120,11 +119,11 @@
                             <td>/{{.Controller}}/{{.Action}}</td>
                             <td>隶属菜单：{{$v.Info.Name}}</td>
                             <td>{{if eq 1 .Status}}
-                                <a class="blue" href="javascript:req('{{adminPath}}/{{$.curController}}/lock?id={{.Id}}')">
+                                <a class="blue" href="javascript:req('/{{adminPath}}/{{$.curController}}/lock?id={{.Id}}')">
                                     <span title="点击锁定" class="badge badge-warning">正常</span>
                                 </a>
                                 {{else}}
-                                <a class="blue" href="javascript:req('{{adminPath}}/{{$.curController}}/lock?id={{.Id}}')">
+                                <a class="blue" href="javascript:req('/{{adminPath}}/{{$.curController}}/lock?id={{.Id}}')">
                                     <span title="点击解锁" class="badge">锁定</span>
                                 </a> 
                                 {{end}}
@@ -132,18 +131,18 @@
                             <td>{{$vc.Sort}}</td>
                             <td>
                                 <div class="action-buttons">
-                                <a class="blue" title="功能编辑" href="{{adminPath}}/{{$.curController}}/add?id={{.Id}}">
+                                <a class="blue" title="功能编辑" href="/{{adminPath}}/{{$.curController}}/add?id={{.Id}}">
                                     <i class="fa fa-pencil bigger-130"></i>
                                 </a>
 
-                                <a class="blue" title="删除" href="javascript:req('{{adminPath}}/{{$.curController}}/del?id={{.Id}}')">
+                                <a class="blue" title="删除" href="javascript:req('/{{adminPath}}/{{$.curController}}/del?id={{.Id}}')">
                                     <i class="fa fa-trash-o bigger-130"></i>
                                 </a>
-                                <a class="blue" href="javascript:req('{{adminPath}}/{{$.curController}}/sort?type=up&id={{.Id}}')">
+                                <a class="blue" href="javascript:req('/{{adminPath}}/{{$.curController}}/sort?type=up&id={{.Id}}')">
                                     <i class="ace-icon glyphicon glyphicon-upload" title="排序上升"></i>
                                 </a>
 
-                                <a class="blue" href="javascript:req('{{adminPath}}/{{$.curController}}/sort?type=down&id={{.Id}}')">
+                                <a class="blue" href="javascript:req('/{{adminPath}}/{{$.curController}}/sort?type=down&id={{.Id}}')">
                                     <i class="ace-icon glyphicon glyphicon-download" title="排序下降"></i>
                                 </a>
                                 </div>

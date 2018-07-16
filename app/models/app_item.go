@@ -7,18 +7,22 @@ import (
 )
 
 type AppItem struct {
-	Id           int
-	Name         string
-	PageIndex    string
-	PathRule     string
-	NameRule     string
-	CategoryRule string
-	StatusRule   string
-	ChapterRule  string
-	ContentRule  string
-	Status       int
-	UpdateTime   int64
-	CreateTime   int64
+	Id              int
+	Name            string
+	PageIndex       string
+	PathPageExp     string
+	PathRule        string
+	NameRule        string
+	CategoryRule    string
+	StatusRule      string
+	ChapterPathRule string
+	ChapterPathExp  string
+	ChapterListRule string
+	ContentExp      string
+	ContentRule     string
+	Status          int
+	UpdateTime      int64
+	CreateTime      int64
 }
 
 func (u *AppItem) TableName() string {

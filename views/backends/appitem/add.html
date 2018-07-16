@@ -30,6 +30,12 @@
                 </div>
             </div>
 
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">目录页样本页: </label>
+                <div class="col-sm-6">
+                    <input class="col-sm-12" class="col-xs-8 col-sm-4" type="text" name="vars[path_page_exp]" value="{{.data.PathPageExp}}" required>
+                </div>
+            </div>
 
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right" for="form-field-1">小说名规则: </label>
@@ -37,19 +43,17 @@
                     <textarea class="col-sm-12" rows="3" name="vars[name_rule]">{{.data.NameRule}}</textarea>
                 </div>
                 <div class="col-sm-1">
-                    <div id="item_sign_make" class="btn btn-sm btn-primary">匹配</div>
+                    <div id="reg_name_rule_test" class="btn btn-sm btn-primary">匹配</div>
                 </div>
             </div>
 
             <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
-                    小说分类规则: 
-                </label>
+                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">小说分类规则: </label>
                 <div class="col-sm-5">
                     <textarea class="col-sm-12"rows="3" name="vars[category_rule]">{{.data.CategoryRule}}</textarea>
                 </div>
                 <div class="col-sm-1">
-                    <div id="item_sign_make" class="btn btn-sm btn-primary">匹配</div>
+                    <div id="reg_category_rule_test" class="btn btn-sm btn-primary">匹配</div>
                 </div>
             </div>
 
@@ -61,7 +65,26 @@
                     <textarea class="col-sm-12" rows="3" name="vars[status_rule]">{{.data.StatusRule}}</textarea>
                 </div>
                 <div class="col-sm-1">
-                    <div id="item_sign_make" class="btn btn-sm btn-primary">匹配</div>
+                    <div id="reg_status_rule_test" class="btn btn-sm btn-primary">匹配</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
+                     章节首页规则: 
+                </label>
+                <div class="col-sm-5">
+                    <textarea class="col-sm-12" rows="3" name="vars[chapter_path_rule]">{{.data.ChapterPathRule}}</textarea>
+                </div>
+                <div class="col-sm-1">
+                    <div id="reg_chapter_path_rule_test" class="btn btn-sm btn-primary">匹配</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 章节首页样本页: </label>
+                <div class="col-sm-6">
+                    <input class="col-sm-12" class="col-xs-8 col-sm-4" type="text" name="vars[chapter_path_exp]" value="{{.data.ChapterPathExp}}" required>
                 </div>
             </div>
 
@@ -70,10 +93,17 @@
                     章节列表规则: 
                 </label>
                 <div class="col-sm-5">
-                    <textarea class="col-sm-12" rows="3" name="vars[chapter_rule]">{{.data.ChapterRule}}</textarea>
+                    <textarea class="col-sm-12" rows="3" name="vars[chapter_list_rule]">{{.data.ChapterListRule}}</textarea>
                 </div>
                 <div class="col-sm-1">
-                    <div id="item_sign_make" class="btn btn-sm btn-primary">匹配</div>
+                    <div id="reg_chapter_list_rule_test" class="btn btn-sm btn-primary">匹配</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 章节内容样本页: </label>
+                <div class="col-sm-6">
+                    <input class="col-sm-12" class="col-xs-8 col-sm-4" type="text" name="vars[content_exp]" value="{{.data.ContentExp}}" required>
                 </div>
             </div>
 
@@ -85,7 +115,7 @@
                     <textarea class="col-sm-12" rows="3" name="vars[content_rule]">{{.data.ContentRule}}</textarea>
                 </div>
                 <div class="col-sm-1">
-                    <div id="item_sign_make" class="btn btn-sm btn-primary">匹配</div>
+                    <div id="reg_content_rule_test" class="btn btn-sm btn-primary">匹配</div>
                 </div>
             </div>
 
@@ -111,65 +141,82 @@
     </div><!-- /.col -->
 </div>
 
-<!-- 添加服务器弹出页 start -->
-<div id="add_server_id" class="hide">
-    
-    <div class="row">
-        <div id="add_server_id_list" class="tags" style="border:none;">
-            <span class="tag">495590<button type="button" class="close">×</button></span>
-        </div>
-    </div>
-    <hr/>
-    <div class="row">
-        <div>
-            <input id="add_server_seacrch" type="text" name="search_info" placeholder="查询序号或描述">
-            <input onclick="query_search();" type="button" name="search" value="查询" class="btn btn-purple btn-sm">
-        </div>
-
-        <div class="space-4"></div>
-        <div>
-            <table class="table table-bordered table-hover" id='add_server_id_tab'>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>IP</th>
-                        <th>描述</th>
-                        <th>操作</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>489612</td>
-                        <td>裸色风暴眼影盘</td>
-                        <td><a href="#"><i class="glyphicon glyphicon-plus bigger-130"></i><a></td>
-                    </tr>
-                </tbody> 
-            </table>
-        </div>
-    </div>
-</div>
-<!-- 添加服务器弹出页 end -->
-
-
 <script>
-
-
-
 jQuery(function($) {
 //start
 
-//初始化sign
-var sign = $('#item_sign').val();
-if (sign == ""){
-    var t = new Date().getTime();
-    var md5_v = hex_md5("" + t);
-    $('#item_sign').val(md5_v);
+function vefiy_rule(url, rule){
+    $.post("/{{adminPath}}/{{$.curController}}/verify", { url: url, rule: rule }, function(data){
+        if (data['code'] < 0){
+            alert(data['msg']);
+        } else {
+            if (data['data'][0]){
+                var content = ""
+                for (j in data['data']) {
+                    var t = "";
+                    for (i in data['data'][j]) {
+                        t += data['data'][j][i] + "\n";
+                    }
+                    content += t;
+                }
+                alert(content);
+            } else {
+                alert("没有匹配到!");
+            }
+            console.log(data);
+        }
+    }, "json");
 }
 
-//重新生成Sign
+//验证目录页面
 $('#reg_path_rule_test').click(function(){
-    alert("12312");
+    var url = $(".form-group :input[name='vars[page_index]']").val();
+    var rule = $(".form-group :input[name='vars[path_rule]']").val();
+    vefiy_rule(url,rule);
 });
+
+//验证小说名
+$('#reg_name_rule_test').click(function(){
+    var url = $(".form-group :input[name='vars[path_page_exp]']").val();
+    var rule = $(".form-group :input[name='vars[name_rule]']").val();
+    vefiy_rule(url,rule);
+});
+
+//验证小说分类
+$('#reg_category_rule_test').click(function(){
+    var url = $(".form-group :input[name='vars[path_page_exp]']").val();
+    var rule = $(".form-group :input[name='vars[category_rule]']").val();
+    vefiy_rule(url,rule);
+});
+
+//验证小说状态
+$('#reg_status_rule_test').click(function(){
+    var url = $(".form-group :input[name='vars[path_page_exp]']").val();
+    var rule = $(".form-group :input[name='vars[status_rule]']").val();
+    vefiy_rule(url,rule);
+});
+
+//验证章节首页列表
+$('#reg_chapter_path_rule_test').click(function(){
+    var url = $(".form-group :input[name='vars[path_page_exp]']").val();
+    var rule = $(".form-group :input[name='vars[chapter_path_rule]']").val();
+    vefiy_rule(url,rule);
+});
+
+//验证章节列表
+$('#reg_chapter_list_rule_test').click(function(){
+    var url = $(".form-group :input[name='vars[chapter_path_exp]']").val();
+    var rule = $(".form-group :input[name='vars[chapter_list_rule]']").val();
+    vefiy_rule(url,rule);
+});
+
+//验证章节内容
+$('#reg_content_rule_test').click(function(){
+    var url = $(".form-group :input[name='vars[content_exp]']").val();
+    var rule = $(".form-group :input[name='vars[content_rule]']").val();
+    vefiy_rule(url,rule);
+});
+
 
 
 //end

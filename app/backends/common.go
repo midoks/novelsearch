@@ -187,7 +187,6 @@ func (this *CommonController) display(tpl ...string) {
 	}
 
 	this.Layout = "backends/layout/index.html"
-	//fmt.Println(this.Layout)
 	this.TplName = tplname
 }
 
