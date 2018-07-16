@@ -21,6 +21,9 @@ type AppItem struct {
 	ChapterListRule string
 	ContentExp      string
 	ContentRule     string
+	SosoExp         string
+	SosoKwCharset   string
+	SosoRule        string
 	Status          int
 	UpdateTime      int64
 	CreateTime      int64

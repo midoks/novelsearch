@@ -104,6 +104,7 @@ func (this *AppItemController) Add() {
 
 	if err == nil {
 		data, _ = models.ItemGetById(id)
+		//fmt.Println(id, data)
 	}
 
 	if this.isPost() {
@@ -124,6 +125,9 @@ func (this *AppItemController) Add() {
 		data.ChapterListRule = vars["chapter_list_rule"]
 		data.ContentExp = vars["content_exp"]
 		data.ContentRule = vars["content_rule"]
+		data.SosoExp = vars["soso_exp"]
+		data.SosoKwCharset = vars["soso_kw_charset"]
+		data.SosoRule = vars["soso_rule"]
 
 		if id > 0 {
 
@@ -205,6 +209,8 @@ func (this *AppItemController) Verify() {
 		if err != nil {
 			log.Fatal(err)
 		}
+
+		fmt.Println(str)
 
 		valid := regexp.MustCompile(rule)
 		match := valid.FindAllStringSubmatch(str, -1)

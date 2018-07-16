@@ -43,7 +43,7 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right" for="form-field-1">目录页样本页: </label>
                 <div class="col-sm-6">
-                    <input class="col-sm-12" class="col-xs-8 col-sm-4" type="text" name="vars[path_page_exp]" value="{{.data.PathPageExp}}">
+                    <input class="col-sm-12" type="text" name="vars[path_page_exp]" value="{{.data.PathPageExp}}">
                 </div>
 
                 <div class="col-sm-3">
@@ -128,7 +128,7 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 章节首页样本页: </label>
                 <div class="col-sm-6">
-                    <input class="col-sm-12" class="col-xs-8 col-sm-4" type="text" name="vars[chapter_path_exp]" value="{{.data.ChapterPathExp}}">
+                    <input class="col-sm-12" type="text" name="vars[chapter_path_exp]" value="{{.data.ChapterPathExp}}">
                 </div>
 
                 <div class="col-sm-3">
@@ -179,6 +179,56 @@
                 </div>
             </div>
 
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
+                    搜索页样本页: 
+                </label>
+                <div class="col-sm-6">
+                    <input class="col-sm-12" type="text" name="vars[soso_exp]" value="{{.data.SosoExp}}">
+                </div>
+               
+                <div class="col-sm-3">
+                    搜索页样本页,<br />
+                    https://xx/?k={$KEYWORD}<br/>
+                    {$KEYWORD}搜索关键字.
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
+                    参数(关键字): 
+                </label>
+                <div class="col-sm-2">
+                    <input class="col-sm-12" type="text" name="vars[soso_exp_keyword]" value="凡人修仙传">
+                </div>
+
+                <label class="col-sm-1 control-label no-padding-right" for="form-field-1">
+                    参数(编码): 
+                </label>
+                <div class="col-sm-2">
+                    <input class="col-sm-12" type="text" name="vars[soso_kw_charset]" value="utf-8">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
+                    小说页匹配规则: 
+                </label>
+
+                <div class="col-sm-5">
+                    <textarea class="col-sm-12" rows="3" name="vars[soso_rule]">{{.data.SosoRule}}</textarea>
+                </div>
+
+                <div class="col-sm-1">
+                    <div id="reg_soso_rule_test" class="btn btn-sm btn-primary">匹配</div>
+                </div>
+               
+                <div class="col-sm-3">
+                    匹配小说地址和名字
+                </div>
+            </div>
+
             <!-- <div class="space-4"></div> -->
             <input name="id" type="hidden" value="{{.id}}">
             <div class="clearfix form-actions">
@@ -200,6 +250,7 @@
         </form>
     </div><!-- /.col -->
 </div>
+<script src="/static/js/gbk/gbk.js"></script>
 
 <script>
 jQuery(function($) {
@@ -281,6 +332,20 @@ $('#reg_chapter_list_rule_test').click(function(){
 $('#reg_content_rule_test').click(function(){
     var url = $(".form-group :input[name='vars[content_exp]']").val();
     var rule = $(".form-group :input[name='vars[content_rule]']").val();
+    vefiy_rule(url,rule);
+});
+
+//验证soso内容
+$('#reg_soso_rule_test').click(function(){
+    var url = $(".form-group :input[name='vars[soso_exp]']").val();
+    var keyword = $(".form-group :input[name='vars[soso_exp_keyword]']").val();
+    // var keyword = $(".form-group :input[name='vars[soso_exp_keyword]']").val();
+
+
+    keyword = $URL.encode(keyword);
+    url = url.replace(/{\$KEYWORD}/,keyword);
+    console.log(url, keyword);
+    var rule = $(".form-group :input[name='vars[soso_rule]']").val();
     vefiy_rule(url,rule);
 });
 
