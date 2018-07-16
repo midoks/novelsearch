@@ -11,7 +11,7 @@
  Target Server Version : 50634
  File Encoding         : 65001
 
- Date: 15/07/2018 22:48:51
+ Date: 16/07/2018 14:05:25
 */
 
 SET NAMES utf8mb4;
@@ -35,25 +35,30 @@ CREATE TABLE `app_debug` (
 DROP TABLE IF EXISTS `app_item`;
 CREATE TABLE `app_item` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '0' COMMENT '网站名',
-  `page_index` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '首页',
+  `name` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT '0' COMMENT '网站名',
+  `page_index` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT '' COMMENT '首页',
   `path_rule` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '小说目录路径规则',
+  `path_page_exp` varchar(100) NOT NULL COMMENT '目录样板页',
   `name_rule` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '小说名规则',
-  `category_rule` text COMMENT '分类规则',
+  `category_rule` text NOT NULL COMMENT '分类规则',
   `status_rule` text NOT NULL COMMENT '状态规则',
-  `chapter_rule` text CHARACTER SET utf8 COLLATE utf8_unicode_ci COMMENT '章节规则',
-  `content_rule` text COMMENT '内容规则',
+  `chapter_path_rule` text NOT NULL COMMENT '章节路径规则',
+  `chapter_path_exp` varchar(100) NOT NULL COMMENT '章节路径样本页',
+  `chapter_list_rule` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '章节列表规则',
+  `content_exp` text NOT NULL COMMENT '内容样本页',
+  `content_rule` text NOT NULL COMMENT '内容规则',
   `status` tinyint(4) NOT NULL DEFAULT '0',
   `update_time` int(11) NOT NULL DEFAULT '0',
   `create_time` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='项目';
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='项目';
 
 -- ----------------------------
 -- Records of app_item
 -- ----------------------------
 BEGIN;
-INSERT INTO `app_item` VALUES (2, '顶点小说', 'https://www.23us.so/', 'https://www.23us.so/xiaoshuo/(\\d*).(html)', '<h1>(.*)全文阅读</h1>', '<th>小说类别</th>\\n<td>&nbsp;<a href=\".*\">(.*)</a></td>', '<th>小说状态</th>\\n<td>&nbsp;(.*)</td>', '(?U)<td class=\"L\"><a href=\"(.*)\">(.*)</a></td>', '(?iUs)<dd id=\"contents\">(.*)</dd>', -1, 1531647641, 1515035827);
+INSERT INTO `app_item` VALUES (2, '顶点小说', 'https://www.23us.so/', 'https://www.23us.so/xiaoshuo/(\\d*).(html)', 'https://www.23us.so/xiaoshuo/43.html', '<h1>(.*)全文阅读</h1>', '<th>小说类别</th>\\n<td>&nbsp;<a href=\".*\">(.*)</a></td>', '<th>小说状态</th>\\n<td>&nbsp;(.*)</td>', '<a class=\"read\" href=\"(.*)\" title=\".*最新章节\">最新章节</a>', 'https://www.23us.so/files/article/html/0/43/index.html', '(?U)<td class=\"L\"><a href=\"(.*)\">(.*)</a></td>', 'https://www.23us.so/files/article/html/0/43/3615670.html', '(?iUs)<dd id=\"contents\">(.*)</dd>', -1, 1531720780, 1515035827);
+INSERT INTO `app_item` VALUES (6, '58小说网', 'http://www.5858xs.com/', '(?U)/(\\d*).(html)', 'http://www.5858xs.com/273530.html', '', '', '', '', 'http://www.5858xs.com/html/273/273530/index.html', '', 'http://www.5858xs.com/html/273/273530/40723761.html', '', 0, 1531720949, 1531706864);
 COMMIT;
 
 -- ----------------------------
@@ -94,7 +99,7 @@ CREATE TABLE `sys_func` (
   `create_time` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `pid` (`pid`)
-) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8 COMMENT='权限列表';
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8 COMMENT='权限列表';
 
 -- ----------------------------
 -- Records of sys_func
@@ -127,6 +132,7 @@ INSERT INTO `sys_func` VALUES (32, '锁定', 18, 'appitem', 'lock', 0, -1, '', '
 INSERT INTO `sys_func` VALUES (33, '删除', 18, 'appitem', 'del', 0, -1, '', '', 0, 1, 1531393695, 1515400760);
 INSERT INTO `sys_func` VALUES (38, '小说管理', 0, 'appnovel', '', 0, 1, 'glyphicon glyphicon-file', '小说列表', 0, 1, 1531394032, 1531393922);
 INSERT INTO `sys_func` VALUES (39, '列表', 38, 'appnovel', 'index', 0, 1, '', '小说列表', 0, 1, 1531394020, 1531393957);
+INSERT INTO `sys_func` VALUES (40, '验证功能', 18, 'appitem', 'verify', 0, 1, '', '验证功能', 0, 1, 1531710514, 1531710379);
 COMMIT;
 
 -- ----------------------------
@@ -140,7 +146,29 @@ CREATE TABLE `sys_logs` (
   `msg` text NOT NULL,
   `add_time` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
+
+-- ----------------------------
+-- Records of sys_logs
+-- ----------------------------
+BEGIN;
+INSERT INTO `sys_logs` VALUES (1, 1, 1, '添加Item的ID:6', 1531706864);
+INSERT INTO `sys_logs` VALUES (2, 1, 1, '更新Item的ID:6|&{%!s(int=6) 58小说网 http://www.5858xs.com/ 1      %!s(int=0) %!s(int64=1531707769) %!s(int64=1531706864)}', 1531707769);
+INSERT INTO `sys_logs` VALUES (3, 1, 1, '添加功能的ID:40|:&{%!s(int=40) 验证功能 %!s(int=18) appitem Verify %!s(int=0) %!s(int=-1)  验证功能 %!s(int=0) %!s(int=0) %!s(int64=1531710379) %!s(int64=1531710379)}', 1531710379);
+INSERT INTO `sys_logs` VALUES (4, 1, 1, '功能解锁成功', 1531710485);
+INSERT INTO `sys_logs` VALUES (5, 1, 1, '更新功能的ID:40|&{%!s(int=40) 验证功能 %!s(int=18) appitem verify %!s(int=0) %!s(int=1)  验证功能 %!s(int=0) %!s(int=1) %!s(int64=1531710514) %!s(int64=1531710379)}', 1531710514);
+INSERT INTO `sys_logs` VALUES (6, 1, 1, '更新Item的ID:6|&{%!s(int=6) 58小说网 http://www.5858xs.com/ http://www.5858xs.com/      %!s(int=0) %!s(int64=1531715706) %!s(int64=1531706864)}', 1531715706);
+INSERT INTO `sys_logs` VALUES (7, 1, 1, '更新Item的ID:6|&{%!s(int=6) 58小说网 http://www.5858xs.com/ (?U)http://www.5858xs.com/(.*).(html)$      %!s(int=0) %!s(int64=1531715846) %!s(int64=1531706864)}', 1531715846);
+INSERT INTO `sys_logs` VALUES (8, 1, 1, '更新Item的ID:6|&{%!s(int=6) 58小说网 http://www.5858xs.com/ (?U)/(\\d*).(html)      %!s(int=0) %!s(int64=1531716168) %!s(int64=1531706864)}', 1531716168);
+INSERT INTO `sys_logs` VALUES (9, 1, 1, '更新Item的ID:2|&{%!s(int=2) 顶点小说 https://www.23us.so/ https://www.23us.so/ https://www.23us.so/xiaoshuo/(\\d*).(html) <h1>(.*)全文阅读</h1> <th>小说类别</th>\\n<td>&nbsp;<a href=\".*\">(.*)</a></td> <th>小说状态</th>\\n<td>&nbsp;(.*)</td> (?U)<td class=\"L\"><a href=\"(.*)\">(.*)</a></td> (?iUs)<dd id=\"contents\">(.*)</dd> %!s(int=-1) %!s(int64=1531716866) %!s(int64=1515035827)}', 1531716866);
+INSERT INTO `sys_logs` VALUES (10, 1, 1, '更新Item的ID:2|&{%!s(int=2) 顶点小说 https://www.23us.so/ https://www.23us.so/xiaoshuo/43.html https://www.23us.so/xiaoshuo/(\\d*).(html) <h1>(.*)全文阅读</h1> <th>小说类别</th>\\n<td>&nbsp;<a href=\".*\">(.*)</a></td> <th>小说状态</th>\\n<td>&nbsp;(.*)</td> (?U)<td class=\"L\"><a href=\"(.*)\">(.*)</a></td> (?iUs)<dd id=\"contents\">(.*)</dd> %!s(int=-1) %!s(int64=1531716900) %!s(int64=1515035827)}', 1531716900);
+INSERT INTO `sys_logs` VALUES (11, 1, 1, '更新Item的ID:2|&{%!s(int=2) 顶点小说 https://www.23us.so/ https://www.23us.so/xiaoshuo/43.html https://www.23us.so/xiaoshuo/(\\d*).(html) <h1>(.*)全文阅读</h1> <th>小说类别</th>\\n<td>&nbsp;<a href=\".*\">(.*)</a></td> <th>小说状态</th>\\n<td>&nbsp;(.*)</td>   (?U)<td class=\"L\"><a href=\"(.*)\">(.*)</a></td> (?iUs)<dd id=\"contents\">(.*)</dd> %!s(int=-1) %!s(int64=1531718279) %!s(int64=1515035827)}', 1531718279);
+INSERT INTO `sys_logs` VALUES (12, 1, 1, '更新Item的ID:2|&{%!s(int=2) 顶点小说 https://www.23us.so/ https://www.23us.so/xiaoshuo/43.html https://www.23us.so/xiaoshuo/(\\d*).(html) <h1>(.*)全文阅读</h1> <th>小说类别</th>\\n<td>&nbsp;<a href=\".*\">(.*)</a></td> <th>小说状态</th>\\n<td>&nbsp;(.*)</td>  https://www.23us.so/files/article/html/0/43/index.html (?U)<td class=\"L\"><a href=\"(.*)\">(.*)</a></td> (?iUs)<dd id=\"contents\">(.*)</dd> %!s(int=-1) %!s(int64=1531718373) %!s(int64=1515035827)}', 1531718373);
+INSERT INTO `sys_logs` VALUES (13, 1, 1, '更新Item的ID:2|&{%!s(int=2) 顶点小说 https://www.23us.so/ https://www.23us.so/xiaoshuo/43.html https://www.23us.so/xiaoshuo/(\\d*).(html) <h1>(.*)全文阅读</h1> <th>小说类别</th>\\n<td>&nbsp;<a href=\".*\">(.*)</a></td> <th>小说状态</th>\\n<td>&nbsp;(.*)</td> <a class=\"read\" href=\"(.*)\" title=\".*最新章节\">最新章节</a> https://www.23us.so/files/article/html/0/43/index.html (?U)<td class=\"L\"><a href=\"(.*)\">(.*)</a></td> (?iUs)<dd id=\"contents\">(.*)</dd> %!s(int=-1) %!s(int64=1531718562) %!s(int64=1515035827)}', 1531718562);
+INSERT INTO `sys_logs` VALUES (14, 1, 1, '更新Item的ID:2|&{%!s(int=2) 顶点小说 https://www.23us.so/ https://www.23us.so/xiaoshuo/43.html https://www.23us.so/xiaoshuo/(\\d*).(html) <h1>(.*)全文阅读</h1> <th>小说类别</th>\\n<td>&nbsp;<a href=\".*\">(.*)</a></td> <th>小说状态</th>\\n<td>&nbsp;(.*)</td> <a class=\"read\" href=\"(.*)\" title=\".*最新章节\">最新章节</a> https://www.23us.so/files/article/html/0/43/index.html (?U)<td class=\"L\"><a href=\"(.*)\">(.*)</a></td> https://www.23us.so/files/article/html/0/43/3615670.html (?iUs)<dd id=\"contents\">(.*)</dd> %!s(int=-1) %!s(int64=1531719196) %!s(int64=1515035827)}', 1531719196);
+INSERT INTO `sys_logs` VALUES (15, 1, 1, '更新Item的ID:2|&{%!s(int=2) 顶点小说 https://www.23us.so/ https://www.23us.so/xiaoshuo/43.html https://www.23us.so/xiaoshuo/(\\d*).(html) <h1>(.*)全文阅读</h1> <th>小说类别</th>\\n<td>&nbsp;<a href=\".*\">(.*)</a></td> <th>小说状态</th>\\n<td>&nbsp;(.*)</td> <a class=\"read\" href=\"(.*)\" title=\".*最新章节\">最新章节</a> https://www.23us.so/files/article/html/0/43/index.html (?U)<td class=\"L\"><a href=\"(.*)\">(.*)</a></td> https://www.23us.so/files/article/html/0/43/3615670.html (?iUs)<dd id=\"contents\">(.*)</dd> %!s(int=-1) %!s(int64=1531720780) %!s(int64=1515035827)}', 1531720780);
+INSERT INTO `sys_logs` VALUES (16, 1, 1, '更新Item的ID:6|&{%!s(int=6) 58小说网 http://www.5858xs.com/ http://www.5858xs.com/273530.html (?U)/(\\d*).(html)     http://www.5858xs.com/html/273/273530/index.html  http://www.5858xs.com/html/273/273530/40723761.html  %!s(int=0) %!s(int64=1531720949) %!s(int64=1531706864)}', 1531720949);
+COMMIT;
 
 -- ----------------------------
 -- Table structure for sys_role
