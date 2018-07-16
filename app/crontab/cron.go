@@ -6,9 +6,9 @@ import (
 	"github.com/astaxie/beego/httplib"
 	"github.com/astaxie/beego/toolbox"
 	"github.com/midoks/novelsearch/app/models"
-	// "time"
 	"log"
 	"regexp"
+	"time"
 )
 
 type DatabaseCheck struct {
