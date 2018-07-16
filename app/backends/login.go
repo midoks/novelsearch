@@ -14,11 +14,6 @@ type LoginController struct {
 	CommonController
 }
 
-func (this *LoginController) Prepare() {
-	this.initData()
-	this.auth()
-}
-
 func (this *LoginController) Index() {
 
 	errMsg := ""

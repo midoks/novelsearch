@@ -1,9 +1,8 @@
 package backends
 
 import (
-	_ "fmt"
+	// "fmt"
 	"github.com/astaxie/beego"
-	_ "github.com/astaxie/beego/logs"
 	"github.com/midoks/novelsearch/app/libs"
 	"github.com/midoks/novelsearch/app/models"
 	"strconv"
@@ -52,20 +51,21 @@ func (this *CommonController) initXSRF() {
 	this.XSRFExpire = 3600 //过期时间，默认1小时
 }
 
-func (this *CommonController) initData() {
-
+func (this *CommonController) initBaseData() {
 	this.Data["pageStartTime"] = time.Now()
 	this.pageSize = 10
 	controllerName, actionName := this.GetControllerAndAction()
 	this.controllerName = strings.ToLower(controllerName[0 : len(controllerName)-10])
 	this.actionName = strings.ToLower(actionName)
-
-	//println(this.controllerName, this.actionName)
-	this.Data["version"] = beego.AppConfig.String("version")
-	this.Data["siteName"] = beego.AppConfig.String("site.name")
 	this.Data["curRoute"] = this.controllerName + "." + this.actionName
 	this.Data["curController"] = this.controllerName
 	this.Data["curAction"] = this.actionName
+}
+
+func (this *CommonController) initConfData() {
+
+	this.Data["version"] = beego.AppConfig.String("version")
+	this.Data["siteName"] = beego.AppConfig.String("site.name")
 }
 
 //登录状态验证

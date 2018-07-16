@@ -8,6 +8,7 @@ import (
 )
 
 func main() {
+
 	libs.Init()
 	crontab.Init()
 	beego.Run()
