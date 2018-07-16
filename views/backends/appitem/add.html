@@ -207,7 +207,11 @@
                     参数(编码): 
                 </label>
                 <div class="col-sm-2">
-                    <input class="col-sm-12" type="text" name="vars[soso_kw_charset]" value="utf-8">
+                    <input class="col-sm-12" type="text" name="vars[soso_kw_charset]" value='{{if eq "" .data.SosoKwCharset}}utf8{{else}}{{.data.SosoKwCharset}}{{end}}'>
+                </div>
+
+                <div class="col-sm-4">
+                    仅支持utf8和gbk编码
                 </div>
             </div>
 
@@ -256,8 +260,8 @@
 jQuery(function($) {
 //start
 
-function vefiy_rule(url, rule){
-    $.post("/{{adminPath}}/{{$.curController}}/verify", { url: url, rule: rule }, function(data){
+function vefiy_rule(url, rule, charset){
+    $.post("/{{adminPath}}/{{$.curController}}/verify", { url: url, rule: rule ,charset: charset}, function(data){
         if (data['code'] < 0){
             alert(data['msg']);
         } else {
@@ -339,6 +343,7 @@ $('#reg_content_rule_test').click(function(){
 $('#reg_soso_rule_test').click(function(){
     var url = $(".form-group :input[name='vars[soso_exp]']").val();
     var keyword = $(".form-group :input[name='vars[soso_exp_keyword]']").val();
+    var charset = $(".form-group :input[name='vars[soso_kw_charset]']").val();
     // var keyword = $(".form-group :input[name='vars[soso_exp_keyword]']").val();
 
 
@@ -346,7 +351,7 @@ $('#reg_soso_rule_test').click(function(){
     url = url.replace(/{\$KEYWORD}/,keyword);
     console.log(url, keyword);
     var rule = $(".form-group :input[name='vars[soso_rule]']").val();
-    vefiy_rule(url,rule);
+    vefiy_rule(url, rule, charset);
 });
 
 

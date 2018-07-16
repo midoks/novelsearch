@@ -189,10 +189,18 @@ func (this *AppItemController) Verify() {
 	if this.isPost() {
 		var url = ""
 		var rule = ""
+		var charset = ""
+		var content = ""
 		url = this.GetString("url", "")
 		rule = this.GetString("rule", "")
+		charset = this.GetString("charset", "")
 		url = strings.TrimSpace(url)
 		rule = strings.TrimSpace(rule)
+		charset = strings.TrimSpace(charset)
+
+		if strings.EqualFold(charset, "") {
+			charset = "utf8"
+		}
 
 		if strings.EqualFold(url, "") {
 			this.retFail("url不能为空")
@@ -205,15 +213,17 @@ func (this *AppItemController) Verify() {
 		}
 
 		req := httplib.Get(url)
-		str, err := req.String()
+		content, err := req.String()
 		if err != nil {
 			log.Fatal(err)
 		}
 
-		fmt.Println(str)
+		if strings.EqualFold(charset, "gbk") {
+			content = libs.ConvertToString(content, "gbk", "utf8")
+		}
 
 		valid := regexp.MustCompile(rule)
-		match := valid.FindAllStringSubmatch(str, -1)
+		match := valid.FindAllStringSubmatch(content, -1)
 
 		this.retOk("验证成功", match)
 	} else {
