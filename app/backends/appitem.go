@@ -7,7 +7,7 @@ import (
 	"github.com/astaxie/beego/orm"
 	"github.com/midoks/novelsearch/app/libs"
 	"github.com/midoks/novelsearch/app/models"
-	"log"
+	// "log"
 	"regexp"
 	"strconv"
 	"strings"
@@ -213,9 +213,12 @@ func (this *AppItemController) Verify() {
 		}
 
 		req := httplib.Get(url)
+		// req.SetTLSClientConfig(&tls.Config{InsecureSkipVerify: true})
 		content, err := req.String()
 		if err != nil {
-			log.Fatal(err)
+			fmt.Println(err)
+			this.retFail("获取url地址数据失败!")
+			return
 		}
 
 		if strings.EqualFold(charset, "gbk") {
