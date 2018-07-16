@@ -11,7 +11,7 @@
  Target Server Version : 50634
  File Encoding         : 65001
 
- Date: 16/07/2018 14:05:25
+ Date: 16/07/2018 19:58:21
 */
 
 SET NAMES utf8mb4;
@@ -40,6 +40,7 @@ CREATE TABLE `app_item` (
   `path_rule` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '小说目录路径规则',
   `path_page_exp` varchar(100) NOT NULL COMMENT '目录样板页',
   `name_rule` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '小说名规则',
+  `author_rule` text NOT NULL COMMENT '作者规则',
   `category_rule` text NOT NULL COMMENT '分类规则',
   `status_rule` text NOT NULL COMMENT '状态规则',
   `chapter_path_rule` text NOT NULL COMMENT '章节路径规则',
@@ -47,18 +48,23 @@ CREATE TABLE `app_item` (
   `chapter_list_rule` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '章节列表规则',
   `content_exp` text NOT NULL COMMENT '内容样本页',
   `content_rule` text NOT NULL COMMENT '内容规则',
+  `soso_exp` varchar(150) NOT NULL COMMENT '搜索样本页',
+  `soso_kw_charset` varchar(5) NOT NULL COMMENT '搜索关键字编码',
+  `soso_rule` text NOT NULL COMMENT '搜索页面规则',
   `status` tinyint(4) NOT NULL DEFAULT '0',
   `update_time` int(11) NOT NULL DEFAULT '0',
   `create_time` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='项目';
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='项目';
 
 -- ----------------------------
 -- Records of app_item
 -- ----------------------------
 BEGIN;
-INSERT INTO `app_item` VALUES (2, '顶点小说', 'https://www.23us.so/', 'https://www.23us.so/xiaoshuo/(\\d*).(html)', 'https://www.23us.so/xiaoshuo/43.html', '<h1>(.*)全文阅读</h1>', '<th>小说类别</th>\\n<td>&nbsp;<a href=\".*\">(.*)</a></td>', '<th>小说状态</th>\\n<td>&nbsp;(.*)</td>', '<a class=\"read\" href=\"(.*)\" title=\".*最新章节\">最新章节</a>', 'https://www.23us.so/files/article/html/0/43/index.html', '(?U)<td class=\"L\"><a href=\"(.*)\">(.*)</a></td>', 'https://www.23us.so/files/article/html/0/43/3615670.html', '(?iUs)<dd id=\"contents\">(.*)</dd>', -1, 1531720780, 1515035827);
-INSERT INTO `app_item` VALUES (6, '58小说网', 'http://www.5858xs.com/', '(?U)/(\\d*).(html)', 'http://www.5858xs.com/273530.html', '', '', '', '', 'http://www.5858xs.com/html/273/273530/index.html', '', 'http://www.5858xs.com/html/273/273530/40723761.html', '', 0, 1531720949, 1531706864);
+INSERT INTO `app_item` VALUES (2, '顶点小说', 'https://www.23us.so/', 'https://www.23us.so/xiaoshuo/(\\d*).(html)', 'https://www.23us.so/xiaoshuo/43.html', '<h1>(.*)全文阅读</h1>', '', '<th>小说类别</th>\\n<td>&nbsp;<a href=\".*\">(.*)</a></td>', '<th>小说状态</th>\\n<td>&nbsp;(.*)</td>', '<a class=\"read\" href=\"(.*)\" title=\".*最新章节\">最新章节</a>', 'https://www.23us.so/files/article/html/0/43/index.html', '(?U)<td class=\"L\"><a href=\"(.*)\">(.*)</a></td>', 'https://www.23us.so/files/article/html/0/43/3615670.html', '(?iUs)<dd id=\"contents\">(.*)</dd>', '', '', '', -1, 1531720780, 1515035827);
+INSERT INTO `app_item` VALUES (6, '58小说网', 'http://www.5858xs.com/', '(?U)/(\\d*).(html)', 'http://www.5858xs.com/273530.html', '', '', '', '', '', 'http://www.5858xs.com/html/273/273530/index.html', '', 'http://www.5858xs.com/html/273/273530/40723761.html', '', '', '', '', 0, 1531720949, 1531706864);
+INSERT INTO `app_item` VALUES (7, '顶点小说2', 'https://www.x23us.com/', '', 'https://www.x23us.com/html/68/68255/', '', '', '', '', '', 'https://www.x23us.com/html/68/68255/', '', 'https://www.x23us.com/html/68/68255/', '', 'https://www.x23us.com/modules/article/search.php?searchtype=keywords&searchkey={$KEYWORD}', 'gbk', '(?U)<td class=\"odd\"><a href=\"(.*)\"><b style=\"color:red\">.*</b>.*</a></td>', 0, 1531741362, 1531721940);
+INSERT INTO `app_item` VALUES (8, '顶点3', 'https://www.dingdiann.com/', '<a href=\"/(.*)/\">(.*)</a>', 'https://www.dingdiann.com/ddk65139/', '<h1>(.*)</h1>', '<p>作&nbsp;&nbsp;者：(.*)</p>', '<meta property=\"og:novel:category\" content=\"(.*)\"/>', '<meta property=\"og:novel:status\" content=\"(.*)\"/>\r\n', '<meta property=\"og:novel:read_url\" content=\"(.*)\"/>\r\n', 'https://www.dingdiann.com/ddk65139/', '<dd> <a style=\"\" href=\"(.*)\">(.*)</a></dd>', 'https://www.dingdiann.com/ddk65139/3436909.html', '(?Us)<div id=\"content\">(.*)</div>', 'https://www.x23us.com/modules/article/search.php?searchtype=keywords&searchkey={$KEYWORD}', 'utf-8', '<tr><td class=\".*\">', 0, 1531739647, 1531723140);
 COMMIT;
 
 -- ----------------------------
@@ -146,7 +152,7 @@ CREATE TABLE `sys_logs` (
   `msg` text NOT NULL,
   `add_time` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_logs
@@ -168,6 +174,27 @@ INSERT INTO `sys_logs` VALUES (13, 1, 1, '更新Item的ID:2|&{%!s(int=2) 顶点�
 INSERT INTO `sys_logs` VALUES (14, 1, 1, '更新Item的ID:2|&{%!s(int=2) 顶点小说 https://www.23us.so/ https://www.23us.so/xiaoshuo/43.html https://www.23us.so/xiaoshuo/(\\d*).(html) <h1>(.*)全文阅读</h1> <th>小说类别</th>\\n<td>&nbsp;<a href=\".*\">(.*)</a></td> <th>小说状态</th>\\n<td>&nbsp;(.*)</td> <a class=\"read\" href=\"(.*)\" title=\".*最新章节\">最新章节</a> https://www.23us.so/files/article/html/0/43/index.html (?U)<td class=\"L\"><a href=\"(.*)\">(.*)</a></td> https://www.23us.so/files/article/html/0/43/3615670.html (?iUs)<dd id=\"contents\">(.*)</dd> %!s(int=-1) %!s(int64=1531719196) %!s(int64=1515035827)}', 1531719196);
 INSERT INTO `sys_logs` VALUES (15, 1, 1, '更新Item的ID:2|&{%!s(int=2) 顶点小说 https://www.23us.so/ https://www.23us.so/xiaoshuo/43.html https://www.23us.so/xiaoshuo/(\\d*).(html) <h1>(.*)全文阅读</h1> <th>小说类别</th>\\n<td>&nbsp;<a href=\".*\">(.*)</a></td> <th>小说状态</th>\\n<td>&nbsp;(.*)</td> <a class=\"read\" href=\"(.*)\" title=\".*最新章节\">最新章节</a> https://www.23us.so/files/article/html/0/43/index.html (?U)<td class=\"L\"><a href=\"(.*)\">(.*)</a></td> https://www.23us.so/files/article/html/0/43/3615670.html (?iUs)<dd id=\"contents\">(.*)</dd> %!s(int=-1) %!s(int64=1531720780) %!s(int64=1515035827)}', 1531720780);
 INSERT INTO `sys_logs` VALUES (16, 1, 1, '更新Item的ID:6|&{%!s(int=6) 58小说网 http://www.5858xs.com/ http://www.5858xs.com/273530.html (?U)/(\\d*).(html)     http://www.5858xs.com/html/273/273530/index.html  http://www.5858xs.com/html/273/273530/40723761.html  %!s(int=0) %!s(int64=1531720949) %!s(int64=1531706864)}', 1531720949);
+INSERT INTO `sys_logs` VALUES (17, 1, 1, '添加Item的ID:7', 1531721940);
+INSERT INTO `sys_logs` VALUES (18, 1, 1, '添加Item的ID:8', 1531723140);
+INSERT INTO `sys_logs` VALUES (19, 1, 1, '更新Item的ID:8|&{%!s(int=8) 顶点3 https://www.dingdiann.com/ https://www.dingdiann.com/ddk65139/          %!s(int=0) %!s(int64=1531723176) %!s(int64=1531723140)}', 1531723176);
+INSERT INTO `sys_logs` VALUES (20, 1, 1, '更新Item的ID:8|&{%!s(int=8) 顶点3 https://www.dingdiann.com/ https://www.dingdiann.com/ddk65139/ <a href=\"/(.*)/\">(.*)</a>         %!s(int=0) %!s(int64=1531723345) %!s(int64=1531723140)}', 1531723345);
+INSERT INTO `sys_logs` VALUES (21, 1, 1, '更新Item的ID:8|&{%!s(int=8) 顶点3 https://www.dingdiann.com/ https://www.dingdiann.com/ddk65139/ <a href=\"/(.*)/\">(.*)</a> <h1>(.*)</h1>        %!s(int=0) %!s(int64=1531723558) %!s(int64=1531723140)}', 1531723558);
+INSERT INTO `sys_logs` VALUES (22, 1, 1, '更新Item的ID:8|&{%!s(int=8) 顶点3 https://www.dingdiann.com/ https://www.dingdiann.com/ddk65139/ <a href=\"/(.*)/\">(.*)</a> <h1>(.*)</h1> <p>作&nbsp;&nbsp;者：(.*)</p>        %!s(int=0) %!s(int64=1531723908) %!s(int64=1531723140)}', 1531723908);
+INSERT INTO `sys_logs` VALUES (23, 1, 1, '更新Item的ID:8|&{%!s(int=8) 顶点3 https://www.dingdiann.com/ https://www.dingdiann.com/ddk65139/ <a href=\"/(.*)/\">(.*)</a> <h1>(.*)</h1> <p>作&nbsp;&nbsp;者：(.*)</p>    https://www.dingdiann.com/ddk65139/  https://www.dingdiann.com/ddk5390/3903128.html  %!s(int=0) %!s(int64=1531724117) %!s(int64=1531723140)}', 1531724117);
+INSERT INTO `sys_logs` VALUES (24, 1, 1, '更新Item的ID:8|&{%!s(int=8) 顶点3 https://www.dingdiann.com/ https://www.dingdiann.com/ddk65139/ <a href=\"/(.*)/\">(.*)</a> <h1>(.*)</h1> <p>作&nbsp;&nbsp;者：(.*)</p>    https://www.dingdiann.com/ddk65139/  https://www.dingdiann.com/ddk65139/3436909.html  %!s(int=0) %!s(int64=1531724145) %!s(int64=1531723140)}', 1531724145);
+INSERT INTO `sys_logs` VALUES (25, 1, 1, '更新Item的ID:8|&{%!s(int=8) 顶点3 https://www.dingdiann.com/ https://www.dingdiann.com/ddk65139/ <a href=\"/(.*)/\">(.*)</a> <h1>(.*)</h1> <p>作&nbsp;&nbsp;者：(.*)</p>  <meta property=\"og:novel:status\" content=\"(.*)\"/>\r\n  https://www.dingdiann.com/ddk65139/  https://www.dingdiann.com/ddk65139/3436909.html  %!s(int=0) %!s(int64=1531724372) %!s(int64=1531723140)}', 1531724372);
+INSERT INTO `sys_logs` VALUES (26, 1, 1, '更新Item的ID:8|&{%!s(int=8) 顶点3 https://www.dingdiann.com/ https://www.dingdiann.com/ddk65139/ <a href=\"/(.*)/\">(.*)</a> <h1>(.*)</h1> <p>作&nbsp;&nbsp;者：(.*)</p> <meta property=\"og:novel:category\" content=\"(.*)\"/> <meta property=\"og:novel:status\" content=\"(.*)\"/>\r\n  https://www.dingdiann.com/ddk65139/  https://www.dingdiann.com/ddk65139/3436909.html  %!s(int=0) %!s(int64=1531724402) %!s(int64=1531723140)}', 1531724402);
+INSERT INTO `sys_logs` VALUES (27, 1, 1, '更新Item的ID:8|&{%!s(int=8) 顶点3 https://www.dingdiann.com/ https://www.dingdiann.com/ddk65139/ <a href=\"/(.*)/\">(.*)</a> <h1>(.*)</h1> <p>作&nbsp;&nbsp;者：(.*)</p> <meta property=\"og:novel:category\" content=\"(.*)\"/> <meta property=\"og:novel:status\" content=\"(.*)\"/>\r\n  https://www.dingdiann.com/ddk65139/ <dd> <a style=\"\" href=\"(.*)\">(.*)</a></dd> https://www.dingdiann.com/ddk65139/3436909.html  %!s(int=0) %!s(int64=1531724588) %!s(int64=1531723140)}', 1531724588);
+INSERT INTO `sys_logs` VALUES (28, 1, 1, '更新Item的ID:8|&{%!s(int=8) 顶点3 https://www.dingdiann.com/ https://www.dingdiann.com/ddk65139/ <a href=\"/(.*)/\">(.*)</a> <h1>(.*)</h1> <p>作&nbsp;&nbsp;者：(.*)</p> <meta property=\"og:novel:category\" content=\"(.*)\"/> <meta property=\"og:novel:status\" content=\"(.*)\"/>\r\n  https://www.dingdiann.com/ddk65139/ <dd> <a style=\"\" href=\"(.*)\">(.*)</a></dd> https://www.dingdiann.com/ddk65139/3436909.html (?Us)<div id=\"content\">(.*)</div> %!s(int=0) %!s(int64=1531724670) %!s(int64=1531723140)}', 1531724670);
+INSERT INTO `sys_logs` VALUES (29, 1, 1, '更新Item的ID:8|&{%!s(int=8) 顶点3 https://www.dingdiann.com/ https://www.dingdiann.com/ddk65139/ <a href=\"/(.*)/\">(.*)</a> <h1>(.*)</h1> <p>作&nbsp;&nbsp;者：(.*)</p> <meta property=\"og:novel:category\" content=\"(.*)\"/> <meta property=\"og:novel:status\" content=\"(.*)\"/>\r\n <meta property=\"og:novel:read_url\" content=\"(.*)\"/>\r\n https://www.dingdiann.com/ddk65139/ <dd> <a style=\"\" href=\"(.*)\">(.*)</a></dd> https://www.dingdiann.com/ddk65139/3436909.html (?Us)<div id=\"content\">(.*)</div> %!s(int=0) %!s(int64=1531727272) %!s(int64=1531723140)}', 1531727272);
+INSERT INTO `sys_logs` VALUES (30, 1, 1, '更新Item的ID:7|&{%!s(int=7) 顶点小说2 https://www.x23us.com/ https://www.x23us.com/html/68/68255/       https://www.x23us.com/html/68/68255/  https://www.x23us.com/html/68/68255/  https://www.x23us.com/modules/article/search.php?searchtype=keywords&searchkey={$KEYWORD}  %!s(int=0) %!s(int64=1531735749) %!s(int64=1531721940)}', 1531735749);
+INSERT INTO `sys_logs` VALUES (31, 1, 1, '更新Item的ID:8|&{%!s(int=8) 顶点3 https://www.dingdiann.com/ https://www.dingdiann.com/ddk65139/ <a href=\"/(.*)/\">(.*)</a> <h1>(.*)</h1> <p>作&nbsp;&nbsp;者：(.*)</p> <meta property=\"og:novel:category\" content=\"(.*)\"/> <meta property=\"og:novel:status\" content=\"(.*)\"/>\r\n <meta property=\"og:novel:read_url\" content=\"(.*)\"/>\r\n https://www.dingdiann.com/ddk65139/ <dd> <a style=\"\" href=\"(.*)\">(.*)</a></dd> https://www.dingdiann.com/ddk65139/3436909.html (?Us)<div id=\"content\">(.*)</div> https://www.x23us.com/modules/article/search.php?searchtype=keywords&searchkey={$KEYWORD}  %!s(int=0) %!s(int64=1531737720) %!s(int64=1531723140)}', 1531737720);
+INSERT INTO `sys_logs` VALUES (32, 1, 1, '更新Item的ID:8|&{%!s(int=8) 顶点3 https://www.dingdiann.com/ https://www.dingdiann.com/ddk65139/ <a href=\"/(.*)/\">(.*)</a> <h1>(.*)</h1> <p>作&nbsp;&nbsp;者：(.*)</p> <meta property=\"og:novel:category\" content=\"(.*)\"/> <meta property=\"og:novel:status\" content=\"(.*)\"/>\r\n <meta property=\"og:novel:read_url\" content=\"(.*)\"/>\r\n https://www.dingdiann.com/ddk65139/ <dd> <a style=\"\" href=\"(.*)\">(.*)</a></dd> https://www.dingdiann.com/ddk65139/3436909.html (?Us)<div id=\"content\">(.*)</div> https://www.x23us.com/modules/article/search.php?searchtype=keywords&searchkey={$KEYWORD}  <tr><td %!s(int=0) %!s(int64=1531739579) %!s(int64=1531723140)}', 1531739579);
+INSERT INTO `sys_logs` VALUES (33, 1, 1, '更新Item的ID:8|&{%!s(int=8) 顶点3 https://www.dingdiann.com/ https://www.dingdiann.com/ddk65139/ <a href=\"/(.*)/\">(.*)</a> <h1>(.*)</h1> <p>作&nbsp;&nbsp;者：(.*)</p> <meta property=\"og:novel:category\" content=\"(.*)\"/> <meta property=\"og:novel:status\" content=\"(.*)\"/>\r\n <meta property=\"og:novel:read_url\" content=\"(.*)\"/>\r\n https://www.dingdiann.com/ddk65139/ <dd> <a style=\"\" href=\"(.*)\">(.*)</a></dd> https://www.dingdiann.com/ddk65139/3436909.html (?Us)<div id=\"content\">(.*)</div> https://www.x23us.com/modules/article/search.php?searchtype=keywords&searchkey={$KEYWORD} utf-8 <tr><td class=\".*\"> %!s(int=0) %!s(int64=1531739647) %!s(int64=1531723140)}', 1531739647);
+INSERT INTO `sys_logs` VALUES (34, 1, 1, '更新Item的ID:7|&{%!s(int=7) 顶点小说2 https://www.x23us.com/ https://www.x23us.com/html/68/68255/       https://www.x23us.com/html/68/68255/  https://www.x23us.com/html/68/68255/  https://www.x23us.com/modules/article/search.php?searchtype=keywords&searchkey={$KEYWORD} utf-8 <tr>\r\n    <td class=\"odd\"><a href=\"https://www.x23us.com/book/69626\"><b style=\"color:red\">凡人</b>修仙之仙界篇</a></td> %!s(int=0) %!s(int64=1531740096) %!s(int64=1531721940)}', 1531740096);
+INSERT INTO `sys_logs` VALUES (35, 1, 1, '更新Item的ID:7|&{%!s(int=7) 顶点小说2 https://www.x23us.com/ https://www.x23us.com/html/68/68255/       https://www.x23us.com/html/68/68255/  https://www.x23us.com/html/68/68255/  https://www.x23us.com/modules/article/search.php?searchtype=keywords&searchkey={$KEYWORD} utf-8 <tr>\\n<td class=\".*\"><a href=\"(.*)\"><b style=\"color:red\">凡人</b>修仙之仙界篇</a></td> %!s(int=0) %!s(int64=1531740539) %!s(int64=1531721940)}', 1531740539);
+INSERT INTO `sys_logs` VALUES (36, 1, 1, '更新Item的ID:7|&{%!s(int=7) 顶点小说2 https://www.x23us.com/ https://www.x23us.com/html/68/68255/       https://www.x23us.com/html/68/68255/  https://www.x23us.com/html/68/68255/  https://www.x23us.com/modules/article/search.php?searchtype=keywords&searchkey={$KEYWORD} utf-8 (?U)<td class=\"odd\"><a href=\"(.*)\"><b style=\"color:red\">.*</b>.*</a></td> %!s(int=0) %!s(int64=1531740922) %!s(int64=1531721940)}', 1531740922);
+INSERT INTO `sys_logs` VALUES (37, 1, 1, '更新Item的ID:7|&{%!s(int=7) 顶点小说2 https://www.x23us.com/ https://www.x23us.com/html/68/68255/       https://www.x23us.com/html/68/68255/  https://www.x23us.com/html/68/68255/  https://www.x23us.com/modules/article/search.php?searchtype=keywords&searchkey={$KEYWORD} gbk (?U)<td class=\"odd\"><a href=\"(.*)\"><b style=\"color:red\">.*</b>.*</a></td> %!s(int=0) %!s(int64=1531741362) %!s(int64=1531721940)}', 1531741362);
 COMMIT;
 
 -- ----------------------------
