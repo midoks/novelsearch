@@ -13,6 +13,7 @@ type AppItem struct {
 	PathPageExp     string
 	PathRule        string
 	NameRule        string
+	DescRule        string
 	AuthorRule      string
 	CategoryRule    string
 	StatusRule      string

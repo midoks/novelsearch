@@ -82,6 +82,20 @@
             </div>
 
             <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">简介规则: </label>
+                <div class="col-sm-5">
+                    <textarea class="col-sm-12" rows="3" name="vars[desc_rule]">{{.data.DescRule}}</textarea>
+                </div>
+                <div class="col-sm-1">
+                    <div id="reg_desc_rule_test" class="btn btn-sm btn-primary">匹配</div>
+                </div>
+
+                <div class="col-sm-3">
+                    匹配作者规则
+                </div>
+            </div>
+
+            <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right" for="form-field-1">小说分类规则: </label>
                 <div class="col-sm-5">
                     <textarea class="col-sm-12"rows="3" name="vars[category_rule]">{{.data.CategoryRule}}</textarea>
@@ -366,6 +380,13 @@ $('#reg_path_rule_test').click(function(){
 $('#reg_name_rule_test').click(function(){
     var url = $(".form-group :input[name='vars[path_page_exp]']").val();
     var rule = $(".form-group :input[name='vars[name_rule]']").val();
+    vefiy_rule(url,rule);
+});
+
+//验证小说简介
+$('#reg_desc_rule_test').click(function(){
+    var url = $(".form-group :input[name='vars[path_page_exp]']").val();
+    var rule = $(".form-group :input[name='vars[desc_rule]']").val();
     vefiy_rule(url,rule);
 });
 
