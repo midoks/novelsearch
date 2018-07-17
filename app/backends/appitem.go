@@ -120,6 +120,7 @@ func (this *AppItemController) Add() {
 		data.AuthorRule = vars["author_rule"]
 		data.CategoryRule = vars["category_rule"]
 		data.StatusRule = vars["status_rule"]
+		data.StatusEndMark = vars["status_end_mark"]
 		data.ChapterPathRule = vars["chapter_path_rule"]
 		data.ChapterPathExp = vars["chapter_path_exp"]
 		data.ChapterListRule = vars["chapter_list_rule"]
@@ -127,6 +128,7 @@ func (this *AppItemController) Add() {
 		data.ContentRule = vars["content_rule"]
 		data.SosoExp = vars["soso_exp"]
 		data.SosoKwCharset = vars["soso_kw_charset"]
+		data.SosoPageArgs = vars["soso_page_args"]
 		data.SosoRule = vars["soso_rule"]
 
 		if id > 0 {

@@ -40,6 +40,8 @@
                 </div>
             </div>
 
+            <hr />
+
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right" for="form-field-1">目录页样本页: </label>
                 <div class="col-sm-6">
@@ -106,6 +108,15 @@
 
                 <div class="col-sm-3">
                     匹配状态规则
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
+                    小说完本标志: 
+                </label>
+                <div class="col-sm-1">
+                    <input  class="col-sm-12" type="text" name="vars[status_end_mark]" value='{{if eq "" .data.StatusEndMark}}完本{{else}}{{.data.StatusEndMark}}{{end}}'>
                 </div>
             </div>
 
@@ -178,7 +189,7 @@
                     章节内容规则
                 </div>
             </div>
-
+            <hr />
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
                     搜索页样本页: 
@@ -203,15 +214,22 @@
                     <input class="col-sm-12" type="text" name="vars[soso_exp_keyword]" value="凡人修仙传">
                 </div>
 
-                <label class="col-sm-1 control-label no-padding-right" for="form-field-1">
+                <label title="仅支持utf8和gbk编码" class="col-sm-1 control-label no-padding-right" for="form-field-1">
                     参数(编码): 
                 </label>
-                <div class="col-sm-2">
-                    <input class="col-sm-12" type="text" name="vars[soso_kw_charset]" value='{{if eq "" .data.SosoKwCharset}}utf8{{else}}{{.data.SosoKwCharset}}{{end}}'>
+                <div class="col-sm-1" >
+                    <input  class="col-sm-12" type="text" name="vars[soso_kw_charset]" value='{{if eq "" .data.SosoKwCharset}}utf8{{else}}{{.data.SosoKwCharset}}{{end}}'>
                 </div>
 
-                <div class="col-sm-4">
-                    仅支持utf8和gbk编码
+                <label class="col-sm-1 control-label no-padding-right" for="form-field-1">
+                    参数(分页): 
+                </label>
+                <div class="col-sm-1">
+                    <input  class="col-sm-12" type="text" name="vars[soso_page_args]" value='{{if eq "" .data.SosoPageArgs}}page{{else}}{{.data.SosoPageArgs}}{{end}}'>
+                </div>
+
+                <div class="col-sm-1">
+                    <input  class="col-sm-12" type="text" name="vars[soso_page_val]" value='1'>
                 </div>
             </div>
 
@@ -344,14 +362,21 @@ $('#reg_soso_rule_test').click(function(){
     var url = $(".form-group :input[name='vars[soso_exp]']").val();
     var keyword = $(".form-group :input[name='vars[soso_exp_keyword]']").val();
     var charset = $(".form-group :input[name='vars[soso_kw_charset]']").val();
-
+    var page = $(".form-group :input[name='vars[soso_page_args]']").val();
+    var page_val = $(".form-group :input[name='vars[soso_page_val]']").val();
     if ("gbk" == charset){
         keyword = $URL.encode(keyword);
     } else if ("utf8" == charset) {
         keyword = encodeURIComponent(keyword);
     }
+
     
     url = url.replace(/{\$KEYWORD}/,keyword);
+    if (url.indexOf('?') !== -1){
+        url += '&'+page+'='+page_val; 
+    } else {
+        url += '?'+page+'='+page_val; 
+    }
     console.log(url, keyword);
     var rule = $(".form-group :input[name='vars[soso_rule]']").val();
     vefiy_rule(url, rule, charset);

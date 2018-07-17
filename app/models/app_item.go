@@ -16,6 +16,7 @@ type AppItem struct {
 	AuthorRule      string
 	CategoryRule    string
 	StatusRule      string
+	StatusEndMark   string
 	ChapterPathRule string
 	ChapterPathExp  string
 	ChapterListRule string
@@ -23,6 +24,7 @@ type AppItem struct {
 	ContentRule     string
 	SosoExp         string
 	SosoKwCharset   string
+	SosoPageArgs    string
 	SosoRule        string
 	Status          int
 	UpdateTime      int64
