@@ -26,6 +26,10 @@ type AppItem struct {
 	SosoKwCharset   string
 	SosoPageArgs    string
 	SosoRule        string
+	SpiderExp       string
+	SpiderRange     string
+	SpiderRule      string
+	ErrMsg          string
 	Status          int
 	CronUpTime      int64
 	UpdateTime      int64

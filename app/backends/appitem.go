@@ -130,6 +130,9 @@ func (this *AppItemController) Add() {
 		data.SosoKwCharset = vars["soso_kw_charset"]
 		data.SosoPageArgs = vars["soso_page_args"]
 		data.SosoRule = vars["soso_rule"]
+		data.SpiderExp = vars["spider_exp"]
+		data.SpiderRange = vars["spider_range"]
+		data.SpiderRule = vars["spider_rule"]
 
 		if id > 0 {
 

@@ -250,6 +250,60 @@
                     匹配小说地址和名字
                 </div>
             </div>
+            <hr/>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
+                    爬取页样本页: 
+                </label>
+                <div class="col-sm-6">
+                    <input class="col-sm-12" type="text" name="vars[spider_exp]" value="{{.data.SpiderExp}}">
+                </div>
+               
+                <div class="col-sm-3">
+                    http://xx/{$RANGE}.html|
+                    {$RANGE}是一个数据范围,比如:(1,2).
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
+                    参数(range): 
+                </label>
+                <div class="col-sm-1">
+                    <input class="col-sm-12" type="text" name="vars[spider_range]" value='{{if eq "" .data.SpiderRange}}1,100{{else}}{{.data.SpiderRange}}{{end}}'>
+                </div>
+
+                <label class="col-sm-2 control-label no-padding-right" for="form-field-2">
+                    参数(开始页): 
+                </label>
+                <div class="col-sm-1">
+                    <input  class="col-sm-12" type="text" name="vars[spider_range_start]" value='1'>
+                </div>
+
+                <label title="仅支持utf8和gbk编码" class="col-sm-2 control-label no-padding-right" for="form-field-1">
+                    参数(公用上面编码)
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
+                    爬取匹配规则: 
+                </label>
+
+                <div class="col-sm-5">
+                    <textarea class="col-sm-12" rows="3" name="vars[spider_rule]">{{.data.SpiderRule}}</textarea>
+                </div>
+
+                <div class="col-sm-1">
+                    <div id="reg_spider_rule_test" class="btn btn-sm btn-primary">匹配</div>
+                </div>
+               
+                <div class="col-sm-3">
+                    匹配小说地址和名字
+                </div>
+            </div>
 
             <!-- <div class="space-4"></div> -->
             <input name="id" type="hidden" value="{{.id}}">
@@ -382,6 +436,18 @@ $('#reg_soso_rule_test').click(function(){
     vefiy_rule(url, rule, charset);
 });
 
+
+//验证soso内容
+$('#reg_spider_rule_test').click(function(){
+    var url = $(".form-group :input[name='vars[spider_exp]']").val();
+    var page_start = $(".form-group :input[name='vars[spider_range_start]']").val();
+    var charset = $(".form-group :input[name='vars[soso_kw_charset]']").val();
+    url = url.replace(/{\$RANGE}/,page_start);
+
+    console.log(url, page_start);
+    var rule = $(".form-group :input[name='vars[spider_rule]']").val();
+    vefiy_rule(url, rule, charset);
+});
 
 
 //end
