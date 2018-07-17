@@ -13,9 +13,11 @@ type AppItem struct {
 	PathPageExp     string
 	PathRule        string
 	NameRule        string
+	DescRule        string
 	AuthorRule      string
 	CategoryRule    string
 	StatusRule      string
+	StatusEndMark   string
 	ChapterPathRule string
 	ChapterPathExp  string
 	ChapterListRule string
@@ -23,8 +25,14 @@ type AppItem struct {
 	ContentRule     string
 	SosoExp         string
 	SosoKwCharset   string
+	SosoPageArgs    string
 	SosoRule        string
+	SpiderExp       string
+	SpiderRange     string
+	SpiderRule      string
+	ErrMsg          string
 	Status          int
+	CronUpTime      int64
 	UpdateTime      int64
 	CreateTime      int64
 }

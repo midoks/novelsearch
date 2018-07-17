@@ -8,8 +8,16 @@ import (
 
 type AppNovel struct {
 	Id         int
+	FromId     int
 	Name       string
 	Desc       string
+	Author     string
+	List       string
+	DClick     int
+	MClick     int
+	YClick     int
+	CClick     int
+	BookStatus string
 	Status     int
 	UpdateTime int64
 	CreateTime int64

@@ -117,9 +117,11 @@ func (this *AppItemController) Add() {
 		data.PathRule = vars["path_rule"]
 		data.PathPageExp = vars["path_page_exp"]
 		data.NameRule = vars["name_rule"]
+		data.DescRule = vars["desc_rule"]
 		data.AuthorRule = vars["author_rule"]
 		data.CategoryRule = vars["category_rule"]
 		data.StatusRule = vars["status_rule"]
+		data.StatusEndMark = vars["status_end_mark"]
 		data.ChapterPathRule = vars["chapter_path_rule"]
 		data.ChapterPathExp = vars["chapter_path_exp"]
 		data.ChapterListRule = vars["chapter_list_rule"]
@@ -127,7 +129,11 @@ func (this *AppItemController) Add() {
 		data.ContentRule = vars["content_rule"]
 		data.SosoExp = vars["soso_exp"]
 		data.SosoKwCharset = vars["soso_kw_charset"]
+		data.SosoPageArgs = vars["soso_page_args"]
 		data.SosoRule = vars["soso_rule"]
+		data.SpiderExp = vars["spider_exp"]
+		data.SpiderRange = vars["spider_range"]
+		data.SpiderRule = vars["spider_rule"]
 
 		if id > 0 {
 
@@ -224,7 +230,7 @@ func (this *AppItemController) Verify() {
 		if strings.EqualFold(charset, "gbk") {
 			content = libs.ConvertToString(content, "gbk", "utf8")
 		}
-
+		//fmt.Println(url, content)
 		valid := regexp.MustCompile(rule)
 		match := valid.FindAllStringSubmatch(content, -1)
 
