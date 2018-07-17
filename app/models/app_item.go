@@ -27,6 +27,7 @@ type AppItem struct {
 	SosoPageArgs    string
 	SosoRule        string
 	Status          int
+	CronUpTime      int64
 	UpdateTime      int64
 	CreateTime      int64
 }
