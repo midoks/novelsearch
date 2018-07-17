@@ -344,10 +344,13 @@ $('#reg_soso_rule_test').click(function(){
     var url = $(".form-group :input[name='vars[soso_exp]']").val();
     var keyword = $(".form-group :input[name='vars[soso_exp_keyword]']").val();
     var charset = $(".form-group :input[name='vars[soso_kw_charset]']").val();
-    // var keyword = $(".form-group :input[name='vars[soso_exp_keyword]']").val();
 
-
-    keyword = $URL.encode(keyword);
+    if ("gbk" == charset){
+        keyword = $URL.encode(keyword);
+    } else if ("utf8" == charset) {
+        keyword = encodeURIComponent(keyword);
+    }
+    
     url = url.replace(/{\$KEYWORD}/,keyword);
     console.log(url, keyword);
     var rule = $(".form-group :input[name='vars[soso_rule]']").val();
