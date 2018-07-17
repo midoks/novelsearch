@@ -1,7 +1,6 @@
 package models
 
 import (
-	"fmt"
 	"github.com/astaxie/beego/orm"
 	"time"
 )
@@ -52,7 +51,7 @@ func LogGetList(page, pageSize int, filters ...interface{}) ([]*SysLog, int64) {
 	return list, total
 }
 
-func LogAdd(uid int, utype int, msg string) {
+func LogAdd(uid int, utype int, msg string) (int64, error) {
 	o := orm.NewOrm()
 	var log SysLog
 
@@ -62,7 +61,5 @@ func LogAdd(uid int, utype int, msg string) {
 	log.AddTime = time.Now().Unix()
 
 	id, err := o.Insert(&log)
-	if err == nil {
-		fmt.Println("SysLog.LogAdd:", id)
-	}
+	return id, err
 }

@@ -229,7 +229,7 @@ func (this *AppItemController) Verify() {
 		if strings.EqualFold(charset, "gbk") {
 			content = libs.ConvertToString(content, "gbk", "utf8")
 		}
-		fmt.Println(url, content)
+		//fmt.Println(url, content)
 		valid := regexp.MustCompile(rule)
 		match := valid.FindAllStringSubmatch(content, -1)
 
