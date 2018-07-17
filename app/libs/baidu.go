@@ -2,7 +2,7 @@ package libs
 
 import (
 	"errors"
-	"fmt"
+	// "fmt"
 	"github.com/astaxie/beego/httplib"
 	"regexp"
 )
