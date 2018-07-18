@@ -33,13 +33,14 @@
                 <thead>
                 <tr>
                     <th class="col-sm-1">序号</th>
+                    <th class="col-sm-1">来源ID</th>
                     <th class="col-sm-1">小说名</th>
                     <th class="col-sm-1">小说作者</th>
                     <th class="col-sm-1">最新章节</th>
+                    <th class="col-sm-1">章节</th>
                     <th class="col-sm-2">更新时间</th>
-                    <th class="col-sm-2">创建时间</th>
-                    <th style="width: 80px;">状态</th>
-                    <th>操作</th>
+                    <th class="col-sm-1">状态</th>
+                    <th class="col-sm-2">操作</th>
                 </tr>
                 </thead>
 
@@ -48,9 +49,12 @@
                     {{range  $k, $v := .list}}
                     <tr>
                         <td>{{$v.Id}}</td>
-                        <td>{{$v.Name}}</td>
+                        <td>{{$v.FromId}}</td>
+                        <td><span class="btn btn-sm" data-rel="tooltip" title="{{$v.Desc}}" data-original-title="">{{$v.Name}}</span></td>
+                        <td>{{$v.Author}}</td>
+                        <td><a target="_blank" href="{{$v.LastChapterUrl}}" class="label label-success arrowed">{{$v.LastChapter}}</a></td>
+                        <td><a title="共{{$v.ChapterNum}}章节" data-rel="tooltip" value="{{$v.List}}" href="javascript:;" onclick="lookChapter(this);" class="btn btn-purple btn-sm">查看</a></td>
                         <td>{{$v.UpdateTime}}</td>
-                        <td>{{$v.CreateTime}}</td>
                         <td>
                             {{if eq 1 $v.Status}}
                             <a class="blue" href="javascript:req('/{{$.curController}}/lock?id={{$v.Id}}')">
@@ -61,7 +65,7 @@
                             {{end}}
                         </td>
                         <td>
-                            <div class="visible-md visible-lg action-buttons">
+                            <div class="action-buttons">
                                 <a class="blue" title="编辑" href="/{{$.curController}}/add?id={{$v.Id}}">
                                     <i class="fa fa-pencil bigger-130"></i>
                                 </a>
@@ -92,8 +96,109 @@
     </div>
 </div>
 
+
+<!-- 章节信息查看 -->
+<div id="dialog-message-chapter" class="hide">
+    <div class="col-sm-4 center">121</div>
+    <div class="col-sm-4 center">11</div>
+    <div class="col-sm-4 center">11</div>
+</div>
+<!-- 章节信息查看 -->
+<style type="text/css">
+
+.chapter_l{
+    border-top:1px dashed gray;
+    border-left:1px dashed gray;
+    overflow:hidden;
+    white-space: nowrap;
+    font-size:14px;
+    text-overflow: ellipsis;
+}
+
+.chapter_r{
+    border-top:1px dashed gray;
+    border-left:1px dashed gray;
+    border-right:1px dashed gray;
+    overflow:hidden;
+    white-space: nowrap;
+    font-size:14px;
+    text-overflow: ellipsis;
+}
+
+.chapter_3{
+    border-top:1px dashed gray;
+    border-left:1px dashed gray;
+    border-bottom:1px dashed gray;
+    overflow:hidden;
+    white-space: nowrap;
+    font-size:14px;
+    text-overflow: ellipsis;
+}
+
+.chapter_a{
+    border:1px dashed gray;
+    overflow:hidden;
+    white-space: nowrap;
+    font-size:14px;
+    text-overflow: ellipsis;
+}
+</style>
 <script>
-jQuery(function($) {
+function lookChapter(o){
+    //console.log($(o));
+    var value = $(o).attr('value');
+    var data = $.parseJSON(value);
+
+    var content = "";
+    var cols = 3;
+    var rowCount = Math.ceil(data.length/cols);
+    var modelNum = data.length%cols;
+    var rowLastNotClose = cols - modelNum;
+    // console.log(rowCount, data.length);
     
+    for (i in data){
+        var className = "chapter_l";
+        var n = parseInt(1 + parseInt(i));
+        var nowRowNum = Math.ceil(n/cols);
+        var colsModel = i%cols;
+
+        if ( colsModel == cols-1 && nowRowNum != rowCount - 1) {
+            className = "chapter_r";
+        } else if ( colsModel > modelNum-1 && nowRowNum == rowCount - 1 && colsModel != cols-1){
+            className = "chapter_3";
+        } else if (colsModel > modelNum-1 && nowRowNum == rowCount - 1 && colsModel == cols-1){
+            className = "chapter_a";
+        }else if (nowRowNum == rowCount && (i != data.length-1) ) {
+            className = "chapter_3";
+        } else if (i == data.length - 1 ){
+            className = "chapter_a";
+        }
+
+        content += '<div class="col-sm-4 center '+ className +'"><a data-rel="tooltip" target="_blank" href="'
+            + data[i]["url"]+ '" title="'
+            + data[i]["name"] 
+            +'">'
+            + data[i]["name"] 
+            +'</a></div>';
+        //console.log(i, data[i]);
+    }
+            
+    var dialog = $( "#dialog-message-chapter" ).removeClass('hide').dialog({
+        modal: true,
+        title: "<div class='widget-header widget-header-small'><h4 class='smaller'><i class='ace-icon fa fa-check'></i>章节查看</h4></div>",
+        title_html: true,
+        width:800,
+        height:500,
+        buttons: [{
+            text: "OK",
+            "class" : "btn btn-primary btn-minier",
+            click: function() {$( this ).dialog( "close" );} 
+        }]
+    }).html(content);
+
+    $('[data-rel=tooltip]').tooltip();
+}
+
+jQuery(function($) {
 });
 </script>

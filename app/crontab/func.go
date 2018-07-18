@@ -2,15 +2,16 @@ package crontab
 
 import (
 	"errors"
-	"fmt"
+	// "fmt"
 	// "github.com/astaxie/beego"
 	"encoding/json"
 	"github.com/astaxie/beego/httplib"
+	"github.com/astaxie/beego/logs"
 	"github.com/astaxie/beego/orm"
 	"github.com/midoks/novelsearch/app/libs"
 	"github.com/midoks/novelsearch/app/models"
-	// "log"
 	"regexp"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -66,12 +67,15 @@ func RegNovelList(content, reg string) ([]map[string]interface{}, error) {
 	return list, nil
 }
 
+//
+func CronPathInfoAndName(v *models.AppItem, name string, url string) {
+
+}
+
 //获取小说path页数据
 func CronPathInfo(v *models.AppItem, url string) {
 
-	//time.Sleep(time.Duration(1) * time.Second)
-	// fmt.Println(url)
-
+	logs.Info("采集开始:fromid:%d,%s", v.Id, url)
 	if content, err := getHttpData(url); err == nil {
 
 		var (
@@ -82,55 +86,70 @@ func CronPathInfo(v *models.AppItem, url string) {
 			desc            = ""
 			path            = ""
 			chapter_content = ""
-			// list            = ""
-			err = errors.New("new")
+			err             = errors.New("new")
 		)
-		//var chapter_list = make([]map[string]interface{})
 
 		name, err = RegNovelSigleInfo(content, v.NameRule)
 		if err != nil {
 			return
 		}
-		fmt.Println(name)
+		logs.Info("小说名:%s", name)
+		vId := strconv.Itoa(v.Id)
+		_, err = models.NovelGetByNameAndFromId(name, vId)
+		if err == nil {
+			logs.Info("已经采集了")
+			return
+		}
 
 		author, err = RegNovelSigleInfo(content, v.AuthorRule)
 		if err != nil {
 			return
 		}
-		fmt.Println(author)
+		logs.Info("作者:%s", author)
 
 		desc, err = RegNovelSigleInfo(content, v.DescRule)
 		if err != nil {
 			return
 		}
-		fmt.Println(desc)
+		logs.Info("描述:%s", desc)
 
 		status, err = RegNovelSigleInfo(content, v.StatusRule)
 		if err != nil {
 			return
 		}
-		fmt.Println(status)
+		logs.Info("状态:%s", status)
 
 		category, err = RegNovelSigleInfo(content, v.CategoryRule)
 		if err != nil {
 			return
 		}
-		fmt.Println(category)
+		logs.Info("分类:%s", category)
 
 		path, err = RegNovelSigleInfo(content, v.ChapterPathRule)
 		if err != nil {
 			return
 		}
-		fmt.Println(path)
+		logs.Info("小说目录页:%s", path)
 
 		var list = ""
+		var last_chapter = ""
+		var last_chapter_url = ""
+		var chapter_num = 0
 		if chapter_content, err = getHttpData(path); err == nil {
 			//fmt.Println(chapter_content)
-			chapter_list, err2 := RegNovelList(chapter_content, v.ChapterListRule)
-			if err2 != nil {
+			chapter_list, chapter_list_err := RegNovelList(chapter_content, v.ChapterListRule)
+			if chapter_list_err != nil {
 				return
 			}
-			if tmp_list, err3 := json.Marshal(chapter_list); err3 == nil {
+
+			chapter_num = len(chapter_list)
+			if chapter_num > 0 {
+				last_chapter = chapter_list[chapter_num-1]["name"].(string)
+				last_chapter_url = chapter_list[chapter_num-1]["url"].(string)
+			}
+
+			tmp_list, tmp_list_err := json.Marshal(chapter_list)
+			if tmp_list_err == nil {
 				list = string(tmp_list)
 			}
 		}
@@ -141,12 +160,17 @@ func CronPathInfo(v *models.AppItem, url string) {
 		data.Author = author
 		data.Desc = desc
 		data.List = list
+		data.ChapterNum = chapter_num
+		data.LastChapter = last_chapter
+		data.LastChapterUrl = last_chapter_url
 		data.BookStatus = status
 		data.UpdateTime = time.Now().Unix()
 		data.CreateTime = time.Now().Unix()
 		_, err = orm.NewOrm().Insert(data)
-		if err != nil {
-			fmt.Println(err)
+		if err == nil {
+			logs.Info("采集结束:%s", url)
+		} else {
+			logs.Warn("采集发生错误:%s", err)
 		}
 	}
 }
@@ -161,7 +185,7 @@ func PageIndexSpider() error {
 
 		if content, err := getHttpData(v.PageIndex); err == nil {
 			pathList := RegPathInfo(content, v.PathRule)
-			//fmt.Println(pathList, time.Now())
+			// fmt.Println(pathList, time.Now())
 			for _, url := range pathList {
 				CronPathInfo(v, url)
 				break

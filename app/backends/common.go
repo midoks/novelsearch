@@ -1,7 +1,7 @@
 package backends
 
 import (
-	// "fmt"
+	"fmt"
 	"github.com/astaxie/beego"
 	"github.com/midoks/novelsearch/app/libs"
 	"github.com/midoks/novelsearch/app/models"
@@ -41,8 +41,11 @@ func (this *CommonController) D(args ...string) {
 		for i := 0; i < len(args); i++ {
 			this.Ctx.WriteString(args[i])
 		}
-		//this.StopRun()
 	}
+}
+
+func (this *CommonController) P(args ...interface{}) {
+	fmt.Println(args...)
 }
 
 func (this *CommonController) initXSRF() {

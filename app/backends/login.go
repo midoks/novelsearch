@@ -11,7 +11,7 @@ import (
 )
 
 type LoginController struct {
-	CommonController
+	BaseController
 }
 
 func (this *LoginController) Index() {

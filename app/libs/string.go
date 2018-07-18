@@ -16,6 +16,10 @@ func Md5(buf []byte) string {
 	return fmt.Sprintf("%x", hash.Sum(nil))
 }
 
+func Md5str(s string) string {
+	return Md5([]byte(s))
+}
+
 func SizeFormat(size float64) string {
 	units := []string{"Byte", "KB", "MB", "GB", "TB"}
 	n := 0

@@ -42,11 +42,15 @@ func (this *AppNovelController) Index() {
 
 		row := make(map[string]interface{})
 
-		// row["Id"] = v.Id
-		// row["Name"] = v.Name
-		// row["Desc"] = v.Desc
-		// row["Type"] = v.Type
-
+		row["Id"] = v.Id
+		row["Name"] = v.Name
+		row["Desc"] = v.Desc
+		row["Author"] = v.Author
+		row["FromId"] = v.FromId
+		row["List"] = v.List
+		row["ChapterNum"] = v.ChapterNum
+		row["LastChapter"] = v.LastChapter
+		row["LastChapterUrl"] = v.LastChapterUrl
 		row["Status"] = v.Status
 		row["UpdateTime"] = beego.Date(time.Unix(v.UpdateTime, 0), "Y-m-d H:i:s")
 		row["CreateTime"] = beego.Date(time.Unix(v.CreateTime, 0), "Y-m-d H:i:s")

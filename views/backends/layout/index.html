@@ -14,6 +14,8 @@
 
     <!-- page specific plugin styles -->
     <link rel="stylesheet" href="/static/css/jquery-ui.css" />
+    <link rel="stylesheet" href="/static/css/jquery-ui.custom.css" />
+    <link rel="stylesheet" href="/static/css/jquery.gritter.css" />
 
     <!-- text fonts -->
     <link rel="stylesheet" href="/static/css/ace-fonts.css" />
@@ -58,12 +60,16 @@
 
     <!-- page specific plugin scripts -->
     <script src="/static/js/jquery-ui.js"></script>
+    <script src="/static/js/jquery-ui.custom.js"></script>
+    <script src="/static/js/jquery.ui.touch-punch.js"></script>
+    <script src="/static/js/bootbox.js"></script>
+    <script src="/static/js/jquery.easypiechart.js"></script>
+    <script src="/static/js/jquery.gritter.js"></script>
+    <script src="/static/js/spin.js"></script>
 
     <!--[if lte IE 8]>
     <script src="/static/js/excanvas.js"></script>
     <![endif]-->
-    <script src="/static/js/jquery-ui.custom.js"></script>
-    <script src="/static/js/jquery.ui.touch-punch.js"></script>
     <script src="/static/js/jquery.easypiechart.js"></script>
     <script src="/static/js/jquery.sparkline.js"></script>
     <script src="/static/js/flot/jquery.flot.js"></script>
@@ -178,6 +184,7 @@
 
 <!-- inline scripts related to this page -->
 <script type="text/javascript">
+
 jQuery(function($) {
     $.widget("ui.dialog", $.extend({}, $.ui.dialog.prototype, {
         _title: function(title) {
@@ -195,7 +202,29 @@ jQuery(function($) {
             $(this).toggleClass('glyphicon-minus');
         });
     });
+
+    $('[data-rel=tooltip]').tooltip();
+    $('[data-rel=popover]').popover({html:true});
+
+    //CSS3 spinner
+    $.fn.spin = function(opts) {
+        this.each(function() {
+          var $this = $(this),
+              data = $this.data();
+
+          if (data.spinner) {
+            data.spinner.stop();
+            delete data.spinner;
+          }
+          if (opts !== false) {
+            data.spinner = new Spinner($.extend({color: $this.css('color')}, opts)).spin(this);
+          }
+        });
+        return this;
+    };
+
 });
+
 </script>
 
 </body>
