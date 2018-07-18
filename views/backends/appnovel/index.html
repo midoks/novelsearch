@@ -144,6 +144,8 @@
 }
 </style>
 <script>
+
+var timeSign;
 function lookChapter(o){
     //console.log($(o));
     var value = $(o).attr('value');
@@ -154,25 +156,49 @@ function lookChapter(o){
     var rowCount = Math.ceil(data.length/cols);
     var modelNum = data.length%cols;
     var rowLastNotClose = cols - modelNum;
-    // console.log(rowCount, data.length);
     
+    var strArr = new Array();
+    var time_start =  (new Date()).getTime();
     for (i in data){
         var className = "chapter_l";
         var n = parseInt(1 + parseInt(i));
         var nowRowNum = Math.ceil(n/cols);
         var colsModel = i%cols;
 
-        if ( colsModel == cols-1 && nowRowNum != rowCount - 1) {
-            className = "chapter_r";
-        } else if ( colsModel > modelNum-1 && nowRowNum == rowCount - 1 && colsModel != cols-1){
-            className = "chapter_3";
-        } else if (colsModel > modelNum-1 && nowRowNum == rowCount - 1 && colsModel == cols-1){
-            className = "chapter_a";
-        }else if (nowRowNum == rowCount && (i != data.length-1) ) {
-            className = "chapter_3";
-        } else if (i == data.length - 1 ){
-            className = "chapter_a";
+        // console.log(colsModel, rowLastNotClose);
+        if (  modelNum != 0){
+            if ( colsModel == cols-1 && nowRowNum != rowCount - 1) {
+                className = "chapter_r";
+            } else if ( colsModel > modelNum-1 && nowRowNum == rowCount - 1 
+                && colsModel != cols-1){
+                className = "chapter_3";
+            } else if (colsModel > modelNum-1 && nowRowNum == rowCount - 1 
+                && colsModel == cols-1){
+                className = "chapter_a";
+            }else if (nowRowNum == rowCount && (i != data.length-1) ) {
+                className = "chapter_3";
+            } else if (i == data.length - 1 ){
+                className = "chapter_a";
+            }
+        } else {
+            if ( colsModel == cols-1 && (i != data.length-1)) {
+                className = "chapter_r";
+            } else if (nowRowNum == rowCount && (i != data.length-1)){
+                className = "chapter_3";
+            } else if (i == data.length - 1 ){
+                className = "chapter_a";
+            }
         }
+
+        // strArr.push('<div class="col-sm-4 center ');
+        // strArr.push(className);
+        // strArr.push('"><a data-rel="tooltip" target="_blank" href="');
+        // strArr.push(data[i]["url"]);
+        // strArr.push('" title="');
+        // strArr.push(data[i]["name"]);
+        // strArr.push('">');
+        // strArr.push(data[i]["name"] );
+        // strArr.push('</a></div>');
 
         content += '<div class="col-sm-4 center '+ className +'"><a data-rel="tooltip" target="_blank" href="'
             + data[i]["url"]+ '" title="'
@@ -180,10 +206,12 @@ function lookChapter(o){
             +'">'
             + data[i]["name"] 
             +'</a></div>';
-        //console.log(i, data[i]);
     }
-            
-    var dialog = $( "#dialog-message-chapter" ).removeClass('hide').dialog({
+    
+    // var content = strArr.join('');
+
+    clearTimeout(timeSign);
+    var dialog = $( "#dialog-message-chapter" ).html('').removeClass('hide').dialog({
         modal: true,
         title: "<div class='widget-header widget-header-small'><h4 class='smaller'><i class='ace-icon fa fa-check'></i>章节查看</h4></div>",
         title_html: true,
@@ -192,9 +220,21 @@ function lookChapter(o){
         buttons: [{
             text: "OK",
             "class" : "btn btn-primary btn-minier",
-            click: function() {$( this ).dialog( "close" );} 
+            click: function() {
+                $( this ).dialog( "close" );
+                timeSign = setTimeout(function(){
+                    $( "#dialog-message-chapter" ).html("");
+                },1);
+            } 
         }]
-    }).html(content);
+    }).html(content).on( "dialogclose", function( event, ui ) {
+        timeSign = setTimeout(function(){
+            $( "#dialog-message-chapter" ).html("");
+        },1);
+    } );
+
+    var time_end =  (new Date()).getTime();
+    console.log("时间消耗:",time_end-time_start);
 
     $('[data-rel=tooltip]').tooltip();
 }
