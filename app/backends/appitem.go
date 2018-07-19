@@ -48,6 +48,7 @@ func (this *AppItemController) Index() {
 		row["Id"] = v.Id
 		row["Name"] = v.Name
 		row["PageIndex"] = v.PageIndex
+		row["IsOfficial"] = v.IsOfficial
 		row["Status"] = v.Status
 		row["UpdateTime"] = beego.Date(time.Unix(v.UpdateTime, 0), "Y-m-d H:i:s")
 		row["CreateTime"] = beego.Date(time.Unix(v.CreateTime, 0), "Y-m-d H:i:s")
@@ -113,6 +114,7 @@ func (this *AppItemController) Add() {
 		this.Ctx.Input.Bind(&vars, "vars")
 
 		data.Name = vars["name"]
+		data.IsOfficial = vars["is_official"]
 		data.PageIndex = vars["page_index"]
 		data.PageCharset = vars["page_charset"]
 		data.PageIndexRule = vars["page_index_rule"]

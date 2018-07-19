@@ -32,16 +32,16 @@ func PageIndexSpider() error {
 			tmpRuleList := strings.Split(tmpRule, "|")
 
 			for i := 0; i < len(tmpRuleList); i++ {
-				logs.Info(tmpRuleList[i])
+				// logs.Info(tmpRuleList[i])
 
 				pathList, err := RegPathInfo(content, tmpRuleList[i])
 				if err == nil {
 					// logs.Info(pathList)
 					for _, val := range pathList {
 						if libs.IsUrlRe(val[1]) {
-							CronPathInfo(v, val[1], val[2])
+							go CronPathInfo(v, val[1], val[2])
 						} else {
-							CronPathInfo(v, val[2], val[1])
+							go CronPathInfo(v, val[2], val[1])
 						}
 					}
 				}

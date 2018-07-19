@@ -34,9 +34,9 @@
                 <tr>
                     <th class="col-sm-1">序号</th>
                     <th class="col-sm-1">网站名</th>
+                    <th class="col-sm-1">类型</th>
                     <th class="col-sm-1">网站地址</th>
-                    <th class="col-sm-2">更新时间</th>
-                    <th class="col-sm-2">创建时间</th>
+                    <th class="col-sm-1">时间</th>
                     <th style="width: 80px;">状态</th>
                     <th>
                         <a class="blue" title="新增项目" href="/{{adminPath}}/{{.curController}}/add">
@@ -52,9 +52,15 @@
                     <tr>
                         <td>{{$v.Id}}</td>
                         <td>{{$v.Name}}</td>
+                        <td>
+                            {{if eq "0" $v.IsOfficial}}<span class="badge badge-grey">民间</span>
+                            {{else}}<span class="badge badge-danger">官方</span>
+                            {{end}}
+                        </td>
                         <td>{{$v.PageIndex}}</td>
-                        <td>{{$v.UpdateTime}}</td>
-                        <td>{{$v.CreateTime}}</td>
+                        <td>
+                            <span class="btn btn-sm" data-rel="tooltip" title="更新时间:{{$v.CreateTime}}|创建时间:{{$v.UpdateTime}}">查看</span>
+                        </td>
                         <td>
                             {{if eq 1 $v.Status}}
                             <a class="blue" href="javascript:req('/{{adminPath}}/{{$.curController}}/lock?id={{$v.Id}}')">

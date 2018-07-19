@@ -9,6 +9,7 @@ import (
 type AppItem struct {
 	Id              int
 	Name            string
+	IsOfficial      string
 	PageCharset     string
 	PageIndex       string
 	PageIndexRule   string

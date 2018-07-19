@@ -1,7 +1,7 @@
 package models
 
 import (
-	// "fmt"
+	"fmt"
 	"github.com/astaxie/beego/orm"
 	"time"
 )
@@ -83,14 +83,29 @@ func NovelGetByName(name string) (*AppNovel, error) {
 	return u, nil
 }
 
-func NovelGetByNameAndFromId(name string, fromid string) (*AppNovel, error) {
-	// fmt.Println(name, "id:", fromid)
+func CronNovelGetByNameAndFromId(name string, fromid string) (*AppNovel, error) {
 	u := new(AppNovel)
 	err := orm.NewOrm().QueryTable(getTnByAppNovel()).Filter("name", name).Filter("fromId", fromid).One(u)
 	if err != nil {
 		return nil, err
 	}
 	return u, nil
+}
+
+func CronNovelGetByStatus(status string, interval int64) []*AppNovel {
+	list := make([]*AppNovel, 0)
+
+	now := time.Now().Unix()
+	intervalBefore := now - interval
+
+	fmt.Printf("%d", time.Now().Unix())
+	orm.NewOrm().QueryTable(getTnByAppNovel()).
+		Filter("status", status).
+		Filter("update_time__lt", intervalBefore).
+		OrderBy("-id").
+		Limit(10).
+		All(&list)
+	return list
 }
 
 func NovelDelById(id int) (int64, error) {

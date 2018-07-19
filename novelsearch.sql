@@ -11,7 +11,7 @@
  Target Server Version : 50634
  File Encoding         : 65001
 
- Date: 19/07/2018 19:06:52
+ Date: 20/07/2018 00:35:00
 */
 
 SET NAMES utf8mb4;
@@ -36,7 +36,8 @@ DROP TABLE IF EXISTS `app_item`;
 CREATE TABLE `app_item` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT '0' COMMENT '网站名',
-  `page_charset` varchar(5) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '搜索关键字编码',
+  `is_official` tinyint(4) DEFAULT '0' COMMENT '是否是官方网站(0,否;1,是)',
+  `page_charset` varchar(5) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT '' COMMENT '搜索关键字编码',
   `page_index` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT '' COMMENT '首页',
   `page_index_rule` text NOT NULL COMMENT '首页爬取规则',
   `path_rule` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '小说目录路径规则',
@@ -70,12 +71,12 @@ CREATE TABLE `app_item` (
 -- Records of app_item
 -- ----------------------------
 BEGIN;
-INSERT INTO `app_item` VALUES (2, '顶点小说', 'utf8', 'https://www.23us.so/', '<a href=\"(.*)\" target=\"_blank\"><img src=\".*\" alt=\"(.*)\"></a>\r\n<li><p>.*</p><a href=\"(.*)\" target=\"_blank\">(.*)</a></li>\r\n', 'https://www.23us.so/xiaoshuo/\\d*.html', 'https://www.23us.so/xiaoshuo/43.html', '<h1>(.*)全文阅读</h1>', '<p>&nbsp;&nbsp;&nbsp;&nbsp; (.*)<br />', '<th>小说作者</th>\\n<td>&nbsp;(.*)</td>', '<th>小说类别</th>\\n<td>&nbsp;<a href=\".*\">(.*)</a></td>', '<th>小说状态</th>\\n<td>&nbsp;(.*)</td>', '完本', '<a class=\"read\" href=\"(.*)\" title=\".*最新章节\">最新章节</a>', 'https://www.23us.so/files/article/html/0/43/index.html', '(?U)<td class=\"L\"><a href=\"(.*)\">(.*)</a></td>', 'https://www.23us.so/files/article/html/0/43/3615670.html', '(?iUs)<dd id=\"contents\">(.*)</dd>', 'http://zhannei.baidu.com/cse/search?s=8053757951023821596&q={$KEYWORD}', 'p', '(?Uis)<a cpos=\"title\" href=\"(.*)\" title=\"(.*)\" class=\"result-game-item-title-link\" target=\"_blank\">', 0, '', '1,100', '', '', 1, 1531992242, 1515035827);
-INSERT INTO `app_item` VALUES (6, '58小说网', 'gbk', 'http://www.5858xs.com/', '', '(?U)/(\\d*).(html)', 'http://www.5858xs.com/273530.html', '', '', '', '', '', '完本', '', 'http://www.5858xs.com/html/273/273530/index.html', '', 'http://www.5858xs.com/html/273/273530/40723761.html', '', '', 'page', '', 0, 'http://www.5858xs.com/xiaoshuosort0/0/{$RANGE}.html', '1,100', '(?U)<td class=odd><a href=(.*) target=_blank>.*</a></td>', '', 0, 1531811148, 1531706864);
-INSERT INTO `app_item` VALUES (7, 'x顶点小说', 'gbk', 'https://www.x23us.com/', '', '', 'https://www.x23us.com/html/68/68255/', '', '', '', '', '', '完本', '', 'https://www.x23us.com/html/68/68255/', '', 'https://www.x23us.com/html/68/68255/', '', 'https://www.x23us.com/modules/article/search.php?searchtype=keywords&searchkey={$KEYWORD}', 'page', '(?U)<td class=\"odd\"><a href=\"(.*)\"><b style=\"color:red\">.*</b>.*</a></td>', 0, '', '1,100', '', '', 0, 1531997154, 1531721940);
-INSERT INTO `app_item` VALUES (8, '顶点3', 'utf8', 'https://www.dingdiann.com/', '', '<a href=\"/(.*)/\">(.*)</a>', 'https://www.dingdiann.com/ddk65139/', '<h1>(.*)</h1>', '', '<p>作&nbsp;&nbsp;者：(.*)</p>', '<meta property=\"og:novel:category\" content=\"(.*)\"/>', '<meta property=\"og:novel:status\" content=\"(.*)\"/>\r\n', '', '<meta property=\"og:novel:read_url\" content=\"(.*)\"/>\r\n', 'https://www.dingdiann.com/ddk65139/', '<dd> <a style=\"\" href=\"(.*)\">(.*)</a></dd>', 'https://www.dingdiann.com/ddk65139/3436909.html', '(?Us)<div id=\"content\">(.*)</div>', 'https://www.dingdiann.com/searchbook.php?keyword={$KEYWORD}', '', '(?U)<a href=\"(.*)\" \\s* target=\"_blank\">.*</a>', 0, '', '', '', '', 0, 1531796369, 1531723140);
-INSERT INTO `app_item` VALUES (9, '起点', 'utf8', 'https://www.qidian.com/', '(?U)<h4><a href=\"//(.*)\" target=\"_blank\" data-eid=\".*\" data-bid=\".*\">(.*)</a></h4>\r\n(?U)<div class=\"name-box\"><a class=\"name\" href=\"//(.*)\" target=\"_blank\" data-eid=\".*\" data-bid=\".*\">(.*)</a><i class=\"total\">.*</i></div>', 'https://book.qidian.com/info/([\\d]*)', 'https://book.qidian.com/info/1010191960', '(?U)<meta name=\"keywords\" content=\"(.*)\">\r\n', '(?U)<div class=\"book-intro\">(.*)</div>', '(?U)<a class=\"writer\" href=\"//.*\" target=\"_blank\" data-eid=\".*\">(.*)</a>', '', '', '完本', '', '', '', '', '', 'https://www.qidian.com/search?kw={$KEYWORD}', 'page', '(?U)<h4><a href=\"//(.*)\" target=\"_blank\" data-eid=\".*\" data-bid=\".*\" data-algrid=\".*\">.*</a></h4>', 0, '', '1,100', '', '', 0, 1531997021, 1531804748);
-INSERT INTO `app_item` VALUES (10, '爱尚小说网', 'utf8', 'http://www.23xs.cc/', '', '', '', '', '', '', '', '', '完本', '', '', '', '', '', '', 'page', '', 0, '', '1,100', '', '', 0, 1531997113, 0);
+INSERT INTO `app_item` VALUES (2, '顶点小说', 0, 'utf8', 'https://www.23us.so/', '<a href=\"(.*)\" target=\"_blank\"><img src=\".*\" alt=\"(.*)\"></a>\r\n<li><p>.*</p><a href=\"(.*)\" target=\"_blank\">(.*)</a></li>\r\n', 'https://www.23us.so/xiaoshuo/\\d*.html', 'https://www.23us.so/xiaoshuo/43.html', '<h1>(.*)全文阅读</h1>', '<p>&nbsp;&nbsp;&nbsp;&nbsp; (.*)<br />', '<th>小说作者</th>\\n<td>&nbsp;(.*)</td>', '<th>小说类别</th>\\n<td>&nbsp;<a href=\".*\">(.*)</a></td>', '<th>小说状态</th>\\n<td>&nbsp;(.*)</td>', '完本', '<a class=\"read\" href=\"(.*)\" title=\".*最新章节\">最新章节</a>', 'https://www.23us.so/files/article/html/0/43/index.html', '(?U)<td class=\"L\"><a href=\"(.*)\">(.*)</a></td>', 'https://www.23us.so/files/article/html/0/43/3615670.html', '(?iUs)<dd id=\"contents\">(.*)</dd>', 'http://zhannei.baidu.com/cse/search?s=8053757951023821596&q={$KEYWORD}', 'p', '(?Uis)<a cpos=\"title\" href=\"(.*)\" title=\"(.*)\" class=\"result-game-item-title-link\" target=\"_blank\">', 0, '', '1,100', '', '', 1, 1531992242, 1515035827);
+INSERT INTO `app_item` VALUES (6, '58小说网', 0, 'gbk', 'http://www.5858xs.com/', '', '(?U)/(\\d*).(html)', 'http://www.5858xs.com/273530.html', '', '', '', '', '', '完本', '', 'http://www.5858xs.com/html/273/273530/index.html', '', 'http://www.5858xs.com/html/273/273530/40723761.html', '', '', 'page', '', 0, 'http://www.5858xs.com/xiaoshuosort0/0/{$RANGE}.html', '1,100', '(?U)<td class=odd><a href=(.*) target=_blank>.*</a></td>', '', 0, 1531811148, 1531706864);
+INSERT INTO `app_item` VALUES (7, 'x顶点小说', 0, 'gbk', 'https://www.x23us.com/', '', '', 'https://www.x23us.com/html/68/68255/', '', '', '', '', '', '完本', '', 'https://www.x23us.com/html/68/68255/', '', 'https://www.x23us.com/html/68/68255/', '', 'https://www.x23us.com/modules/article/search.php?searchtype=keywords&searchkey={$KEYWORD}', 'page', '(?U)<td class=\"odd\"><a href=\"(.*)\"><b style=\"color:red\">.*</b>.*</a></td>', 0, '', '1,100', '', '', 0, 1531997154, 1531721940);
+INSERT INTO `app_item` VALUES (8, '顶点3', 0, 'utf8', 'https://www.dingdiann.com/', '', '<a href=\"/(.*)/\">(.*)</a>', 'https://www.dingdiann.com/ddk65139/', '<h1>(.*)</h1>', '', '<p>作&nbsp;&nbsp;者：(.*)</p>', '<meta property=\"og:novel:category\" content=\"(.*)\"/>', '<meta property=\"og:novel:status\" content=\"(.*)\"/>\r\n', '', '<meta property=\"og:novel:read_url\" content=\"(.*)\"/>\r\n', 'https://www.dingdiann.com/ddk65139/', '<dd> <a style=\"\" href=\"(.*)\">(.*)</a></dd>', 'https://www.dingdiann.com/ddk65139/3436909.html', '(?Us)<div id=\"content\">(.*)</div>', 'https://www.dingdiann.com/searchbook.php?keyword={$KEYWORD}', '', '(?U)<a href=\"(.*)\" \\s* target=\"_blank\">.*</a>', 0, '', '', '', '', 0, 1531796369, 1531723140);
+INSERT INTO `app_item` VALUES (9, '起点', 1, 'utf8', 'https://www.qidian.com/', '(?U)<h4><a href=\"//(.*)\" target=\"_blank\" data-eid=\".*\" data-bid=\".*\">(.*)</a></h4>\r\n(?U)<div class=\"name-box\"><a class=\"name\" href=\"//(.*)\" target=\"_blank\" data-eid=\".*\" data-bid=\".*\">(.*)</a><i class=\"total\">.*</i></div>', 'https://book.qidian.com/info/([\\d]*)', 'https://book.qidian.com/info/1010191960', '(?U)<meta name=\"keywords\" content=\"(.*)\">\r\n', '(?U)<div class=\"book-intro\">(.*)</div>', '(?U)<a class=\"writer\" href=\"//.*\" target=\"_blank\" data-eid=\".*\">(.*)</a>', '', '', '完本', '', '', '', '', '', 'https://www.qidian.com/search?kw={$KEYWORD}', 'page', '(?U)<h4><a href=\"//(.*)\" target=\"_blank\" data-eid=\".*\" data-bid=\".*\" data-algrid=\".*\">.*</a></h4>', 0, '', '1,100', '', '', 0, 1532016069, 1531804748);
+INSERT INTO `app_item` VALUES (10, '爱尚小说网', 0, 'utf8', 'http://www.23xs.cc/', '', '', '', '', '', '', '', '', '完本', '', '', '', '', '', '', 'page', '', 0, '', '1,100', '', '', 0, 1531997113, 0);
 COMMIT;
 
 -- ----------------------------
@@ -92,15 +93,16 @@ CREATE TABLE `app_novel` (
   `chapter_num` int(11) DEFAULT NULL COMMENT '章节数量',
   `last_chapter` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '最新章节名',
   `last_chapter_url` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '最新章节url',
+  `y_click` int(11) DEFAULT '0' COMMENT '上一年记录',
   `d_click` int(11) DEFAULT '0' COMMENT '上一天记录',
   `m_click` int(11) DEFAULT '0' COMMENT '上一月记录',
-  `y_click` int(11) DEFAULT '0' COMMENT '上一年记录',
   `c_click` int(11) DEFAULT '0' COMMENT '总记录',
   `book_status` varchar(5) COLLATE utf8_unicode_ci DEFAULT '0' COMMENT '书的状态',
   `status` tinyint(4) DEFAULT '0' COMMENT '状态',
   `update_time` int(11) DEFAULT NULL,
   `create_time` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `t1` (`from_id`,`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------

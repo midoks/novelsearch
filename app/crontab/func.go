@@ -75,7 +75,7 @@ func CronPathInfo(v *models.AppItem, url, name string) {
 
 	logs.Info("采集开始:fromid:%d,%s:%s", v.Id, name, url)
 	vId := strconv.Itoa(v.Id)
-	_, errFind := models.NovelGetByNameAndFromId(name, vId)
+	_, errFind := models.CronNovelGetByNameAndFromId(name, vId)
 	if errFind == nil {
 		logs.Info("已经采集了")
 		return
@@ -99,7 +99,7 @@ func CronPathInfo(v *models.AppItem, url, name string) {
 			return
 		}
 		logs.Info("小说名:%s", name)
-		_, errFind := models.NovelGetByNameAndFromId(name, vId)
+		_, errFind := models.CronNovelGetByNameAndFromId(name, vId)
 		if errFind == nil {
 			logs.Info("已经采集了(名字不一致哟)")
 			return
