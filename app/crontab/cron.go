@@ -8,15 +8,14 @@ import (
 func Init() {
 	fmt.Println("crontab init")
 
-	PageIndexSpider()
-
 	//首页爬取数据
-	//tk1 := toolbox.NewTask("PageIndexSpider", "0/10 * * * * *", PageIndexSpider)
-	//toolbox.AddTask("PageIndexSpider", tk1)
+	// PageIndexSpider() //test
+	// tk1 := toolbox.NewTask("PageIndexSpider", "0/10 * * * * *", PageIndexSpider)
+	// toolbox.AddTask("PageIndexSpider", tk1)
 
-	// tkList := toolbox.NewTask("getNovel", "0/10 * * * * *", spiderNovelList)
-	// toolbox.AddTask("获取小说列表", tkList)
-
-	//手册
+	//对每一个小说进行检查更新
+	NovelIndexSpider()
+	// tk2 := toolbox.NewTask("NovelIndexSpider", "0/10 * * * * *", NovelIndexSpider)
+	// toolbox.AddTask("NovelIndexSpider", tk2)
 
 }

@@ -27,6 +27,16 @@
             </div>
 
             <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">页面编码:</label>
+                <div class="col-sm-6" >
+                    <input  class="col-sm-6" type="text" name="vars[page_charset]" value='{{if eq "" .data.PageCharset}}utf8{{else}}{{.data.PageCharset}}{{end}}'>
+                </div>
+                <div class="col-sm-3">
+                    网站编码(仅支持utf8和gbk编码)
+                </div>
+            </div>
+
+            <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right" for="form-field-1">首页规则: </label>
                 <div class="col-sm-5">
                     <textarea class="col-sm-12" rows="5" name="vars[page_index_rule]">{{.data.PageIndexRule}}</textarea>
@@ -238,13 +248,6 @@
                 </label>
                 <div class="col-sm-2">
                     <input class="col-sm-12" type="text" name="vars[soso_exp_keyword]" value="凡人修仙传">
-                </div>
-
-                <label title="仅支持utf8和gbk编码" class="col-sm-1 control-label no-padding-right" for="form-field-1">
-                    参数(编码): 
-                </label>
-                <div class="col-sm-1" >
-                    <input  class="col-sm-12" type="text" name="vars[soso_kw_charset]" value='{{if eq "" .data.SosoKwCharset}}utf8{{else}}{{.data.SosoKwCharset}}{{end}}'>
                 </div>
 
                 <label class="col-sm-1 control-label no-padding-right" for="form-field-1">
@@ -517,7 +520,7 @@ $('#reg_content_rule_test').click(function(){
 $('#reg_soso_rule_test').click(function(){
     var url = $(".form-group :input[name='vars[soso_exp]']").val();
     var keyword = $(".form-group :input[name='vars[soso_exp_keyword]']").val();
-    var charset = $(".form-group :input[name='vars[soso_kw_charset]']").val();
+    var charset = $(".form-group :input[name='vars[page_charset]']").val();
     var page = $(".form-group :input[name='vars[soso_page_args]']").val();
     var page_val = $(".form-group :input[name='vars[soso_page_val]']").val();
     if ("gbk" == charset){
@@ -543,7 +546,7 @@ $('#reg_soso_rule_test').click(function(){
 $('#reg_spider_rule_test').click(function(){
     var url = $(".form-group :input[name='vars[spider_exp]']").val();
     var page_start = $(".form-group :input[name='vars[spider_range_start]']").val();
-    var charset = $(".form-group :input[name='vars[soso_kw_charset]']").val();
+    var charset = $(".form-group :input[name='vars[page_charset]']").val();
     url = url.replace(/{\$RANGE}/,page_start);
 
     if (url == ""){

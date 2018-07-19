@@ -114,6 +114,7 @@ func (this *AppItemController) Add() {
 
 		data.Name = vars["name"]
 		data.PageIndex = vars["page_index"]
+		data.PageCharset = vars["page_charset"]
 		data.PageIndexRule = vars["page_index_rule"]
 		data.PathRule = vars["path_rule"]
 		data.PathPageExp = vars["path_page_exp"]
@@ -129,7 +130,6 @@ func (this *AppItemController) Add() {
 		data.ContentExp = vars["content_exp"]
 		data.ContentRule = vars["content_rule"]
 		data.SosoExp = vars["soso_exp"]
-		data.SosoKwCharset = vars["soso_kw_charset"]
 		data.SosoPageArgs = vars["soso_page_args"]
 		data.SosoRule = vars["soso_rule"]
 		data.SpiderExp = vars["spider_exp"]

@@ -2,13 +2,12 @@ package crontab
 
 import (
 	"errors"
-	// "fmt"
 	// "github.com/astaxie/beego"
 	"encoding/json"
 	"github.com/astaxie/beego/httplib"
 	"github.com/astaxie/beego/logs"
 	"github.com/astaxie/beego/orm"
-	"github.com/midoks/novelsearch/app/libs"
+	// "github.com/midoks/novelsearch/app/libs"
 	"github.com/midoks/novelsearch/app/models"
 	"regexp"
 	"strconv"
@@ -28,10 +27,14 @@ func getHttpData(url string) (string, error) {
 }
 
 //匹配路径
-func RegPathInfo(content, reg string) []string {
+func RegPathInfo(content, reg string) ([][]string, error) {
 	match_exp := regexp.MustCompile(reg)
-	list := libs.RemoveDuplicatesAndEmpty(match_exp.FindAllString(content, -1))
-	return list
+	list := match_exp.FindAllStringSubmatch(content, -1)
+
+	if len(list) == 0 {
+		return nil, errors.New("没有匹配到!")
+	}
+	return list, nil
 }
 
 //匹配当个信息
@@ -67,15 +70,17 @@ func RegNovelList(content, reg string) ([]map[string]interface{}, error) {
 	return list, nil
 }
 
-//
-func CronPathInfoAndName(v *models.AppItem, name string, url string) {
-
-}
-
 //获取小说path页数据
-func CronPathInfo(v *models.AppItem, url string) {
+func CronPathInfo(v *models.AppItem, url, name string) {
 
-	logs.Info("采集开始:fromid:%d,%s", v.Id, url)
+	logs.Info("采集开始:fromid:%d,%s:%s", v.Id, name, url)
+	vId := strconv.Itoa(v.Id)
+	_, errFind := models.NovelGetByNameAndFromId(name, vId)
+	if errFind == nil {
+		logs.Info("已经采集了")
+		return
+	}
+
 	if content, err := getHttpData(url); err == nil {
 
 		var (
@@ -94,10 +99,9 @@ func CronPathInfo(v *models.AppItem, url string) {
 			return
 		}
 		logs.Info("小说名:%s", name)
-		vId := strconv.Itoa(v.Id)
-		_, err = models.NovelGetByNameAndFromId(name, vId)
-		if err == nil {
-			logs.Info("已经采集了")
+		_, errFind := models.NovelGetByNameAndFromId(name, vId)
+		if errFind == nil {
+			logs.Info("已经采集了(名字不一致哟)")
 			return
 		}
 
@@ -118,6 +122,11 @@ func CronPathInfo(v *models.AppItem, url string) {
 			return
 		}
 		logs.Info("状态:%s", status)
+
+		//判断是否已经结束
+		if !strings.EqualFold(status, v.StatusEndMark) {
+			status = "连载中"
+		}
 
 		category, err = RegNovelSigleInfo(content, v.CategoryRule)
 		if err != nil {
@@ -173,25 +182,4 @@ func CronPathInfo(v *models.AppItem, url string) {
 			logs.Warn("采集发生错误:%s", err)
 		}
 	}
-}
-
-//首页爬取数据
-func PageIndexSpider() error {
-	filters := make([]interface{}, 0)
-	filters = append(filters, "status", "1")
-	list, _ := models.ItemGetList(1, 10, filters...)
-
-	for _, v := range list {
-
-		if content, err := getHttpData(v.PageIndex); err == nil {
-			pathList := RegPathInfo(content, v.PathRule)
-			// fmt.Println(pathList, time.Now())
-			for _, url := range pathList {
-				CronPathInfo(v, url)
-				break
-			}
-		}
-	}
-
-	return nil
 }

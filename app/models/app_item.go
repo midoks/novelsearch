@@ -9,6 +9,7 @@ import (
 type AppItem struct {
 	Id              int
 	Name            string
+	PageCharset     string
 	PageIndex       string
 	PageIndexRule   string
 	PathRule        string
@@ -25,7 +26,6 @@ type AppItem struct {
 	ContentExp      string
 	ContentRule     string
 	SosoExp         string
-	SosoKwCharset   string
 	SosoPageArgs    string
 	SosoRule        string
 	SpiderExp       string
