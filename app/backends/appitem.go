@@ -114,6 +114,7 @@ func (this *AppItemController) Add() {
 
 		data.Name = vars["name"]
 		data.PageIndex = vars["page_index"]
+		data.PageIndexRule = vars["page_index_rule"]
 		data.PathRule = vars["path_rule"]
 		data.PathPageExp = vars["path_page_exp"]
 		data.NameRule = vars["name_rule"]
@@ -210,6 +211,11 @@ func (this *AppItemController) Verify() {
 
 		if strings.EqualFold(url, "") {
 			this.retFail("url不能为空")
+			return
+		}
+
+		if !libs.IsUrlRe(url) {
+			this.retFail("url不合法!")
 			return
 		}
 

@@ -27,16 +27,28 @@
             </div>
 
             <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">首页规则: </label>
+                <div class="col-sm-5">
+                    <textarea class="col-sm-12" rows="5" name="vars[page_index_rule]">{{.data.PageIndexRule}}</textarea>
+                </div>
+                <div class="col-sm-1">
+                    <div id="reg_page_index_rule_test" class="btn btn-sm btn-primary">匹配</div>
+                </div>
+
+                <div class="col-sm-3">首页规则类型多,要支持多个规则, 用户"|"或回车分割<br> 必须匹配到地址和名字</div>
+            </div>
+
+            <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right" for="form-field-1">目录页规则: </label>
                 <div class="col-sm-5">
-                    <textarea class="col-sm-12" rows="3" name="vars[path_rule]">{{.data.PathRule}}</textarea>
+                    <textarea class="col-sm-12" rows="1" name="vars[path_rule]">{{.data.PathRule}}</textarea>
                 </div>
                 <div class="col-sm-1">
                     <div id="reg_path_rule_test" class="btn btn-sm btn-primary">匹配</div>
                 </div>
 
                 <div class="col-sm-3">
-                    首页上匹配章节首页规则
+                    首页上匹配章节首页规则,<br/> 例如:https://xx.com/(\d*).(html)
                 </div>
             </div>
 
@@ -342,32 +354,101 @@
 </div>
 <script src="/static/js/gbk/gbk.js"></script>
 
+<style type="text/css">
+.noticeFontSize{
+    font-size: 5px;
+}
+</style>
+
 <script>
+
+function HtmlEncode(input) { 
+    var converter = document.createElement("DIV"); 
+    converter.innerText = input; 
+    var output = converter.innerHTML; 
+    converter = null; 
+    return output; 
+}
+
+function sleep(numberMillis) { 
+    var now = new Date(); 
+    var exitTime = now.getTime() + numberMillis; 
+    while (true) { 
+        now = new Date(); 
+        if (now.getTime() > exitTime) 
+            return; 
+    } 
+}
+
 jQuery(function($) {
 //start
 
 function vefiy_rule(url, rule, charset){
     $.post("/{{adminPath}}/{{$.curController}}/verify", { url: url, rule: rule ,charset: charset}, function(data){
+        var content = "";
         if (data['code'] < 0){
-            alert(data['msg']);
+            content = data['msg'];
         } else {
+            
             if (data['data'][0]){
-                var content = ""
-                for (j in data['data']) {
+
+                if(data['data'][0].length>1){
+                    //页面上只显示一条数据
                     var t = "";
-                    for (i in data['data'][j]) {
-                        t += data['data'][j][i] + "\n";
+                    for (i in data['data'][0][0]) {
+                        t += data['data'][0][0][i] + ",\n";
+                        console.log(t);
                     }
                     content += t;
+                    content += "---------------------------------\n";
+                    content += "页面上只显示一条数据,更多看console.log";
+                    console.log(url,rule,data["data"][0]);
+                } else {
+                    for (j in data['data']) {
+                        var t = "";
+                        for (i in data['data'][j]) {
+                            t += data['data'][j][i] + "\n";
+                        }
+                        content += t;
+                    } 
                 }
-                alert(content);
             } else {
-                alert("没有匹配到!");
+                content = "没有匹配到!";
             }
-            console.log(data);
         }
+        content = "规则:"+ rule + "\n返回匹配数据:\n" + content;
+        content = HtmlEncode(content);
+        $.gritter.add({
+            title: "规则匹配",
+            text: content,
+            class_name: 'gritter-info gritter-light noticeFontSize'
+        });
     }, "json");
 }
+
+
+//验证目录页面
+$('#reg_page_index_rule_test').click(function(){
+    var url = $(".form-group :input[name='vars[page_index]']").val();
+    var rule = $(".form-group :input[name='vars[page_index_rule]']").val();
+
+    rule = rule.trim();
+    rule = rule.replace("\n", "|");
+    rule = rule.replace("\r\n", "|");
+
+    rule_list = rule.split("|");
+    for(i in rule_list) {
+        if (i>0){
+            var tmp_rule = rule_list[i];
+            setTimeout(function(){
+                vefiy_rule(url,tmp_rule);
+            },i*1000); 
+        } else {
+            vefiy_rule(url,rule_list[i]);
+        }
+    }
+});
+
 
 //验证目录页面
 $('#reg_path_rule_test').click(function(){
@@ -465,17 +546,15 @@ $('#reg_spider_rule_test').click(function(){
     var charset = $(".form-group :input[name='vars[soso_kw_charset]']").val();
     url = url.replace(/{\$RANGE}/,page_start);
 
-    console.log(url, page_start);
+    if (url == ""){
+        alert("爬取页样本页,没有填写!");
+    }
+
+    // console.log(url, page_start);
     var rule = $(".form-group :input[name='vars[spider_rule]']").val();
     vefiy_rule(url, rule, charset);
 });
 
-
-$.gritter.add({
-    title: '测试',
-    text: '测试内容',
-    class_name: 'gritter-info gritter-light'
-});
 //end
 })
 </script>

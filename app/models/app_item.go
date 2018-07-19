@@ -10,8 +10,9 @@ type AppItem struct {
 	Id              int
 	Name            string
 	PageIndex       string
-	PathPageExp     string
+	PageIndexRule   string
 	PathRule        string
+	PathPageExp     string
 	NameRule        string
 	DescRule        string
 	AuthorRule      string
