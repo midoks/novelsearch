@@ -1,7 +1,7 @@
 package models
 
 import (
-	"fmt"
+	// "fmt"
 	"github.com/astaxie/beego/orm"
 	"time"
 )
@@ -9,6 +9,7 @@ import (
 type AppNovel struct {
 	Id             int
 	FromId         int
+	Url            string
 	Name           string
 	Desc           string
 	Author         string
@@ -20,7 +21,7 @@ type AppNovel struct {
 	MClick         int
 	YClick         int
 	CClick         int
-	BookStatus     string
+	BookStatus     int
 	Status         int
 	UpdateTime     int64
 	CreateTime     int64
@@ -92,18 +93,16 @@ func CronNovelGetByNameAndFromId(name string, fromid string) (*AppNovel, error) 
 	return u, nil
 }
 
-func CronNovelGetByStatus(status string, interval int64) []*AppNovel {
+func CronNovelGetByStatus(status string, interval int64, num int) []*AppNovel {
 	list := make([]*AppNovel, 0)
 
 	now := time.Now().Unix()
 	intervalBefore := now - interval
-
-	fmt.Printf("%d", time.Now().Unix())
 	orm.NewOrm().QueryTable(getTnByAppNovel()).
 		Filter("status", status).
 		Filter("update_time__lt", intervalBefore).
 		OrderBy("-id").
-		Limit(10).
+		Limit(num).
 		All(&list)
 	return list
 }
