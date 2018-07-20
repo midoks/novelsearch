@@ -26,12 +26,12 @@ type AppNovel struct {
 	CreateTime     int64
 }
 
-func (u *AppNovel) TableName() string {
+func getTnByAppNovel() string {
 	return TableName("novel")
 }
 
-func getTnByAppNovel() string {
-	return TableName("novel")
+func (u *AppNovel) TableName() string {
+	return getTnByAppNovel()
 }
 
 func (u *AppNovel) Update(fields ...string) error {

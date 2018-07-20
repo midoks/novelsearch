@@ -20,8 +20,12 @@ type SysUser struct {
 	CreateTime int64
 }
 
-func (u *SysUser) TableName() string {
+func getTnByUser() string {
 	return "sys_user"
+}
+
+func (u *SysUser) TableName() string {
+	return getTnByUser()
 }
 
 func (u *SysUser) Update(fields ...string) error {
@@ -37,7 +41,7 @@ func UserGetList(page, pageSize int, filters ...interface{}) ([]*SysUser, int64)
 
 	list := make([]*SysUser, 0)
 
-	query := orm.NewOrm().QueryTable("sys_user")
+	query := orm.NewOrm().QueryTable(getTnByUser())
 
 	if len(filters) > 0 {
 		l := len(filters)
@@ -56,7 +60,7 @@ func UserGetList(page, pageSize int, filters ...interface{}) ([]*SysUser, int64)
 func UserGetById(id int) (*SysUser, error) {
 
 	u := new(SysUser)
-	err := orm.NewOrm().QueryTable("sys_user").Filter("id", id).One(u)
+	err := orm.NewOrm().QueryTable(getTnByUser()).Filter("id", id).One(u)
 	if err != nil {
 		return nil, err
 	}
@@ -66,15 +70,13 @@ func UserGetById(id int) (*SysUser, error) {
 func UserGetByName(username string) (*SysUser, error) {
 
 	u := new(SysUser)
-	err := orm.NewOrm().QueryTable("sys_user").Filter("username", username).One(u)
+	err := orm.NewOrm().QueryTable(getTnByUser()).Filter("username", username).One(u)
 	if err != nil {
 		return nil, err
 	}
 	return u, nil
 }
 
-func UserDelById(id int) (int64,error) {
+func UserDelById(id int) (int64, error) {
 	return orm.NewOrm().Delete(&SysUser{Id: id})
 }
-
-

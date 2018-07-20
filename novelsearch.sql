@@ -11,7 +11,7 @@
  Target Server Version : 50634
  File Encoding         : 65001
 
- Date: 20/07/2018 00:35:00
+ Date: 20/07/2018 14:14:36
 */
 
 SET NAMES utf8mb4;
@@ -125,7 +125,7 @@ CREATE TABLE `sys_func` (
   `create_time` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `pid` (`pid`)
-) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8 COMMENT='权限列表';
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8 COMMENT='权限列表';
 
 -- ----------------------------
 -- Records of sys_func
@@ -148,7 +148,7 @@ INSERT INTO `sys_func` VALUES (14, '锁定角色', 1, 'sysrole', 'lock', 1, 0, '
 INSERT INTO `sys_func` VALUES (15, '功能设置菜单', 1, 'sysfunc', 'setmenu', 1, 0, '', '功能设置菜单', 9, 1, 1489429439, 1489429439);
 INSERT INTO `sys_func` VALUES (16, '功能升降序', 1, 'sysfunc', 'sort', 1, 0, '', '功能升降序', 5, 1, 1489429439, 1489429439);
 INSERT INTO `sys_func` VALUES (17, '日志管理', 1, 'syslog', 'index', 1, 1, '', '日志管理', 99, 1, 1489429439, 1489429439);
-INSERT INTO `sys_func` VALUES (18, '小说网站管理', 0, 'appitem', 'index', 0, 1, 'glyphicon glyphicon-th-large', '项目管理 - 列表', 0, 1, 1531385434, 1514871452);
+INSERT INTO `sys_func` VALUES (18, '小说网站管理', 0, 'appitem', 'index', 0, 1, 'glyphicon glyphicon-th-large', '项目管理 - 列表', 3, 1, 1531385434, 1514871452);
 INSERT INTO `sys_func` VALUES (19, '列表', 18, 'appitem', 'index', 0, 1, '', '网站列表', 0, 1, 1531393703, 1514871585);
 INSERT INTO `sys_func` VALUES (20, '添加', 18, 'appitem', 'add', 0, 1, '', '添加网站', 0, 1, 1531393758, 1515033366);
 INSERT INTO `sys_func` VALUES (27, '日志管理', 0, 'appdebug', '', 0, 1, 'fa fa-bell', '异常日志管理', 4, 1, 1531449077, 1515041927);
@@ -156,9 +156,12 @@ INSERT INTO `sys_func` VALUES (28, '列表', 27, 'appdebug', 'index', 0, 1, '', 
 INSERT INTO `sys_func` VALUES (29, '搜索', 18, 'appitem', 'searchAjax', 0, -1, '', '', 0, 1, 1531393726, 1515382967);
 INSERT INTO `sys_func` VALUES (32, '锁定', 18, 'appitem', 'lock', 0, -1, '', '', 0, 1, 1531393687, 1515400747);
 INSERT INTO `sys_func` VALUES (33, '删除', 18, 'appitem', 'del', 0, -1, '', '', 0, 1, 1531393695, 1515400760);
-INSERT INTO `sys_func` VALUES (38, '小说管理', 0, 'appnovel', '', 0, 1, 'glyphicon glyphicon-file', '小说列表', 0, 1, 1531394032, 1531393922);
+INSERT INTO `sys_func` VALUES (38, '小说管理', 0, 'appnovel', '', 0, 1, 'glyphicon glyphicon-file', '小说列表', 2, 1, 1531394032, 1531393922);
 INSERT INTO `sys_func` VALUES (39, '列表', 38, 'appnovel', 'index', 0, 1, '', '小说列表', 0, 1, 1531394020, 1531393957);
 INSERT INTO `sys_func` VALUES (40, '验证功能', 18, 'appitem', 'verify', 0, 1, '', '验证功能', 0, 1, 1531710514, 1531710379);
+INSERT INTO `sys_func` VALUES (41, '基本设置', 0, 'syssetting', '', 0, 1, 'glyphicon glyphicon-edit', '基本设置', 1, 1, 1532057224, 1532056813);
+INSERT INTO `sys_func` VALUES (42, '基本信息', 41, 'syssetting', 'index', 0, 1, '', '', 0, 1, 1532057439, 1532057071);
+INSERT INTO `sys_func` VALUES (43, '邮件设置', 41, 'syssetting', 'mail', 0, 1, '', '', 0, 1, 1532065874, 1532065874);
 COMMIT;
 
 -- ----------------------------
@@ -173,6 +176,36 @@ CREATE TABLE `sys_logs` (
   `add_time` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
+
+-- ----------------------------
+-- Table structure for sys_option
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_option`;
+CREATE TABLE `sys_option` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '配置名字',
+  `value` text COLLATE utf8_unicode_ci COMMENT '值',
+  `update_time` int(11) DEFAULT NULL,
+  `create_time` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+-- Records of sys_option
+-- ----------------------------
+BEGIN;
+INSERT INTO `sys_option` VALUES (1, 'web_name', '小说搜索11', 1532067240, 1532064476);
+INSERT INTO `sys_option` VALUES (2, 'web_keyword', '小说关键字1', 1532067240, 1532065440);
+INSERT INTO `sys_option` VALUES (3, 'web_desc', '小说描述1', 1532067240, 1532065440);
+INSERT INTO `sys_option` VALUES (4, 'web_stat', '小说统计代码11', 1532067240, 1532065440);
+INSERT INTO `sys_option` VALUES (5, 'web_notice', '', 1532067240, 1532065440);
+INSERT INTO `sys_option` VALUES (6, 'mail_host', 'smtp.163.com', 1532066949, 1532066709);
+INSERT INTO `sys_option` VALUES (7, 'mail_port', '25', 1532066949, 1532066709);
+INSERT INTO `sys_option` VALUES (8, 'mail_user', 'admin', 1532066950, 1532066709);
+INSERT INTO `sys_option` VALUES (9, 'mail_pwd', '123123', 1532066950, 1532066709);
+INSERT INTO `sys_option` VALUES (10, 'web_notice_mail', 'midoks@163.com', 1532067240, 1532067228);
+COMMIT;
 
 -- ----------------------------
 -- Table structure for sys_role
@@ -193,7 +226,7 @@ CREATE TABLE `sys_role` (
 -- Records of sys_role
 -- ----------------------------
 BEGIN;
-INSERT INTO `sys_role` VALUES (1, '管理员', '系统总管理员', '2,6,7,8,9,16,3,4,5,10,15,11,12,13,14,17,39,19,20,29,32,33,28', 1, 1531394056, 1489429439);
+INSERT INTO `sys_role` VALUES (1, '管理员', '系统总管理员', '2,6,7,8,9,16,3,4,5,10,15,11,12,13,14,17,42,43,39,19,20,29,32,33,28', 1, 1532065994, 1489429439);
 INSERT INTO `sys_role` VALUES (2, '编辑', '普通编辑人员', '2,14,15,17,18,23,32', 1, 1489429439, 1489429439);
 COMMIT;
 

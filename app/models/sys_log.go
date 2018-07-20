@@ -19,8 +19,12 @@ type SysLog struct {
 	AddTime int64
 }
 
-func (u *SysLog) TableName() string {
+func getTnByLogs() string {
 	return "sys_logs"
+}
+
+func (u *SysLog) TableName() string {
+	return getTnByLogs()
 }
 
 func (u *SysLog) Update(fields ...string) error {
@@ -35,7 +39,7 @@ func LogGetList(page, pageSize int, filters ...interface{}) ([]*SysLog, int64) {
 
 	list := make([]*SysLog, 0)
 
-	query := orm.NewOrm().QueryTable("sys_logs")
+	query := orm.NewOrm().QueryTable(getTnByLogs())
 
 	if len(filters) > 0 {
 		l := len(filters)

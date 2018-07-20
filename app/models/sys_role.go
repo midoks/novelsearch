@@ -14,8 +14,12 @@ type SysRole struct {
 	CreateTime int64
 }
 
-func (u *SysRole) TableName() string {
+func getTnByRole() string {
 	return "sys_role"
+}
+
+func (u *SysRole) TableName() string {
+	return getTnByRole()
 }
 
 func (u *SysRole) Update(fields ...string) error {
@@ -29,7 +33,7 @@ func RoleGetAll() ([]*SysRole, int64) {
 
 	list := make([]*SysRole, 0)
 
-	query := orm.NewOrm().QueryTable("sys_role")
+	query := orm.NewOrm().QueryTable(getTnByRole())
 	total, _ := query.Count()
 	query.OrderBy("-id").All(&list)
 
@@ -39,7 +43,7 @@ func RoleGetAll() ([]*SysRole, int64) {
 func RoleGetById(id int) (*SysRole, error) {
 
 	u := new(SysRole)
-	err := orm.NewOrm().QueryTable("sys_role").Filter("id", id).One(u)
+	err := orm.NewOrm().QueryTable(getTnByRole()).Filter("id", id).One(u)
 	if err != nil {
 		return nil, err
 	}
@@ -51,7 +55,7 @@ func RoleGetList(page, pageSize int, filters ...interface{}) ([]*SysRole, int64)
 
 	list := make([]*SysRole, 0)
 
-	query := orm.NewOrm().QueryTable("sys_role")
+	query := orm.NewOrm().QueryTable(getTnByRole())
 
 	if len(filters) > 0 {
 		l := len(filters)
@@ -67,6 +71,6 @@ func RoleGetList(page, pageSize int, filters ...interface{}) ([]*SysRole, int64)
 	return list, total
 }
 
-func RoleDelById(id int) (int64,error) {
+func RoleDelById(id int) (int64, error) {
 	return orm.NewOrm().Delete(&SysRole{Id: id})
 }

@@ -36,6 +36,7 @@ func init() {
 	beego.AddNamespace(beego.NewNamespace(admin_path, beego.NSAutoRouter(&backends.SysFuncController{})))
 	beego.AddNamespace(beego.NewNamespace(admin_path, beego.NSAutoRouter(&backends.SysRoleController{})))
 	beego.AddNamespace(beego.NewNamespace(admin_path, beego.NSAutoRouter(&backends.SysLogController{})))
+	beego.AddNamespace(beego.NewNamespace(admin_path, beego.NSAutoRouter(&backends.SysSettingController{})))
 
 	//后台功能开发
 	beego.AddNamespace(beego.NewNamespace(admin_path, beego.NSAutoRouter(&backends.AppItemController{})))

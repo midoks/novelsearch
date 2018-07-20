@@ -39,8 +39,12 @@ type AppItem struct {
 	CreateTime      int64
 }
 
-func (u *AppItem) TableName() string {
+func getTnByAppItem() string {
 	return TableName("item")
+}
+
+func (u *AppItem) TableName() string {
+	return getTnByAppItem()
 }
 
 func (u *AppItem) Update(fields ...string) error {
@@ -56,7 +60,7 @@ func ItemGetList(page, pageSize int, filters ...interface{}) ([]*AppItem, int64)
 
 	list := make([]*AppItem, 0)
 
-	query := orm.NewOrm().QueryTable(TableName("item"))
+	query := orm.NewOrm().QueryTable(getTnByAppItem())
 
 	if len(filters) > 0 {
 		l := len(filters)
@@ -75,7 +79,7 @@ func ItemGetList(page, pageSize int, filters ...interface{}) ([]*AppItem, int64)
 func ItemGetById(id int) (*AppItem, error) {
 
 	u := new(AppItem)
-	err := orm.NewOrm().QueryTable(TableName("item")).Filter("id", id).One(u)
+	err := orm.NewOrm().QueryTable(getTnByAppItem()).Filter("id", id).One(u)
 	if err != nil {
 		return nil, err
 	}
@@ -85,7 +89,7 @@ func ItemGetById(id int) (*AppItem, error) {
 func ItemGetByName(name string) (*AppItem, error) {
 
 	u := new(AppItem)
-	err := orm.NewOrm().QueryTable(TableName("item")).Filter("name", name).One(u)
+	err := orm.NewOrm().QueryTable(getTnByAppItem()).Filter("name", name).One(u)
 	if err != nil {
 		return nil, err
 	}

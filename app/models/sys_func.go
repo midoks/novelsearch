@@ -30,8 +30,12 @@ type SysFuncNav struct {
 	ListCount int
 }
 
-func (u *SysFunc) TableName() string {
+func getTnByFunc() string {
 	return "sys_func"
+}
+
+func (u *SysFunc) TableName() string {
+	return getTnByFunc()
 }
 
 func (u *SysFunc) Update(fields ...string) error {

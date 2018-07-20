@@ -13,8 +13,12 @@ type AppDebug struct {
 	AddTime int64
 }
 
-func (u *AppDebug) TableName() string {
+func getTnByAppDebug() string {
 	return TableName("debug")
+}
+
+func (u *AppDebug) TableName() string {
+	return getTnByAppDebug()
 }
 
 func (u *AppDebug) Update(fields ...string) error {
@@ -29,7 +33,7 @@ func DebugGetList(page, pageSize int, filters ...interface{}) ([]*AppDebug, int6
 
 	list := make([]*AppDebug, 0)
 
-	query := orm.NewOrm().QueryTable(TableName("debug"))
+	query := orm.NewOrm().QueryTable(getTnByAppDebug())
 
 	if len(filters) > 0 {
 		l := len(filters)
