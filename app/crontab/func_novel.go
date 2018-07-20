@@ -93,7 +93,7 @@ func NovelIndexSpider() error {
 
 	logs.Info("小说开始更新---start!")
 
-	list := models.CronNovelGetByStatus("0", 6, 1)
+	list := models.CronNovelGetByStatus("0", 60*60*1, 1)
 	if len(list) == 0 {
 		logs.Info("小说开始更新(无更新数据)---end!")
 		return nil

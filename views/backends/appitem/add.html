@@ -566,7 +566,7 @@ $('#reg_spider_rule_test').click(function(){
         alert("爬取页样本页,没有填写!");
     }
 
-    // console.log(url, page_start);
+    console.log(url, page_start);
     var rule = $(".form-group :input[name='vars[spider_rule]']").val();
     vefiy_rule(url, rule, charset);
 });

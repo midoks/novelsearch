@@ -5,6 +5,8 @@ import (
 	"github.com/astaxie/beego/toolbox"
 )
 
+//	 minute hour day month week   command
+//顺序：分    时   日   月    周
 func Init() {
 	fmt.Println("crontab init")
 
@@ -17,7 +19,7 @@ func Init() {
 
 	//对每一个小说进行检查更新
 	NovelIndexSpider()
-	tk2 := toolbox.NewTask("NovelIndexSpider", "0/3 * * * * *", NovelIndexSpider)
+	tk2 := toolbox.NewTask("NovelIndexSpider", "0/30 * * * * *", NovelIndexSpider)
 	toolbox.AddTask("NovelIndexSpider", tk2)
 
 }

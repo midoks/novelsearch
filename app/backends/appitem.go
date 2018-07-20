@@ -238,10 +238,10 @@ func (this *AppItemController) Verify() {
 		if strings.EqualFold(charset, "gbk") {
 			content = libs.ConvertToString(content, "gbk", "utf8")
 		}
-		//fmt.Println(url, content)
+
 		valid := regexp.MustCompile(rule)
 		match := valid.FindAllStringSubmatch(content, -1)
-
+		fmt.Println(url, content, match)
 		this.retOk("验证成功", match)
 	} else {
 		this.retFail("非法请求")
