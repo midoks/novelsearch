@@ -137,6 +137,11 @@ func PageIndexSpider() error {
 	filters = append(filters, "status", "1")
 	list, _ := models.ItemGetList(1, 10, filters...)
 
+	if len(list) == 0 {
+		logs.Info("首页开始采集(无更新数据)---end!")
+		return nil
+	}
+
 	for _, v := range list {
 
 		if content, err := getHttpData(v.PageIndex); err == nil {

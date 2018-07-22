@@ -12,14 +12,24 @@ func Init() {
 
 	tk0 := toolbox.NewTask("test", "0 * * * * *", func() error { fmt.Println("begin--cron"); return nil })
 	toolbox.AddTask("test", tk0)
-	//首页爬取数据
+	//首页更新
 	// PageIndexSpider() //test
 	// tk1 := toolbox.NewTask("PageIndexSpider", "0/10 * * * * *", PageIndexSpider)
 	// toolbox.AddTask("PageIndexSpider", tk1)
 
-	//对每一个小说进行检查更新
-	NovelIndexSpider()
-	tk2 := toolbox.NewTask("NovelIndexSpider", "0/30 * * * * *", NovelIndexSpider)
-	toolbox.AddTask("NovelIndexSpider", tk2)
+	//连载更新
+	// NovelIndexSpider()
+	// tk2 := toolbox.NewTask("NovelIndexSpider", "0/30 * * * * *", NovelIndexSpider)
+	// toolbox.AddTask("NovelIndexSpider", tk2)
+
+	//全站更新
+	// WebRuleSpider()
+	// tk3 := toolbox.NewTask("WebRuleSpider", "0 */2 * * * *", WebRuleSpider)
+	// toolbox.AddTask("WebRuleSpider", tk3)
+
+	//搜索更新
+	SosoSpider()
+	tk4 := toolbox.NewTask("WebRuleSpider", "0/1 * * * * *", SosoSpider)
+	toolbox.AddTask("WebRuleSpider", tk4)
 
 }

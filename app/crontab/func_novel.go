@@ -88,7 +88,7 @@ func CronNovelUpdate(v *models.AppItem, n *models.AppNovel, url, name string) {
 	}
 }
 
-//首页爬取数据
+//爬取数据
 func NovelIndexSpider() error {
 
 	logs.Info("小说开始更新---start!")
