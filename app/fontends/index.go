@@ -11,6 +11,21 @@ type IndexController struct {
 }
 
 func (this *IndexController) Index() {
+	this.display()
+}
 
+func (this *IndexController) Top() {
+	this.display()
+}
+
+func (this *IndexController) Soso() {
+	this.display()
+}
+
+func (this *IndexController) Page() {
+	this.display()
+}
+
+func (this *IndexController) Details() {
 	this.display()
 }

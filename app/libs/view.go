@@ -3,6 +3,7 @@ package libs
 import (
 	"fmt"
 	"github.com/astaxie/beego"
+	"github.com/midoks/novelsearch/app/models"
 	"strconv"
 	"strings"
 	"time"
@@ -16,6 +17,18 @@ func Init() {
 	beego.AddFuncMap("isIntInList", tplIsIntInList)
 	beego.AddFuncMap("loadtimes", loadtimes)
 	beego.AddFuncMap("adminPath", getAdminPath)
+
+	beego.AddFuncMap("webName", func() string {
+		return models.OptionGet(models.WEB_NAME, "小说搜索")
+	})
+
+	beego.AddFuncMap("webKeyWord", func() string {
+		return models.OptionGet(models.WEB_KEYWORD, "关键字")
+	})
+
+	beego.AddFuncMap("webDesc", func() string {
+		return models.OptionGet(models.WEB_DESC, "默认描述")
+	})
 }
 
 func loadtimes(t time.Time) int {

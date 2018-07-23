@@ -7,6 +7,21 @@ import (
 	"net/url"
 )
 
+const (
+	WEB_NAME        = "web_name"
+	WEB_KEYWORD     = "web_keyword"
+	WEB_DESC        = "web_desc"
+	WEB_STAT        = "web_stat"
+	WEB_NOTICE      = "web_notice"
+	WEB_NOTICE_MAIL = "web_notice_mail"
+
+	MAIL_HOST       = "mail_host"
+	MAIL_PORT       = "mail_port"
+	MAIL_USER       = "mail_user"
+	MAIL_PWD        = "mail_pwd"
+	MAIL_QUEUE_SIZE = "mail_queue_size"
+)
+
 func Init() {
 	fmt.Println("db init")
 

@@ -13,6 +13,9 @@ func init() {
 
 	//前台
 	beego.Router("/", &fontends.IndexController{}, "*:Index")
+	beego.Router("/top", &fontends.IndexController{}, "*:Top")
+	beego.Router("/s", &fontends.IndexController{}, "*:Soso")
+	beego.Router("/d", &fontends.IndexController{}, "*:Details")
 
 	//前台接口
 	ns := beego.NewNamespace("/v1", beego.NSAutoRouter(&backends.ItemController{}))

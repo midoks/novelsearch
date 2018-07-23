@@ -1,7 +1,7 @@
 package fontends
 
 import (
-	"fmt"
+	// "fmt"
 	"github.com/astaxie/beego"
 	_ "github.com/astaxie/beego/logs"
 	// "github.com/midoks/novelsearch/app/libs"
@@ -98,9 +98,6 @@ func (this *CommonController) display(tpl ...string) {
 	}
 
 	this.Layout = "fontends/layout/index.html"
-
-	fmt.Println(this.Layout)
-
 	this.TplName = tplname
 }
 
