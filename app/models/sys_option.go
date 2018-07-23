@@ -31,6 +31,7 @@ func (u *SysOption) Update(fields ...string) error {
 }
 
 func OptionSet(name string, value string) bool {
+
 	data := new(SysOption)
 	err := orm.NewOrm().QueryTable(getTnByOption()).Filter("name", name).One(data)
 	if err == nil {
@@ -56,6 +57,7 @@ func OptionSet(name string, value string) bool {
 }
 
 func OptionGet(name string, def string) string {
+
 	data := new(SysOption)
 	err := orm.NewOrm().QueryTable(getTnByOption()).Filter("name", name).One(data)
 	if err == nil {

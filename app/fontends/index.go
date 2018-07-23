@@ -2,6 +2,7 @@ package fontends
 
 import (
 	"fmt"
+	// "github.com/astaxie/beego"
 	"github.com/midoks/novelsearch/app/models"
 	"strings"
 )
@@ -21,7 +22,7 @@ func (this *IndexController) Top() {
 func (this *IndexController) Soso() {
 	kw := this.GetString("wd")
 	if strings.EqualFold(kw, "") {
-		return
+		this.redirect("/")
 	}
 	fmt.Println(kw)
 	list := models.SosoNovelByKw(kw)

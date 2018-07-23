@@ -11,7 +11,7 @@
  Target Server Version : 50634
  File Encoding         : 65001
 
- Date: 23/07/2018 17:53:15
+ Date: 23/07/2018 18:51:01
 */
 
 SET NAMES utf8mb4;
@@ -106,7 +106,8 @@ CREATE TABLE `app_novel` (
   `update_time` int(11) DEFAULT NULL,
   `create_time` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `t1` (`from_id`,`name`)
+  UNIQUE KEY `t1` (`from_id`,`name`),
+  KEY `author` (`author`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------

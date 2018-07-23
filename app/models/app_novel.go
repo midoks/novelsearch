@@ -1,7 +1,7 @@
 package models
 
 import (
-	// "fmt"
+	"fmt"
 	"github.com/astaxie/beego/orm"
 	"time"
 )
@@ -109,6 +109,14 @@ func CronNovelGetByStatus(status string, interval int64, num int) []*AppNovel {
 }
 
 func SosoNovelByKw(kw string) string {
+	var list []AppNovel
+	orm.NewOrm().QueryTable(getTnByAppNovel()).
+		Filter("name__icontains", kw).
+		OrderBy("-id").
+		Limit(10).
+		All(&list, "id", "name")
+	fmt.Println(list)
+
 	return ""
 }
 
