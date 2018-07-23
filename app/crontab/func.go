@@ -42,6 +42,7 @@ func RegNovelSigleInfo(content, reg string) (string, error) {
 
 	match_exp := regexp.MustCompile(reg)
 	name := match_exp.FindAllStringSubmatch(content, -1)
+	// logs.Warn(name)
 	if len(name) == 0 {
 		return "", errors.New("没有匹配到!")
 	}

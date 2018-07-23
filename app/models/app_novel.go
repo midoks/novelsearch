@@ -11,6 +11,7 @@ type AppNovel struct {
 	FromId         int
 	Url            string
 	Name           string
+	Category       string
 	Desc           string
 	Author         string
 	List           string

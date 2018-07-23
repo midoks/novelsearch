@@ -119,6 +119,7 @@ func (this *AppItemController) Add() {
 		data.PageCharset = vars["page_charset"]
 		data.PageIndexRule = vars["page_index_rule"]
 		data.PathRule = vars["path_rule"]
+		data.PathTpl = vars["path_tpl"]
 		data.PathPageExp = vars["path_page_exp"]
 		data.NameRule = vars["name_rule"]
 		data.DescRule = vars["desc_rule"]
@@ -134,6 +135,7 @@ func (this *AppItemController) Add() {
 		data.SosoExp = vars["soso_exp"]
 		data.SosoPageArgs = vars["soso_page_args"]
 		data.SosoRule = vars["soso_rule"]
+		data.SosoModel = vars["soso_model"]
 		data.SpiderExp = vars["spider_exp"]
 		data.SpiderRange = vars["spider_range"]
 		data.SpiderRule = vars["spider_rule"]
@@ -203,6 +205,8 @@ func (this *AppItemController) Verify() {
 		url = this.GetString("url", "")
 		rule = this.GetString("rule", "")
 		charset = this.GetString("charset", "")
+		model := this.GetString("model", "")
+		path_tpl := this.GetString("path_tpl", "")
 		url = strings.TrimSpace(url)
 		rule = strings.TrimSpace(rule)
 		charset = strings.TrimSpace(charset)
@@ -241,7 +245,15 @@ func (this *AppItemController) Verify() {
 
 		valid := regexp.MustCompile(rule)
 		match := valid.FindAllStringSubmatch(content, -1)
-		fmt.Println(url, content, match)
+
+		fmt.Println(model)
+		if strings.EqualFold(model, "1") {
+			for i := 0; i < len(match); i++ {
+				fmt.Println(path_tpl, "{$ID}", match[i][1])
+				match[i][1] = strings.Replace(path_tpl, "{$ID}", match[i][1], -1)
+			}
+		}
+		// fmt.Println(url, content, match)
 		this.retOk("验证成功", match)
 	} else {
 		this.retFail("非法请求")

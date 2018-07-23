@@ -2,7 +2,7 @@ package crontab
 
 import (
 	"errors"
-	"fmt"
+	// "fmt"
 	// "github.com/astaxie/beego"
 	// "encoding/json"
 	// "github.com/astaxie/beego/httplib"
@@ -30,6 +30,7 @@ func CronWebRuleSpider(v *models.AppItem, url string, ranges string, rule string
 
 	start, err = strconv.Atoi(list[0])
 	if err != nil {
+		logs.Error("start:%s", list[0])
 		return
 	}
 
@@ -42,11 +43,9 @@ func CronWebRuleSpider(v *models.AppItem, url string, ranges string, rule string
 		cur = strconv.Itoa(i)
 		cur_page = strings.Replace(url, "{$RANGE}", cur, -1)
 
-		logs.Info("全站采集开始:url:%s", cur_page)
-		fmt.Println(cur_page)
+		logs.Warn("全站采集开始:url:%s", cur_page)
 
-		var isEmpty = false
-
+		var isEmpty = true
 		if content, errcur := getHttpData(cur_page); errcur == nil {
 
 			list, errlist := RegNovelList(content, rule)
@@ -54,21 +53,19 @@ func CronWebRuleSpider(v *models.AppItem, url string, ranges string, rule string
 
 				if len(list) > 0 {
 					for j := 0; j < len(list); j++ {
-						// fmt.Println(list[j])
-						go CronPathInfo(v, list[j]["url"].(string), list[j]["name"].(string))
+						CronPathInfo(v, list[j]["url"].(string), list[j]["name"].(string))
 					}
+					isEmpty = false
 				} else {
-					logs.Info("全站采集结束(没有数据):url:%s", cur_page)
-					isEmpty = true
+					logs.Error("全站采集结束(没有数据):url:%s", cur_page)
 					break
 				}
 			}
 		}
-
-		if !isEmpty {
+		if isEmpty {
 			break
 		}
-		logs.Info("全站采集结束:url:%s", cur_page)
+		logs.Warn("全站采集结束:url:%s", cur_page)
 	}
 }
 

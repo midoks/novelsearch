@@ -14,6 +14,7 @@ type AppItem struct {
 	PageIndex       string
 	PageIndexRule   string
 	PathRule        string
+	PathTpl         string
 	PathPageExp     string
 	NameRule        string
 	DescRule        string
@@ -29,6 +30,7 @@ type AppItem struct {
 	SosoExp         string
 	SosoPageArgs    string
 	SosoRule        string
+	SosoModel       string
 	SpiderExp       string
 	SpiderRange     string
 	SpiderRule      string

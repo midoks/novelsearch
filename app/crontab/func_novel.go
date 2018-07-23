@@ -32,9 +32,10 @@ func CronNovelUpdate(v *models.AppItem, n *models.AppNovel, url, name string) {
 
 		status, err = RegNovelSigleInfo(content, v.StatusRule)
 		if err != nil {
+			logs.Error("状态获取(失败):%s", err)
 			return
 		}
-		logs.Info("状态:%s", status)
+		// logs.Info("状态:%s", status)
 
 		//判断是否已经结束
 		if strings.EqualFold(status, v.StatusEndMark) {
@@ -43,9 +44,10 @@ func CronNovelUpdate(v *models.AppItem, n *models.AppNovel, url, name string) {
 
 		path, err = RegNovelSigleInfo(content, v.ChapterPathRule)
 		if err != nil {
+			logs.Error("小说获取目录页:%s", path)
 			return
 		}
-		logs.Info("小说目录页:%s", path)
+		// logs.Info("小说目录页:%s", path)
 
 		var list = ""
 		var last_chapter = ""

@@ -17,7 +17,7 @@ import (
 //获取小说path页数据
 func CronPathInfo(v *models.AppItem, url, name string) {
 
-	logs.Info("采集开始:fromid:%d,%s:%s", v.Id, name, url)
+	logs.Warn("目录页采集开始:fromid:%d,%s:%s", v.Id, name, url)
 	vId := strconv.Itoa(v.Id)
 	_, errFind := models.CronNovelGetByNameAndFromId(name, vId)
 	if errFind == nil {
@@ -46,27 +46,30 @@ func CronPathInfo(v *models.AppItem, url, name string) {
 		logs.Info("小说名:%s", name)
 		_, errFind := models.CronNovelGetByNameAndFromId(name, vId)
 		if errFind == nil {
-			logs.Info("已经采集了(名字不一致哟)")
+			logs.Error("已经采集了(名字不一致哟)")
 			return
 		}
 
 		author, err = RegNovelSigleInfo(content, v.AuthorRule)
 		if err != nil {
+			logs.Error("作者获取(失败):%s", err)
 			return
 		}
-		logs.Info("作者:%s", author)
+		// logs.Info("作者:%s", author)
 
 		desc, err = RegNovelSigleInfo(content, v.DescRule)
 		if err != nil {
+			logs.Error("描述获取(失败[%s]):%s", name, err)
 			return
 		}
-		logs.Info("描述:%s", desc)
+		// logs.Info("描述:%s", desc)
 
 		status, err = RegNovelSigleInfo(content, v.StatusRule)
 		if err != nil {
+			logs.Error("状态获取(失败):%s", err)
 			return
 		}
-		logs.Info("状态:%s", status)
+		// logs.Info("状态:%s", status)
 
 		//判断是否已经结束
 		if strings.EqualFold(status, v.StatusEndMark) {
@@ -75,15 +78,17 @@ func CronPathInfo(v *models.AppItem, url, name string) {
 
 		category, err = RegNovelSigleInfo(content, v.CategoryRule)
 		if err != nil {
+			logs.Error("分类获取(失败):%s", err)
 			return
 		}
-		logs.Info("分类:%s", category)
+		// logs.Info("分类:%s", category)
 
 		path, err = RegNovelSigleInfo(content, v.ChapterPathRule)
 		if err != nil {
+			logs.Error("目录获取(失败):%s", err)
 			return
 		}
-		logs.Info("小说目录页:%s", path)
+		// logs.Info("小说目录页:%s", path)
 
 		var list = ""
 		var last_chapter = ""
@@ -112,6 +117,7 @@ func CronPathInfo(v *models.AppItem, url, name string) {
 		data.FromId = v.Id
 		data.Url = url
 		data.Name = name
+		data.Category = category
 		data.Author = author
 		data.Desc = desc
 		data.List = list
@@ -123,10 +129,12 @@ func CronPathInfo(v *models.AppItem, url, name string) {
 		data.CreateTime = time.Now().Unix()
 		_, err = orm.NewOrm().Insert(data)
 		if err == nil {
-			logs.Info("采集结束:%s", url)
+			logs.Warn("目录页采集结束:%s", url)
 		} else {
-			logs.Warn("采集发生错误:%s", err)
+			logs.Error("目录页采集发生错误:%s", err)
 		}
+	} else {
+		logs.Warn("目录页采集结束(没有获取到资源):%s", url)
 	}
 }
 

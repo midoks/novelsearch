@@ -12,6 +12,7 @@ func Init() {
 
 	tk0 := toolbox.NewTask("test", "0 * * * * *", func() error { fmt.Println("begin--cron"); return nil })
 	toolbox.AddTask("test", tk0)
+
 	//首页更新
 	// PageIndexSpider() //test
 	// tk1 := toolbox.NewTask("PageIndexSpider", "0/10 * * * * *", PageIndexSpider)
@@ -28,8 +29,8 @@ func Init() {
 	// toolbox.AddTask("WebRuleSpider", tk3)
 
 	//搜索更新
-	SosoSpider()
-	tk4 := toolbox.NewTask("WebRuleSpider", "0/1 * * * * *", SosoSpider)
-	toolbox.AddTask("WebRuleSpider", tk4)
+	// SosoSpider()
+	// tk4 := toolbox.NewTask("SosoSpider", "0 */2 * * * *", SosoSpider)
+	// toolbox.AddTask("SosoSpider", tk4)
 
 }
