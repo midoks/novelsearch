@@ -108,6 +108,10 @@ func CronNovelGetByStatus(status string, interval int64, num int) []*AppNovel {
 	return list
 }
 
+func SosoNovelByKw(kw string) string {
+	return ""
+}
+
 func NovelDelById(id int) (int64, error) {
 	return orm.NewOrm().Delete(&AppItem{Id: id})
 }

@@ -1,9 +1,9 @@
 package fontends
 
 import (
-	// "fmt"
-	_ "github.com/astaxie/beego"
-	// "github.com/midoks/novelsearch/app/models"
+	"fmt"
+	"github.com/midoks/novelsearch/app/models"
+	"strings"
 )
 
 type IndexController struct {
@@ -19,6 +19,13 @@ func (this *IndexController) Top() {
 }
 
 func (this *IndexController) Soso() {
+	kw := this.GetString("wd")
+	if strings.EqualFold(kw, "") {
+		return
+	}
+	fmt.Println(kw)
+	list := models.SosoNovelByKw(kw)
+	fmt.Println(list)
 	this.display()
 }
 
