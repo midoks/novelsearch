@@ -116,6 +116,8 @@ func CronPathInfo(v *models.AppItem, url, name string) {
 		data := new(models.AppNovel)
 		data.FromId = v.Id
 		data.Url = url
+		data.List = list
+		data.UniqueId = libs.Md5str(url)
 		data.Name = name
 		data.Category = category
 		data.Author = author

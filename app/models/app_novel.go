@@ -10,6 +10,7 @@ type AppNovel struct {
 	Id             int
 	FromId         int
 	Url            string
+	UniqueId       string
 	Name           string
 	Category       string
 	Desc           string

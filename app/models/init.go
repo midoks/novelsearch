@@ -3,11 +3,11 @@ package models
 import (
 	"fmt"
 	"github.com/astaxie/beego"
-	"github.com/astaxie/beego/cache"
+	// "github.com/astaxie/beego/cache"
 	// "github.com/astaxie/beego/logs"
 	"github.com/astaxie/beego/orm"
 	"net/url"
-	"time"
+	// "time"
 )
 
 const (
@@ -53,41 +53,8 @@ func Init() {
 }
 
 func MysqlPing() bool {
-	o := orm.NewOrm()
-	r := o.Raw("show tables")
+	r := orm.NewOrm().Raw("show VARIABLES")
 	fmt.Println(r)
-
-	return false
-}
-
-func getCacheIntance() (cache.Cache, error) {
-	cacheLink, err := cache.NewCache("memory", `{"interval":300}`)
-	if err != nil {
-		return nil, err
-	}
-	return cacheLink, nil
-}
-
-func getCache(key string) (bool, string) {
-	cacheLink, err := getCacheIntance()
-	if err == nil {
-		val := cacheLink.Get(key)
-		fmt.Println(val)
-		if val != nil {
-			return true, val.(string)
-		}
-	}
-	return false, ""
-}
-
-func setCache(key string, val interface{}, timeout time.Duration) bool {
-	cacheLink, err := getCacheIntance()
-	if err == nil {
-		err2 := cacheLink.Put(key, val, timeout)
-		if err2 == nil {
-			return true
-		}
-	}
 	return false
 }
 

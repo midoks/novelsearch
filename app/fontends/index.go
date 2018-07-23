@@ -35,5 +35,7 @@ func (this *IndexController) Page() {
 }
 
 func (this *IndexController) Details() {
+	unique_id := this.Ctx.Input.Param(":unique_id")
+	fmt.Println(unique_id)
 	this.display()
 }

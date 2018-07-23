@@ -11,7 +11,7 @@
  Target Server Version : 50634
  File Encoding         : 65001
 
- Date: 23/07/2018 18:51:01
+ Date: 23/07/2018 20:41:09
 */
 
 SET NAMES utf8mb4;
@@ -88,8 +88,9 @@ DROP TABLE IF EXISTS `app_novel`;
 CREATE TABLE `app_novel` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `from_id` int(11) NOT NULL COMMENT '来源ID',
-  `url` text COLLATE utf8_unicode_ci NOT NULL COMMENT '来源地址',
   `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL COMMENT '小说名',
+  `url` text COLLATE utf8_unicode_ci NOT NULL COMMENT '来源地址',
+  `unique_id` char(32) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '唯一标示',
   `desc` text COLLATE utf8_unicode_ci NOT NULL COMMENT '简介',
   `category` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '小说分类',
   `author` varchar(50) COLLATE utf8_unicode_ci NOT NULL COMMENT '作者',
@@ -107,6 +108,7 @@ CREATE TABLE `app_novel` (
   `create_time` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `t1` (`from_id`,`name`),
+  UNIQUE KEY `unique_id` (`unique_id`),
   KEY `author` (`author`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
