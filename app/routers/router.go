@@ -7,9 +7,22 @@ import (
 	"github.com/midoks/novelsearch/app/fontends"
 	"github.com/midoks/novelsearch/app/libs"
 	"github.com/midoks/novelsearch/app/models"
+	"html/template"
+	"net/http"
 )
 
+func page_not_found(rw http.ResponseWriter, r *http.Request) {
+	t, _ := template.New("404.html").ParseFiles(beego.BConfig.WebConfig.ViewsPath + "/404.html")
+	data := make(map[string]interface{})
+	data["content"] = "page not found"
+	this.Redirect(url, 302)
+	// r.Write([]byte("Location: /"))
+	t.Execute(rw, data)
+}
+
 func init() {
+	//错误页面设置
+	beego.ErrorHandler("404", page_not_found)
 
 	//前台
 	beego.Router("/", &fontends.IndexController{}, "*:Index")
