@@ -111,12 +111,15 @@ func CronNovelGetByStatus(status string, interval int64, num int) []*AppNovel {
 
 func SosoNovelByKw(kw string) []AppNovel {
 	var list []AppNovel
+	orm.Debug = true
 	orm.NewOrm().QueryTable(getTnByAppNovel()).
 		Filter("name__icontains", kw).
+		Filter("author__icontains", kw).
 		OrderBy("-id").
 		Limit(10).
 		All(&list, "id", "name", "from_id", "unique_id")
 	fmt.Println(list)
+	orm.Debug = false
 	return list
 }
 
