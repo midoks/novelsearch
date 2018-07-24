@@ -109,16 +109,15 @@ func CronNovelGetByStatus(status string, interval int64, num int) []*AppNovel {
 	return list
 }
 
-func SosoNovelByKw(kw string) string {
+func SosoNovelByKw(kw string) []AppNovel {
 	var list []AppNovel
 	orm.NewOrm().QueryTable(getTnByAppNovel()).
 		Filter("name__icontains", kw).
 		OrderBy("-id").
 		Limit(10).
-		All(&list, "id", "name")
+		All(&list, "id", "name", "from_id", "unique_id")
 	fmt.Println(list)
-
-	return ""
+	return list
 }
 
 func NovelDelById(id int) (int64, error) {

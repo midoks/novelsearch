@@ -19,6 +19,10 @@ func (this *IndexController) Top() {
 	this.display()
 }
 
+func (this *IndexController) Baidutop() {
+	this.display()
+}
+
 func (this *IndexController) Soso() {
 	kw := this.GetString("wd")
 	if strings.EqualFold(kw, "") {
