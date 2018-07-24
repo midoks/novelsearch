@@ -1,3 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta charset="utf-8" />
+    <title>{{webName}}</title>
+    <meta name="keywords" content="{{webKeyWord}}">
+    <meta name="description" content="{{webDesc}}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <link rel="stylesheet" href="/static/css/bootstrap.css" />
+    <link rel="stylesheet" href="/static/css/font-awesome.css" />
+    <link rel="stylesheet" href="/static/css/jquery-ui.css" />
+    <script src="/static/js/jquery.js"></script>
+    <script type="text/javascript">
+        if('ontouchstart' in document.documentElement) document.write("<script src='../static/js/jquery.mobile.custom.js'>"+"<"+"/script>");
+    </script>
+    <script src="/static/js/bootstrap.js"></script>
+    <script src="/static/js/jquery-ui.js"></script>
+    <script src="/static/js/jquery-ui.custom.js"></script>
+    <script src="/static/js/jquery.ui.touch-punch.js"></script>
+</head>
+
+<body>
+
+
+
 
 <div class="container" style="padding-top:60px;">
 	<div class="col-lg-6 col-sm-6 col-xm-6">
@@ -6,6 +32,35 @@
 		  <span class="input-group-btn">
 		    <butt class="btn btn-default" type="buontton">Top</button>
 		  </span>
-		</div><!-- /input-group -->
+		</div>
 	</div>
 </div>
+
+
+
+<div class="footer">
+    <nav class="navbar navbar-default navbar-fixed-bottom">
+        <div class="container">
+		    <ul class="nav navbar-nav">
+		        <li><a href="/">首页</a></li>
+		        <li><a href="/top.html">排行榜</a></li>
+		        <li><a href="/baidutop.html">百度榜</a></li>
+
+		    </ul>
+		    <ul class="nav navbar-nav navbar-right">
+		        <li><a href="/">{{webName}}</a></li>
+		        <li><a data-container="body" data-toggle="popover" data-placement="top"
+                       data-content="本站是一个开源小说搜索引擎，提供且仅提供第三方搜索引擎提供的小说检索结果。本站只负责展示搜索结果，展示内容与本站无关。">免责声明</a></li>
+		    </ul>
+		</div>
+    </nav>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    $('[data-toggle="popover"]').popover()
+});
+</script>
+
+</body>
+</html>
