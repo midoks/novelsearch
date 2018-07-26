@@ -1,13 +1,34 @@
 
+
+
 <div class="container">
+  <div class="jumbotron">
+    <h2 class="center text-center">搜书</h2>   
+    <form class="ui form main search" action="/s">
+      <div class="input-group">
+        <input class="form-control" name="wd" autofocus="autofocus" value="" placeholder="搜索网络书籍" type="text">
+        <span class="input-group-btn">
+          <button class="btn btn-default" type="submit">搜索</button>
+        </span>
+      </div>
+    </form>
 
-      <form class="ui form main search" action="/s">
-		<div class="input-group">
-		  <input type="text"  name="wd" class="form-control" placeholder="搜索小说,至少俩个字!">
-		  <span class="input-group-btn">
-		    <button class="btn btn-default" type="submit">搜索</button>
-		  </span>
-		</div>
+  </div>
+</div>
 
-	  </form>
+<div class="container">
+    <h5 class="center text-center">最新收录</h5>
+    <table class="table table-bordered">
+      <tr>
+        <td>名字</td>
+        <td>来源</td>
+        <td>收录时间</td>
+      </tr>
+
+      <tr>
+        <td><a href="/details.html" target="_blank">凡人修仙住</td>
+        <td>笔趣阁</td>
+        <td>1990-12-12</td>
+      </tr>
+    </table>
 </div>

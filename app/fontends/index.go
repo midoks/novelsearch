@@ -3,6 +3,7 @@ package fontends
 import (
 	"fmt"
 	// "github.com/astaxie/beego"
+	"github.com/midoks/novelsearch/app/libs"
 	"github.com/midoks/novelsearch/app/models"
 	"strings"
 )
@@ -20,6 +21,8 @@ func (this *IndexController) Top() {
 }
 
 func (this *IndexController) Baidutop() {
+	list := libs.GetAllBaiduTop()
+	this.Data["list"] = list
 	this.display()
 }
 

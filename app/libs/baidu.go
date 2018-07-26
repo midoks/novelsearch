@@ -5,9 +5,14 @@ import (
 	// "fmt"
 	"github.com/astaxie/beego/httplib"
 	"regexp"
+	"time"
 )
 
-//http://top.baidu.com/buzz?b=353&c=10
+var (
+	BAIDU_KEY = "baidu_top_key"
+)
+
+//http://top.baidu.com/buzz?b=353
 //单个榜单的数据
 func BaiduTop(url string) ([]string, error) {
 	req := httplib.Get(url)
@@ -34,5 +39,31 @@ func BaiduTop(url string) ([]string, error) {
 }
 
 func CronSaveAllBaiduTop() {
+	toplist := make(map[string]string)
+	toplist["全部"] = "http://top.baidu.com/buzz?b=7"
+	toplist["玄幻奇幻"] = "http://top.baidu.com/buzz?b=353"
+	toplist["都市言情"] = "http://top.baidu.com/buzz?b=355"
+	toplist["武侠仙侠"] = "http://top.baidu.com/buzz?b=354"
+	toplist["青春校园"] = "http://top.baidu.com/buzz?b=1508"
+	toplist["穿越架空"] = "http://top.baidu.com/buzz?b=1509"
+	toplist["科幻悬疑"] = "http://top.baidu.com/buzz?b=356"
+	toplist["历史军事"] = "http://top.baidu.com/buzz?b=459"
+	toplist["游戏竞技"] = "http://top.baidu.com/buzz?b=1512"
+	toplist["耽美同人"] = "http://top.baidu.com/buzz?b=1510"
+	toplist["文学经典"] = "http://top.baidu.com/buzz?b=1513"
 
+	topData := make(map[string]interface{})
+	for i, v := range toplist {
+		top, err := BaiduTop(v)
+		if err == nil {
+			topData[i] = top
+		}
+	}
+
+	SetCache(BAIDU_KEY, topData, 24*60*60*time.Second)
+}
+
+func GetAllBaiduTop() map[string]interface{} {
+	c := GetCache(BAIDU_KEY)
+	return c.(map[string]interface{})
 }
