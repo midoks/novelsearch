@@ -63,7 +63,15 @@ func CronSaveAllBaiduTop() {
 	SetCache(BAIDU_KEY, topData, 24*60*60*time.Second)
 }
 
-func GetAllBaiduTop() map[string]interface{} {
-	c := GetCache(BAIDU_KEY)
-	return c.(map[string]interface{})
+func GetAllBaiduTop() (map[string]interface{}, error) {
+	if !CacheIsExist(BAIDU_KEY) {
+		return nil, errors.New("不存在")
+	}
+
+	c, err := GetCache(BAIDU_KEY)
+
+	if err == nil {
+		return c.(map[string]interface{}), nil
+	}
+	return nil, errors.New("获取失败")
 }

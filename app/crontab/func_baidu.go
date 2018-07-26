@@ -5,6 +5,9 @@ import (
 )
 
 func BaiduTopAll() error {
-	libs.CronSaveAllBaiduTop()
+	_, err := libs.GetAllBaiduTop()
+	if err != nil {
+		libs.CronSaveAllBaiduTop()
+	}
 	return nil
 }

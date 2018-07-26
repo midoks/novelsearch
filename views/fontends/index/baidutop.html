@@ -1,5 +1,6 @@
 
 <div class="container">
+	{{if .list}}
 	<div class="rows">
 		{{range  $k, $v := .list}}
 		<div class="col-sm-4">
@@ -19,4 +20,5 @@
 		</div>
 		{{end}}
 	</div>
+	{{end}}
 </div>

@@ -21,8 +21,14 @@ func (this *IndexController) Top() {
 }
 
 func (this *IndexController) Baidutop() {
-	list := libs.GetAllBaiduTop()
-	this.Data["list"] = list
+	list, err := libs.GetAllBaiduTop()
+
+	if err == nil {
+		this.Data["list"] = list
+	} else {
+		// this.Data["list"] = make(map[string]interface{})
+	}
+
 	this.display()
 }
 

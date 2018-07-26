@@ -34,7 +34,7 @@ func Init() {
 	// toolbox.AddTask("SosoSpider", tk4)
 
 	//百度榜单
-	// BaiduTopAll()
+	BaiduTopAll()
 	tk5 := toolbox.NewTask("BaiduBang", "0 * */1 * * *", BaiduTopAll)
 	toolbox.AddTask("BaiduBang", tk5)
 }
