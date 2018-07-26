@@ -32,3 +32,7 @@ func BaiduTop(url string) ([]string, error) {
 
 	return nil, errors.New("没有匹配到值!")
 }
+
+func CronSaveAllBaiduTop() {
+
+}

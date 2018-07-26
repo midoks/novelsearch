@@ -13,6 +13,8 @@ func Init() {
 	tk0 := toolbox.NewTask("test", "0 * * * * *", func() error { fmt.Println("begin--cron"); return nil })
 	toolbox.AddTask("test", tk0)
 
+	allBaiduTop()
+
 	//首页更新
 	// PageIndexSpider() //test
 	// tk1 := toolbox.NewTask("PageIndexSpider", "0/10 * * * * *", PageIndexSpider)
