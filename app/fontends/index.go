@@ -1,6 +1,7 @@
 package fontends
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/astaxie/beego"
 	"github.com/midoks/novelsearch/app/libs"
@@ -32,10 +33,7 @@ func (this *IndexController) Index() {
 		row["Author"] = v.Author
 		row["FromId"] = v.FromId
 		row["FromName"] = fName
-		row["List"] = v.List
-		row["ChapterNum"] = v.ChapterNum
-		row["LastChapter"] = v.LastChapter
-		row["LastChapterUrl"] = v.LastChapterUrl
+		row["UniqueId"] = v.UniqueId
 		row["Status"] = v.Status
 		row["UpdateTime"] = beego.Date(time.Unix(v.UpdateTime, 0), "Y-m-d H:i:s")
 		row["CreateTime"] = beego.Date(time.Unix(v.CreateTime, 0), "Y-m-d H:i:s")
@@ -74,8 +72,38 @@ func (this *IndexController) Page() {
 	this.display()
 }
 
+type BookLinkInfo struct {
+	Name string
+	Url  string
+}
+
 func (this *IndexController) Details() {
 	unique_id := this.Ctx.Input.Param(":unique_id")
-	fmt.Println(unique_id)
+	data, err := models.NovelGetByUniqueId(unique_id)
+	if err == nil {
+		row := make(map[string]interface{})
+		fName := models.ItemGetNameById(data.FromId)
+		row["Id"] = data.Id
+		row["Name"] = data.Name
+		row["Desc"] = data.Desc
+		row["Author"] = data.Author
+		row["Category"] = data.Category
+		row["FromId"] = data.FromId
+		row["FromName"] = fName
+		row["UniqueId"] = data.UniqueId
+		row["Status"] = data.Status
+		row["UpdateTime"] = beego.Date(time.Unix(data.UpdateTime, 0), "Y-m-d H:i:s")
+		var bli []BookLinkInfo
+		errJson := json.Unmarshal([]byte(data.List), &bli)
+		// fmt.Println(bli)
+		if errJson == nil {
+			row["List"] = bli
+		}
+		// fmt.Println(data, err)
+		this.Data["info"] = row
+	} else {
+		this.redirect("/")
+	}
+
 	this.display()
 }

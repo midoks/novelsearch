@@ -20,7 +20,7 @@
       {{if .list}}
         {{range  $k, $v := .list}}
       <tr>
-        <td class="text-center"><a href="/s?wd={{$v.Name}}" target="_blank">{{$v.Name}}</td>
+        <td class="text-center"><a href="/b/{{$v.UniqueId}}.html">{{$v.Name}}</td>
         <td class="text-center">{{$v.FromName}}</td>
         <td class="text-center">{{$v.CreateTime}}</td>
       </tr>

@@ -95,6 +95,16 @@ func CronNovelGetByNameAndFromId(name string, fromid string) (*AppNovel, error) 
 	return u, nil
 }
 
+func NovelGetByUniqueId(unique_id string) (*AppNovel, error) {
+
+	u := new(AppNovel)
+	err := orm.NewOrm().QueryTable(getTnByAppNovel()).Filter("unique_id", unique_id).One(u)
+	if err != nil {
+		return nil, err
+	}
+	return u, nil
+}
+
 func CronNovelGetByStatus(status string, interval int64, num int) []*AppNovel {
 	list := make([]*AppNovel, 0)
 
