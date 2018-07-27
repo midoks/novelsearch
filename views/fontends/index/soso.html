@@ -4,7 +4,7 @@
   <div class="jumbotron"> 
     <form class="ui form main search" action="/s">
       <div class="input-group">
-        <input class="form-control" name="wd" autofocus="autofocus" value="" placeholder="搜索网络书籍" type="text">
+        <input class="form-control" name="wd" autofocus="autofocus" value="{{.kw}}" placeholder="搜索网络书籍" type="text">
         <span class="input-group-btn">
           <button class="btn btn-default" type="submit">搜索</button>
         </span>
@@ -20,17 +20,23 @@
     <table class="table table-bordered">
       <tr>
         <td>名字</td>
+        <td>作者</td>
         <td>最新章节</td>
         <td>来源</td>
-        <td>收录时间</td>
+        <td>更新时间</td>
       </tr>
 
-      <tr>
-        <td>凡人修仙住</td>
-        <td>狗屎</td>
-        <td>笔趣阁</td>
-        <td>1990-12-12</td>
-      </tr>
+      {{if .list}}
+        {{range  $k, $v := .list}}
+        <tr>
+          <td>{{$v.Name}}</td>
+          <td>{{$v.Author}}</td>
+          <td>{{$v.Author}}</td>
+          <td>{{$v.FromName}}</td>
+          <td>{{$v.UpdateTime}}</td>
+        </tr>
+        {{end}}
+      {{end}}
     </table>
 
     <nav aria-label="Page navigation" class="text-center">

@@ -1,7 +1,7 @@
 package models
 
 import (
-	"fmt"
+	// "fmt"
 	"github.com/astaxie/beego/orm"
 	"time"
 )
@@ -119,18 +119,23 @@ func CronNovelGetByStatus(status string, interval int64, num int) []*AppNovel {
 	return list
 }
 
-func SosoNovelByKw(kw string) []AppNovel {
+func SosoNovelByKw(kw string, page, pageSize int) ([]AppNovel, int) {
+	offset := (page - 1) * pageSize
+
 	var list []AppNovel
-	orm.Debug = true
+	// orm.Debug = true
+
+	cond := orm.NewCondition()
+	cond1 := cond.And("name__istartswith", kw).
+		Or("author__istartswith", kw)
+
 	orm.NewOrm().QueryTable(getTnByAppNovel()).
-		Filter("name__icontains", kw).
-		Filter("author__icontains", kw).
+		SetCond(cond1).
 		OrderBy("-id").
-		Limit(10).
-		All(&list, "id", "name", "from_id", "unique_id")
-	fmt.Println(list)
-	orm.Debug = false
-	return list
+		Limit(pageSize, offset).
+		All(&list, "id", "name", "from_id", "unique_id", "author", "update_time")
+	// orm.Debug = false
+	return list, len(list)
 }
 
 func IndexNovelList() {

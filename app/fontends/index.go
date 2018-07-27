@@ -2,7 +2,7 @@ package fontends
 
 import (
 	"encoding/json"
-	"fmt"
+	// "fmt"
 	"github.com/astaxie/beego"
 	"github.com/midoks/novelsearch/app/libs"
 	"github.com/midoks/novelsearch/app/models"
@@ -58,13 +58,41 @@ func (this *IndexController) Baidutop() {
 }
 
 func (this *IndexController) Soso() {
-	kw := this.GetString("wd")
+	kw := this.GetString("wd", "")
 	if strings.EqualFold(kw, "") {
 		this.redirect("/")
 	}
-	fmt.Println(kw)
-	list := models.SosoNovelByKw(kw)
-	fmt.Println(list)
+
+	page, _ := this.GetInt("page")
+	if page < 1 {
+		page = 1
+	}
+
+	result, _ := models.SosoNovelByKw(kw, page, 10)
+	list := make([]map[string]interface{}, len(result))
+
+	for k, v := range result {
+
+		row := make(map[string]interface{})
+		fName := models.ItemGetNameById(v.FromId)
+
+		row["Id"] = v.Id
+		row["Name"] = v.Name
+		row["Desc"] = v.Desc
+		row["Author"] = v.Author
+		row["FromId"] = v.FromId
+		row["FromName"] = fName
+		row["ChapterNum"] = v.ChapterNum
+		row["LastChapter"] = v.LastChapter
+		row["LastChapterUrl"] = v.LastChapterUrl
+		row["Status"] = v.Status
+		row["UpdateTime"] = beego.Date(time.Unix(v.UpdateTime, 0), "Y-m-d H:i:s")
+		list[k] = row
+
+		// fmt.Println(v.Name)
+	}
+	this.Data["list"] = list
+	this.Data["kw"] = kw
 	this.display()
 }
 
@@ -95,15 +123,12 @@ func (this *IndexController) Details() {
 		row["UpdateTime"] = beego.Date(time.Unix(data.UpdateTime, 0), "Y-m-d H:i:s")
 		var bli []BookLinkInfo
 		errJson := json.Unmarshal([]byte(data.List), &bli)
-		// fmt.Println(bli)
 		if errJson == nil {
 			row["List"] = bli
 		}
-		// fmt.Println(data, err)
 		this.Data["info"] = row
 	} else {
 		this.redirect("/")
 	}
-
 	this.display()
 }
