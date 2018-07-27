@@ -29,9 +29,9 @@
       {{if .list}}
         {{range  $k, $v := .list}}
         <tr>
-          <td>{{$v.Name}}</td>
-          <td>{{$v.Author}}</td>
-          <td>{{$v.Author}}</td>
+          <td><a target="_blank" href="/b/{{$v.UniqueId}}.html">{{$v.Name}}</a></td>
+          <td><a href="/s?wd={{$v.Author}}">{{$v.Author}}</a></td>
+          <td><a target="_blank" href="{{$v.LastChapterUrl}}">{{$v.LastChapter}}</a></td>
           <td>{{$v.FromName}}</td>
           <td>{{$v.UpdateTime}}</td>
         </tr>

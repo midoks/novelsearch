@@ -133,7 +133,14 @@ func SosoNovelByKw(kw string, page, pageSize int) ([]AppNovel, int) {
 		SetCond(cond1).
 		OrderBy("-id").
 		Limit(pageSize, offset).
-		All(&list, "id", "name", "from_id", "unique_id", "author", "update_time")
+		All(&list, "id",
+			"name",
+			"from_id",
+			"unique_id",
+			"author",
+			"last_chapter",
+			"last_chapter_url",
+			"update_time")
 	// orm.Debug = false
 	return list, len(list)
 }

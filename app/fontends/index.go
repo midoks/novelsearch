@@ -78,15 +78,14 @@ func (this *IndexController) Soso() {
 
 		row["Id"] = v.Id
 		row["Name"] = v.Name
-		row["Desc"] = v.Desc
+		row["UniqueId"] = v.UniqueId
 		row["Author"] = v.Author
 		row["FromId"] = v.FromId
 		row["FromName"] = fName
-		row["ChapterNum"] = v.ChapterNum
 		row["LastChapter"] = v.LastChapter
 		row["LastChapterUrl"] = v.LastChapterUrl
 		row["Status"] = v.Status
-		row["UpdateTime"] = beego.Date(time.Unix(v.UpdateTime, 0), "Y-m-d H:i:s")
+		row["UpdateTime"] = beego.Date(time.Unix(v.UpdateTime, 0), "Y-m-d")
 		list[k] = row
 
 		// fmt.Println(v.Name)

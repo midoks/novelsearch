@@ -11,9 +11,9 @@ import (
 	// "github.com/midoks/novelsearch/app/libs"
 	"github.com/midoks/novelsearch/app/models"
 	// "regexp"
-	"strings"
-	// "time"
 	"strconv"
+	"strings"
+	"time"
 )
 
 func CronWebRuleSpider(v *models.AppItem, url string, ranges string, rule string) {
@@ -65,13 +65,14 @@ func CronWebRuleSpider(v *models.AppItem, url string, ranges string, rule string
 		if isEmpty {
 			break
 		}
+
 		logs.Warn("全站采集结束:url:%s", cur_page)
 	}
 }
 
 //首页爬取数据
 func WebRuleSpider() error {
-
+	timeStart := time.Now().Unix()
 	logs.Info("全站更新---start!")
 
 	filters := make([]interface{}, 0)
@@ -91,7 +92,7 @@ func WebRuleSpider() error {
 			logs.Info("全站更新(条件不足)---end!")
 		}
 	}
-
-	logs.Info("全站更新---end!")
+	timeEnd := time.Now().Unix()
+	logs.Info("全站更新---end!", timeEnd-timeStart)
 	return nil
 }
