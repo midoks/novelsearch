@@ -123,6 +123,10 @@ func SosoNovelByKw(kw string) []AppNovel {
 	return list
 }
 
+func IndexNovelList() {
+
+}
+
 func NovelDelById(id int) (int64, error) {
 	return orm.NewOrm().Delete(&AppItem{Id: id})
 }

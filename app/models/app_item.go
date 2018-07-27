@@ -88,6 +88,15 @@ func ItemGetById(id int) (*AppItem, error) {
 	return u, nil
 }
 
+func ItemGetNameById(id int) string {
+	u := new(AppItem)
+	err := orm.NewOrm().QueryTable(getTnByAppItem()).Filter("id", id).One(u)
+	if err != nil {
+		return "无数据"
+	}
+	return u.Name
+}
+
 func ItemGetByName(name string) (*AppItem, error) {
 
 	u := new(AppItem)
