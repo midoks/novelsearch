@@ -91,7 +91,7 @@ func (this *IndexController) Soso() {
 	this.display()
 }
 
-func (this *IndexController) Page() {
+func (this *IndexController) Content() {
 	this.display()
 }
 
@@ -100,7 +100,7 @@ type BookLinkInfo struct {
 	Url  string
 }
 
-func (this *IndexController) Details() {
+func (this *IndexController) List() {
 	unique_id := this.Ctx.Input.Param(":unique_id")
 	data, err := models.NovelGetByUniqueId(unique_id)
 	if err == nil {
