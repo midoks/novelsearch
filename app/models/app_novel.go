@@ -19,10 +19,6 @@ type AppNovel struct {
 	ChapterNum     int
 	LastChapter    string
 	LastChapterUrl string
-	DClick         int
-	MClick         int
-	YClick         int
-	CClick         int
 	BookStatus     int
 	Status         int
 	UpdateTime     int64

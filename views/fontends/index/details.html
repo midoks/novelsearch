@@ -10,7 +10,11 @@
           </tr>
 
           <tr>
-            <td class="text-left"><span>更新:{{.info.UpdateTime}}</span></td>
+            <td class="text-left" title="更新:{{.info.UpdateTime}}"><span>
+            	状态:{{if eq 1 .info.Status}}完本
+            	{{else}}连载{{end}}
+            	</span>
+            </td>
             <td class="text-left"><span>来源:{{.info.FromName}}</span></td>
           </tr>
 

@@ -45,10 +45,6 @@ func (this *IndexController) Index() {
 	this.display()
 }
 
-func (this *IndexController) Top() {
-	this.display()
-}
-
 func (this *IndexController) Baidutop() {
 	list, err := libs.GetAllBaiduTop()
 	if err == nil {

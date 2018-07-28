@@ -26,7 +26,6 @@ func init() {
 
 	//前台
 	beego.Router("/", &fontends.IndexController{}, "*:Index")
-	beego.Router("/top.html", &fontends.IndexController{}, "*:Top")
 	beego.Router("/baidutop.html", &fontends.IndexController{}, "*:Baidutop")
 	beego.Router("/s", &fontends.IndexController{}, "*:Soso")
 	beego.Router("/b/:unique_id(.*).(html|htm|shtml)", &fontends.IndexController{}, "*:Details")
