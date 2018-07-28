@@ -17,6 +17,7 @@ func Init() {
 	beego.AddFuncMap("isIntInList", tplIsIntInList)
 	beego.AddFuncMap("loadtimes", loadtimes)
 	beego.AddFuncMap("adminPath", getAdminPath)
+	beego.AddFuncMap("base64encode", tplBase64encode)
 
 	beego.AddFuncMap("webName", func() string {
 		return models.OptionGet(models.WEB_NAME, "小说搜索")
@@ -29,6 +30,11 @@ func Init() {
 	beego.AddFuncMap("webDesc", func() string {
 		return models.OptionGet(models.WEB_DESC, "默认描述")
 	})
+}
+
+func tplBase64encode(in int) string {
+	d := strconv.Itoa(in)
+	return Base64encode(d)
 }
 
 func loadtimes(t time.Time) int {

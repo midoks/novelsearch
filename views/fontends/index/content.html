@@ -1,43 +1,11 @@
-
 <div class="container">
-	{{if .info}}
-    <div class="rows">
-        <table class="table table-bordered">
-          <tr>
-            <td class="text-center" rowspan="2"><h1>{{.info.Name}}</h1></td>
-            <td class="text-left"><span>作者:<a href="/s?wd={{.info.Author}}" target="_blank">{{.info.Author}}</a></span></td>
-            <td class="text-left"><span>分类:{{.info.Category}}</span></td>
-          </tr>
 
-          <tr>
-            <td class="text-left" title="更新:{{.info.UpdateTime}}"><span>
-            	状态:{{if eq 1 .info.Status}}完本
-            	{{else}}连载{{end}}
-            	</span>
-            </td>
-            <td class="text-left"><span>来源:{{.info.FromName}}</span></td>
-          </tr>
-
-          <tr>
-            <td class="text-left" colspan="3">更新:{{.info.Desc}}</td>
-          </tr>
-        </table>
-    </div>
-    
-    <div class="panel panel-default" style="border: none;">
+    <div class="panel panel-default">
         <div class="panel-heading">
-            <h3 class="panel-title text-center">章节</h3>
+            <h3 class="panel-title text-center">第三百六十六章 提前发作</h3>
         </div>
-
-       	<div class="row show-grid">
-       		{{range  $k1, $v1 := .info.List}}
-	  			<div class="col-xs-6 col-md-4 text-center" >
-	  				<a  href="/content.html" target="_blank" >{{$v1.Name}}</a>
-	  			</div>
-	  		{{end}}
-		</div>
+        <div style="padding: 15px;"  id="content">
+          {{str2html .Content}}
+        </div>
     </div>
-    {{end}}
-    
-    
 </div>

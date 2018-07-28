@@ -32,7 +32,7 @@
        	<div class="row show-grid">
        		{{range  $k1, $v1 := .info.List}}
 	  			<div class="col-xs-6 col-md-4 text-center" >
-	  				<a  href="/content.html" target="_blank" >{{$v1.Name}}</a>
+	  				<a  href="/c/{{$.info.Id|base64encode}}/{{$k1|base64encode}}.html" target="_blank" >{{.Name}}</a>
 	  			</div>
 	  		{{end}}
 		</div>

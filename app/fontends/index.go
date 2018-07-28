@@ -4,14 +4,21 @@ import (
 	"encoding/json"
 	// "fmt"
 	"github.com/astaxie/beego"
+	"github.com/midoks/novelsearch/app/crontab"
 	"github.com/midoks/novelsearch/app/libs"
 	"github.com/midoks/novelsearch/app/models"
+	"strconv"
 	"strings"
 	"time"
 )
 
 type IndexController struct {
 	CommonController
+}
+
+type BookLinkInfo struct {
+	Name string
+	Url  string
 }
 
 func (this *IndexController) Index() {
@@ -92,15 +99,76 @@ func (this *IndexController) Soso() {
 }
 
 func (this *IndexController) Content() {
+	var err error
+	id := this.Ctx.Input.Param(":id")
+	chapter_id := this.Ctx.Input.Param(":chapter_id")
+
+	id_real, err := libs.Base64decode(id)
+	if err != nil {
+		this.redirect("/")
+		return
+	}
+
+	chapter_id_real, err := libs.Base64decode(chapter_id)
+	if err != nil {
+		this.redirect("/")
+		return
+	}
+
+	id_int, err := strconv.Atoi(id_real)
+	if err != nil {
+		this.redirect("/")
+		return
+	}
+
+	chapter_id_int, err := strconv.Atoi(chapter_id_real)
+	if err != nil {
+		this.redirect("/")
+		return
+	}
+
+	data, err := models.NovelGetById(id_int)
+
+	if err != nil {
+		this.redirect("/")
+		return
+	}
+
+	ruleList, err := models.ItemGetById(data.FromId)
+	if err != nil {
+		this.redirect("/")
+		return
+	}
+	// fmt.Println(ruleList.ContentRule)
+
+	var bli []BookLinkInfo
+	err = json.Unmarshal([]byte(data.List), &bli)
+	if err != nil {
+		this.redirect("/")
+		return
+	}
+
+	info := bli[chapter_id_int]
+	url := info.Url
+
+	urlData, err := libs.GetHttpData(url)
+	if err != nil {
+
+	}
+
+	content, err := crontab.RegNovelSigleInfo(urlData, ruleList.ContentRule)
+	if err != nil {
+
+	}
+
+	// fmt.Println("a:", chapter_id_real, url, content)
+
+	this.Data["Content"] = content
 	this.display()
 }
 
-type BookLinkInfo struct {
-	Name string
-	Url  string
-}
-
 func (this *IndexController) List() {
+	var err error
 	unique_id := this.Ctx.Input.Param(":unique_id")
 	data, err := models.NovelGetByUniqueId(unique_id)
 	if err == nil {
@@ -117,8 +185,8 @@ func (this *IndexController) List() {
 		row["Status"] = data.Status
 		row["UpdateTime"] = beego.Date(time.Unix(data.UpdateTime, 0), "Y-m-d H:i:s")
 		var bli []BookLinkInfo
-		errJson := json.Unmarshal([]byte(data.List), &bli)
-		if errJson == nil {
+		err := json.Unmarshal([]byte(data.List), &bli)
+		if err == nil {
 			row["List"] = bli
 		}
 		this.Data["info"] = row

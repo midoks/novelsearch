@@ -2,7 +2,10 @@ package libs
 
 import (
 	"crypto/md5"
+	"encoding/base64"
+	"errors"
 	"fmt"
+	"github.com/astaxie/beego/httplib"
 	"github.com/axgle/mahonia"
 	"os"
 )
@@ -39,6 +42,17 @@ func RemoveDuplicatesAndEmpty(a []string) (ret []string) {
 	return
 }
 
+func GetHttpData(url string) (string, error) {
+	req := httplib.Get(url)
+
+	str, err := req.String()
+	if err != nil {
+		return "", errors.New("资源获取错误!")
+	}
+
+	return str, nil
+}
+
 func PathExists(path string) (bool, error) {
 	_, err := os.Stat(path)
 	if err == nil {
@@ -48,6 +62,19 @@ func PathExists(path string) (bool, error) {
 		return false, nil
 	}
 	return false, err
+}
+
+func Base64encode(in string) string {
+	encodeString := base64.StdEncoding.EncodeToString([]byte(in))
+	return encodeString
+}
+
+func Base64decode(in string) (string, error) {
+	decodeBytes, err := base64.StdEncoding.DecodeString(in)
+	if err != nil {
+		return in, err
+	}
+	return string(decodeBytes), nil
 }
 
 func ConvertToString(src string, srcCode string, tagCode string) string {

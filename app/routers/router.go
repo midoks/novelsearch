@@ -26,10 +26,11 @@ func init() {
 
 	//前台
 	beego.Router("/", &fontends.IndexController{}, "*:Index")
-	beego.Router("/baidutop.html", &fontends.IndexController{}, "*:Baidutop")
+	beego.Router("/index", &fontends.IndexController{}, "*:Index")
+	beego.Router("/baidutop", &fontends.IndexController{}, "*:Baidutop")
 	beego.Router("/s", &fontends.IndexController{}, "*:Soso")
-	beego.Router("/b/:unique_id(.*).(html|htm|shtml)", &fontends.IndexController{}, "*:List")
-	beego.Router("/c/:unique_id(.*).(html|htm|shtml)", &fontends.IndexController{}, "*:Content")
+	beego.Router("/b/:unique_id(.*).(html|htm)", &fontends.IndexController{}, "*:List")
+	beego.Router("/c/:id(.*)/:chapter_id(.*).(html|htm)", &fontends.IndexController{}, "*:Content")
 
 	//前台接口
 	ns := beego.NewNamespace("/v1", beego.NSAutoRouter(&backends.ItemController{}))

@@ -79,21 +79,24 @@ func ItemGetList(page, pageSize int, filters ...interface{}) ([]*AppItem, int64)
 }
 
 func ItemGetById(id int) (*AppItem, error) {
-
+	// orm.Debug = true
 	u := new(AppItem)
 	err := orm.NewOrm().QueryTable(getTnByAppItem()).Filter("id", id).One(u)
 	if err != nil {
 		return nil, err
 	}
+	// orm.Debug = false
 	return u, nil
 }
 
 func ItemGetNameById(id int) string {
+	// orm.Debug = true
 	u := new(AppItem)
 	err := orm.NewOrm().QueryTable(getTnByAppItem()).Filter("id", id).One(u)
 	if err != nil {
 		return "无数据"
 	}
+	// orm.Debug = false
 	return u.Name
 }
 

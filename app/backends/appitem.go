@@ -246,7 +246,7 @@ func (this *AppItemController) Verify() {
 		valid := regexp.MustCompile(rule)
 		match := valid.FindAllStringSubmatch(content, -1)
 
-		fmt.Println(model)
+		// fmt.Println(model)
 		if strings.EqualFold(model, "1") {
 			for i := 0; i < len(match); i++ {
 				fmt.Println(path_tpl, "{$ID}", match[i][1])
