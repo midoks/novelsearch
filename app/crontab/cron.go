@@ -35,6 +35,11 @@ func Init() {
 
 	//百度榜单
 	BaiduTopAll()
-	tk5 := toolbox.NewTask("BaiduBang", "0 * */1 * * *", BaiduTopAll)
+	tk5 := toolbox.NewTask("BaiduBang", "59 23 * * * *", BaiduTopAll)
 	toolbox.AddTask("BaiduBang", tk5)
+
+	//邮件发送
+	// CronSendMail()
+	tk6 := toolbox.NewTask("CronSendMail", "0 * */1 * * *", CronSendMail)
+	toolbox.AddTask("CronSendMail", tk6)
 }

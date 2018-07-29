@@ -1,7 +1,7 @@
 package backends
 
 import (
-	"fmt"
+	// "fmt"
 	_ "github.com/astaxie/beego"
 	"github.com/midoks/novelsearch/app/models"
 	"strconv"
@@ -31,7 +31,6 @@ func (this *IndexController) Index() {
 	}
 
 	this.Data["CountList"] = list
-	fmt.Println(list)
 
 	this.Data["NovelCount"] = models.NovelCount("")
 	this.Data["NovelTodayCount"] = models.NovelTodayCount("")

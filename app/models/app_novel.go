@@ -154,7 +154,7 @@ func SosoNovelByKw(kw string, page, pageSize int) ([]AppNovel, int64) {
 }
 
 func NovelCount(from_id string) int64 {
-	orm.Debug = true
+	// orm.Debug = true
 	var count int64
 	query := orm.NewOrm().QueryTable(getTnByAppNovel())
 	if strings.EqualFold(from_id, "") {
@@ -162,7 +162,7 @@ func NovelCount(from_id string) int64 {
 	} else {
 		count, _ = query.Filter("from_id", from_id).Count()
 	}
-	orm.Debug = false
+	// orm.Debug = false
 	return count
 }
 
