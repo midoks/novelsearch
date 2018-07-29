@@ -2,7 +2,7 @@ package fontends
 
 import (
 	"encoding/json"
-	// "fmt"
+	"fmt"
 	"github.com/astaxie/beego"
 	"github.com/midoks/novelsearch/app/crontab"
 	"github.com/midoks/novelsearch/app/libs"
@@ -70,8 +70,9 @@ func (this *IndexController) Soso() {
 	if page < 1 {
 		page = 1
 	}
+	pageSize := 10
 
-	result, _ := models.SosoNovelByKw(kw, page, 10)
+	result, count := models.SosoNovelByKw(kw, page, pageSize)
 	list := make([]map[string]interface{}, len(result))
 
 	for k, v := range result {
@@ -90,9 +91,9 @@ func (this *IndexController) Soso() {
 		row["Status"] = v.Status
 		row["UpdateTime"] = beego.Date(time.Unix(v.UpdateTime, 0), "Y-m-d")
 		list[k] = row
-
-		// fmt.Println(v.Name)
 	}
+
+	this.Data["pageLink"] = libs.NewPager(page, int(count), pageSize, "/s?wd="+kw, true).ToString()
 	this.Data["list"] = list
 	this.Data["kw"] = kw
 	this.display()
@@ -115,19 +116,13 @@ func (this *IndexController) Content() {
 		return
 	}
 
-	id_int, err := strconv.Atoi(id_real)
-	if err != nil {
-		this.redirect("/")
-		return
-	}
-
 	chapter_id_int, err := strconv.Atoi(chapter_id_real)
 	if err != nil {
 		this.redirect("/")
 		return
 	}
 
-	data, err := models.NovelGetById(id_int)
+	data, err := models.NovelGetByIdStr(id_real)
 
 	if err != nil {
 		this.redirect("/")
@@ -139,7 +134,6 @@ func (this *IndexController) Content() {
 		this.redirect("/")
 		return
 	}
-	// fmt.Println(ruleList.ContentRule)
 
 	var bli []BookLinkInfo
 	err = json.Unmarshal([]byte(data.List), &bli)
@@ -161,8 +155,23 @@ func (this *IndexController) Content() {
 
 	}
 
-	// fmt.Println("a:", chapter_id_real, url, content)
+	chapter_id_float, err := strconv.ParseFloat(chapter_id_real, 64)
+	count_list := strconv.Itoa(len(bli))
+	count_list_float, err := strconv.ParseFloat(count_list, 64)
+	this.Data["Percent"] = fmt.Sprintf("%.2f", (chapter_id_float/count_list_float)*100)
 
+	tmpPrev := chapter_id_int - 1
+	if tmpPrev >= 0 {
+		this.Data["Prev"] = tmpPrev
+	}
+
+	tmpNext := chapter_id_int + 1
+	if tmpNext <= len(bli) {
+		this.Data["Next"] = tmpNext
+	}
+
+	this.Data["Info"] = data
+	this.Data["Title"] = info.Name
 	this.Data["Content"] = content
 	this.display()
 }

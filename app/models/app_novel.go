@@ -72,6 +72,15 @@ func NovelGetById(id int) (*AppNovel, error) {
 	return u, nil
 }
 
+func NovelGetByIdStr(id string) (*AppNovel, error) {
+	u := new(AppNovel)
+	err := orm.NewOrm().QueryTable(getTnByAppNovel()).Filter("id", id).One(u)
+	if err != nil {
+		return nil, err
+	}
+	return u, nil
+}
+
 func NovelGetByName(name string) (*AppNovel, error) {
 
 	u := new(AppNovel)
@@ -115,7 +124,7 @@ func CronNovelGetByStatus(status string, interval int64, num int) []*AppNovel {
 	return list
 }
 
-func SosoNovelByKw(kw string, page, pageSize int) ([]AppNovel, int) {
+func SosoNovelByKw(kw string, page, pageSize int) ([]AppNovel, int64) {
 	offset := (page - 1) * pageSize
 
 	var list []AppNovel
@@ -125,20 +134,22 @@ func SosoNovelByKw(kw string, page, pageSize int) ([]AppNovel, int) {
 	cond1 := cond.And("name__istartswith", kw).
 		Or("author__istartswith", kw)
 
-	orm.NewOrm().QueryTable(getTnByAppNovel()).
+	query := orm.NewOrm().QueryTable(getTnByAppNovel()).
 		SetCond(cond1).
-		OrderBy("-id").
-		Limit(pageSize, offset).
-		All(&list, "id",
-			"name",
-			"from_id",
-			"unique_id",
-			"author",
-			"last_chapter",
-			"last_chapter_url",
-			"update_time")
+		OrderBy("-id")
+
+	total, _ := query.Count()
+
+	query.Limit(pageSize, offset).All(&list, "id",
+		"name",
+		"from_id",
+		"unique_id",
+		"author",
+		"last_chapter",
+		"last_chapter_url",
+		"update_time")
 	// orm.Debug = false
-	return list, len(list)
+	return list, total
 }
 
 func IndexNovelList() {
