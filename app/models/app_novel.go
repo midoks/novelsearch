@@ -3,6 +3,7 @@ package models
 import (
 	// "fmt"
 	"github.com/astaxie/beego/orm"
+	"strings"
 	"time"
 )
 
@@ -152,8 +153,36 @@ func SosoNovelByKw(kw string, page, pageSize int) ([]AppNovel, int64) {
 	return list, total
 }
 
-func IndexNovelList() {
+func NovelCount(from_id string) int64 {
+	orm.Debug = true
+	var count int64
+	query := orm.NewOrm().QueryTable(getTnByAppNovel())
+	if strings.EqualFold(from_id, "") {
+		count, _ = query.Count()
+	} else {
+		count, _ = query.Filter("from_id", from_id).Count()
+	}
+	orm.Debug = false
+	return count
+}
 
+func NovelTodayCount(from_id string) int64 {
+	// orm.Debug = true
+
+	t := time.Now()
+	the_time := time.Date(t.Year(), t.Month(), t.Day()-1, 0, 0, 0, 0, time.Local)
+	unix_time := the_time.Unix()
+	// fmt.Println(t.Year(), t.Month(), t.Day(), unix_time)
+
+	query := orm.NewOrm().QueryTable(getTnByAppNovel()).Filter("create_time__gt", unix_time)
+	var count int64
+	if strings.EqualFold(from_id, "") {
+		count, _ = query.Count()
+	} else {
+		count, _ = query.Filter("from_id", from_id).Count()
+	}
+	// orm.Debug = false
+	return count
 }
 
 func NovelDelById(id int) (int64, error) {

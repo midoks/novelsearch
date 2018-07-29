@@ -70,6 +70,7 @@ func GetAllBaiduTop() (map[string]interface{}, error) {
 
 	c, err := GetCache(BAIDU_KEY)
 
+	// fmt.Println(c)
 	if err == nil {
 		return c.(map[string]interface{}), nil
 	}

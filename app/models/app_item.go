@@ -110,6 +110,11 @@ func ItemGetByName(name string) (*AppItem, error) {
 	return u, nil
 }
 
+func ItemCount() int64 {
+	count, _ := orm.NewOrm().QueryTable(getTnByAppItem()).Filter("status", 1).Count()
+	return count
+}
+
 func ItemDelById(id int) (int64, error) {
 	return orm.NewOrm().Delete(&AppItem{Id: id})
 }
