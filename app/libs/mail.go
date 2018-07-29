@@ -2,10 +2,12 @@ package libs
 
 import (
 	"fmt"
+	"github.com/astaxie/beego"
 	"github.com/midoks/novelsearch/app/models"
 	"gopkg.in/gomail.v2"
 	"strconv"
 	"strings"
+	"time"
 )
 
 func SendMail(tomail string, subject string, conent string) {
@@ -32,7 +34,7 @@ func SendMail(tomail string, subject string, conent string) {
 
 	d := gomail.Dialer{Host: mailHost, Port: mailPortInt, Username: mailUser, Password: mailPwd}
 	if err := d.DialAndSend(m); err != nil {
-		fmt.Println(err)
+		fmt.Println(beego.Date(time.Now(), "Y-m-d H:i:s"), err)
 		return
 	}
 	return

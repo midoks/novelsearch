@@ -30,6 +30,14 @@ func Init() {
 	beego.AddFuncMap("webDesc", func() string {
 		return models.OptionGet(models.WEB_DESC, "默认描述")
 	})
+
+	beego.AddFuncMap("webStat", func() string {
+		return models.OptionGet(models.WEB_STAT, "")
+	})
+
+	beego.AddFuncMap("webNotice", func() string {
+		return models.OptionGet(models.WEB_NOTICE, "")
+	})
 }
 
 func tplBase64encode(in int) string {

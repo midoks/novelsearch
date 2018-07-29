@@ -40,6 +40,6 @@ func Init() {
 
 	//邮件发送
 	// CronSendMail()
-	tk6 := toolbox.NewTask("CronSendMail", "0 * */1 * * *", CronSendMail)
+	tk6 := toolbox.NewTask("CronSendMail", "59 23 * * * *", CronSendMail)
 	toolbox.AddTask("CronSendMail", tk6)
 }
