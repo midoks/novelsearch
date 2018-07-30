@@ -2,7 +2,7 @@ package crontab
 
 import (
 	"errors"
-	"fmt"
+	_ "fmt"
 	// "github.com/astaxie/beego"
 	"encoding/json"
 	// "github.com/astaxie/beego/httplib"
@@ -10,6 +10,7 @@ import (
 	"github.com/astaxie/beego/orm"
 	"github.com/midoks/novelsearch/app/libs"
 	"github.com/midoks/novelsearch/app/models"
+	// "io/ioutil"
 	"strconv"
 	"strings"
 	"time"
@@ -26,6 +27,7 @@ func CronPathInfo(v *models.AppItem, url, name string) {
 		return
 	}
 
+	// s_name := name
 	if content, err := getHttpData(url); err == nil {
 		var (
 			name            = ""
@@ -38,11 +40,12 @@ func CronPathInfo(v *models.AppItem, url, name string) {
 			err             = errors.New("new")
 			book_status     = 0
 		)
-		fmt.Println(content)
+		//fmt.Println(content)
+		// ioutil.WriteFile("t/"+s_name+".html", []byte(content), 0644)
 
 		name, err = RegNovelSigleInfo(content, v.NameRule)
 		if err != nil {
-			logs.Error("小说名获取错误", v.NameRule)
+			logs.Error("小说名获取错误:", v.NameRule)
 			return
 		}
 		logs.Info("小说名:%s", name)
@@ -57,21 +60,21 @@ func CronPathInfo(v *models.AppItem, url, name string) {
 			logs.Error("作者获取(失败):%s", err)
 			return
 		}
-		// logs.Info("作者:%s", author)
+		logs.Info("作者:%s", author)
 
 		desc, err = RegNovelSigleInfo(content, v.DescRule)
 		if err != nil {
 			logs.Error("描述获取(失败[%s]):%s", name, err)
 			return
 		}
-		// logs.Info("描述:%s", desc)
+		logs.Info("描述:%s", desc)
 
 		status, err = RegNovelSigleInfo(content, v.StatusRule)
 		if err != nil {
 			logs.Error("状态获取(失败):%s", err)
 			return
 		}
-		// logs.Info("状态:%s", status)
+		logs.Info("状态:%s", status)
 
 		//判断是否已经结束
 		if strings.EqualFold(status, v.StatusEndMark) {
@@ -83,36 +86,48 @@ func CronPathInfo(v *models.AppItem, url, name string) {
 			logs.Error("分类获取(失败):%s", err)
 			return
 		}
-		// logs.Info("分类:%s", category)
-
-		path, err = RegNovelSigleInfo(content, v.ChapterPathRule)
-		if err != nil {
-			logs.Error("目录获取(失败):%s", err)
-			return
-		}
-		// logs.Info("小说目录页:%s", path)
+		logs.Info("分类:%s", category)
 
 		var list = ""
 		var last_chapter = ""
 		var last_chapter_url = ""
 		var chapter_num = 0
-		if chapter_content, err = getHttpData(path); err == nil {
-			//fmt.Println(chapter_content)
-			chapter_list, chapter_list_err := RegNovelList(chapter_content, v.ChapterListRule)
-			if chapter_list_err != nil {
+
+		//如果获取章节目录页规则为空，则认为目录首页里,直接匹配
+		if strings.EqualFold(v.ChapterPathRule, "") {
+
+			chapter_content = content
+		} else {
+
+			path, err = RegNovelSigleInfo(content, v.ChapterPathRule)
+			if err != nil {
+				logs.Error("目录获取(失败):%s", err)
 				return
 			}
+			logs.Info("小说目录页:%s", path)
 
-			chapter_num = len(chapter_list)
-			if chapter_num > 0 {
-				last_chapter = chapter_list[chapter_num-1]["name"].(string)
-				last_chapter_url = chapter_list[chapter_num-1]["url"].(string)
+			chapter_content, err = getHttpData(path)
+			if err != nil {
+				logs.Error("资源获取失败:%s", path)
+				return
 			}
+		}
 
-			tmp_list, tmp_list_err := json.Marshal(chapter_list)
-			if tmp_list_err == nil {
-				list = string(tmp_list)
-			}
+		chapter_list, chapter_list_err := RegNovelList(chapter_content, v.ChapterListRule)
+		if chapter_list_err != nil {
+			logs.Error("匹配列表失败:%s", chapter_list_err, v.ChapterListRule)
+			return
+		}
+
+		chapter_num = len(chapter_list)
+		if chapter_num > 0 {
+			last_chapter = chapter_list[chapter_num-1]["name"].(string)
+			last_chapter_url = chapter_list[chapter_num-1]["url"].(string)
+		}
+
+		tmp_list, tmp_list_err := json.Marshal(chapter_list)
+		if tmp_list_err == nil {
+			list = string(tmp_list)
 		}
 
 		data := new(models.AppNovel)

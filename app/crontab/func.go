@@ -2,22 +2,17 @@ package crontab
 
 import (
 	"errors"
-	// "github.com/astaxie/beego"
-	// "encoding/json"
+	// "fmt"
 	"github.com/astaxie/beego/httplib"
 	// "github.com/astaxie/beego/logs"
-	// "github.com/astaxie/beego/orm"
-	// "github.com/midoks/novelsearch/app/libs"
-	// "github.com/midoks/novelsearch/app/models"
 	"regexp"
-	// "strconv"
 	"strings"
-	// "time"
 )
 
 func getHttpData(url string) (string, error) {
 	req := httplib.Get(url)
-	req.Header("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/31.0.1650.57 Safari/537.36")
+	req.Header("Accept-Encoding", "gzip,deflate,sdch")
+	req.Header("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36")
 
 	str, err := req.String()
 	if err != nil {
@@ -40,13 +35,15 @@ func RegPathInfo(content, reg string) ([][]string, error) {
 
 //匹配当个信息
 func RegNovelSigleInfo(content, reg string) (string, error) {
-
+	// reg = fmt.Sprintf("`%s`", reg)
+	// fmt.Println(reg)
 	match_exp := regexp.MustCompile(reg)
 	name := match_exp.FindAllStringSubmatch(content, -1)
-	// logs.Warn(name)
+
 	if len(name) == 0 {
 		return "", errors.New("没有匹配到!")
 	}
+	// logs.Warn(reg, name[0])
 	return strings.TrimSpace(name[0][1]), nil
 }
 

@@ -192,7 +192,7 @@
                 </div>
 
                 <div class="col-sm-3">
-                    匹配章节首页规则
+                    匹配章节首页规则(如果为空,则任务信息页和列表在一起)
                 </div>
             </div>
 
@@ -507,56 +507,64 @@ $('#reg_path_rule_test').click(function(){
 $('#reg_name_rule_test').click(function(){
     var url = $(".form-group :input[name='vars[path_page_exp]']").val();
     var rule = $(".form-group :input[name='vars[name_rule]']").val();
-    vefiy_rule(url,rule);
+    var charset = $(".form-group :input[name='vars[page_charset]']").val();
+    vefiy_rule(url,rule,charset);
 });
 
 //验证小说简介
 $('#reg_desc_rule_test').click(function(){
     var url = $(".form-group :input[name='vars[path_page_exp]']").val();
     var rule = $(".form-group :input[name='vars[desc_rule]']").val();
-    vefiy_rule(url,rule);
+    var charset = $(".form-group :input[name='vars[page_charset]']").val();
+    vefiy_rule(url,rule,charset);
 });
 
 //验证小说作者
 $('#reg_author_rule_test').click(function(){
     var url = $(".form-group :input[name='vars[path_page_exp]']").val();
     var rule = $(".form-group :input[name='vars[author_rule]']").val();
-    vefiy_rule(url,rule);
+    var charset = $(".form-group :input[name='vars[page_charset]']").val();
+    vefiy_rule(url,rule,charset);
 });
 
 //验证小说分类
 $('#reg_category_rule_test').click(function(){
     var url = $(".form-group :input[name='vars[path_page_exp]']").val();
     var rule = $(".form-group :input[name='vars[category_rule]']").val();
-    vefiy_rule(url,rule);
+    var charset = $(".form-group :input[name='vars[page_charset]']").val();
+    vefiy_rule(url,rule,charset);
 });
 
 //验证小说状态
 $('#reg_status_rule_test').click(function(){
     var url = $(".form-group :input[name='vars[path_page_exp]']").val();
     var rule = $(".form-group :input[name='vars[status_rule]']").val();
-    vefiy_rule(url,rule);
+    var charset = $(".form-group :input[name='vars[page_charset]']").val();
+    vefiy_rule(url,rule,charset);
 });
 
 //验证章节首页列表
 $('#reg_chapter_path_rule_test').click(function(){
     var url = $(".form-group :input[name='vars[path_page_exp]']").val();
     var rule = $(".form-group :input[name='vars[chapter_path_rule]']").val();
-    vefiy_rule(url,rule);
+    var charset = $(".form-group :input[name='vars[page_charset]']").val();
+    vefiy_rule(url,rule,charset);
 });
 
 //验证章节列表
 $('#reg_chapter_list_rule_test').click(function(){
     var url = $(".form-group :input[name='vars[chapter_path_exp]']").val();
     var rule = $(".form-group :input[name='vars[chapter_list_rule]']").val();
-    vefiy_rule(url,rule);
+    var charset = $(".form-group :input[name='vars[page_charset]']").val();
+    vefiy_rule(url,rule,charset);
 });
 
 //验证章节内容
 $('#reg_content_rule_test').click(function(){
     var url = $(".form-group :input[name='vars[content_exp]']").val();
     var rule = $(".form-group :input[name='vars[content_rule]']").val();
-    vefiy_rule(url,rule);
+    var charset = $(".form-group :input[name='vars[page_charset]']").val();
+    vefiy_rule(url,rule,charset);
 });
 
 //验证soso内容
