@@ -11,7 +11,7 @@
  Target Server Version : 50634
  File Encoding         : 65001
 
- Date: 29/07/2018 23:07:31
+ Date: 30/07/2018 15:01:14
 */
 
 SET NAMES utf8mb4;
@@ -73,11 +73,11 @@ CREATE TABLE `app_item` (
 -- Records of app_item
 -- ----------------------------
 BEGIN;
-INSERT INTO `app_item` VALUES (2, '顶点小说', 0, 'utf8', 'https://www.23us.so/', '<a href=\"(.*)\" target=\"_blank\"><img src=\".*\" alt=\"(.*)\"></a>\r\n<li><p>.*</p><a href=\"(.*)\" target=\"_blank\">(.*)</a></li>\r\n', 'https://www.23us.so/xiaoshuo/\\d*.html', 'https://www.23us.so/xiaoshuo/{$ID}.html', 'https://www.23us.so/xiaoshuo/43.html', '<h1>(.*)全文阅读</h1>', '(?Uis)<p>&nbsp;&nbsp;&nbsp;&nbsp;(.*)<br />', '<th>小说作者</th>\\n<td>&nbsp;(.*)</td>', '<th>小说类别</th>\\n<td>&nbsp;<a href=\".*\">(.*)</a></td>', '<th>小说状态</th>\\n<td>&nbsp;(.*)</td>', '完本', '<a class=\"read\" href=\"(.*)\" title=\".*最新章节\">最新章节</a>', 'https://www.23us.so/files/article/html/0/43/index.html', '(?U)<td class=\"L\"><a href=\"(.*)\">(.*)</a></td>', 'https://www.23us.so/files/article/html/0/43/3615670.html', '(?iUs)<dd id=\"contents\">(.*)</dd>', 'http://zhannei.baidu.com/cse/search?s=8053757951023821596&q={$KEYWORD}', 'p', '(?iU)<a cpos=\"title\" href=\"http://.*/html/\\d+/(.*)/index.html\" title=\"(.*)\" class=\"result-game-item-title-link\" target=\"_blank\">', 1, 0, 'https://www.23us.so/top/allvisit_{$RANGE}.html', '1,1200', '(?Uis)<td class=\"L\"><a href=\"(https://www.23us.so/xiaoshuo/\\d*\\.html)\">(.*)</a></td>', '', 1, 1532328044, 1515035827);
+INSERT INTO `app_item` VALUES (2, '顶点小说', 0, 'utf8', 'https://www.23us.so/', '<a href=\"(.*)\" target=\"_blank\"><img src=\".*\" alt=\"(.*)\"></a>\r\n<li><p>.*</p><a href=\"(.*)\" target=\"_blank\">(.*)</a></li>\r\n', 'https://www.23us.so/xiaoshuo/\\d*.html', 'https://www.23us.so/xiaoshuo/{$ID}.html', 'https://www.23us.so/xiaoshuo/43.html', '<h1>(.*)全文阅读</h1>', '(?Uis)<p>&nbsp;&nbsp;&nbsp;&nbsp;(.*)<br />', '<th>小说作者</th>\\n<td>&nbsp;(.*)</td>', '<th>小说类别</th>\\n<td>&nbsp;<a href=\".*\">(.*)</a></td>', '<th>小说状态</th>\\n<td>&nbsp;(.*)</td>', '完本', '<a class=\"read\" href=\"(.*)\" title=\".*最新章节\">最新章节</a>', 'https://www.23us.so/files/article/html/0/43/index.html', '(?U)<td class=\"L\"><a href=\"(.*)\">(.*)</a></td>', 'https://www.23us.so/files/article/html/0/43/3615670.html', '(?iUs)<dd id=\"contents\">(.*)</dd>', 'http://zhannei.baidu.com/cse/search?s=8053757951023821596&q={$KEYWORD}', 'p', '(?iU)<a cpos=\"title\" href=\"http://.*/html/\\d+/(.*)/index.html\" title=\"(.*)\" class=\"result-game-item-title-link\" target=\"_blank\">', 1, 0, 'https://www.23us.so/top/allvisit_{$RANGE}.html', '1,1200', '(?Uis)<td class=\"L\"><a href=\"(https://www.23us.so/xiaoshuo/\\d*\\.html)\">(.*)</a></td>', '', -1, 1532916327, 1515035827);
 INSERT INTO `app_item` VALUES (6, '58小说网', 0, 'gbk', 'http://www.5858xs.com/', '', '(?U)/(\\d*).(html)', NULL, 'http://www.5858xs.com/273530.html', '', '', '', '', '', '完本', '', 'http://www.5858xs.com/html/273/273530/index.html', '', 'http://www.5858xs.com/html/273/273530/40723761.html', '', '', 'page', '', 0, 0, 'http://www.5858xs.com/xiaoshuosort0/0/{$RANGE}.html', '1,100', '(?U)<td class=odd><a href=(.*) target=_blank>.*</a></td>', '', 0, 1531811148, 1531706864);
 INSERT INTO `app_item` VALUES (7, 'x顶点小说', 0, 'gbk', 'https://www.x23us.com/', '', '', NULL, 'https://www.x23us.com/html/68/68255/', '', '', '', '', '', '完本', '', 'https://www.x23us.com/html/68/68255/', '', 'https://www.x23us.com/html/68/68255/', '', 'https://www.x23us.com/modules/article/search.php?searchtype=keywords&searchkey={$KEYWORD}', 'page', '(?U)<td class=\"odd\"><a href=\"(.*)\"><b style=\"color:red\">.*</b>.*</a></td>', NULL, 0, '', '1,100', '', '', 0, 1531997154, 1531721940);
 INSERT INTO `app_item` VALUES (8, '顶点3', 0, 'utf8', 'https://www.dingdiann.com/', '', '<a href=\"/(.*)/\">(.*)</a>', NULL, 'https://www.dingdiann.com/ddk65139/', '<h1>(.*)</h1>', '', '<p>作&nbsp;&nbsp;者：(.*)</p>', '<meta property=\"og:novel:category\" content=\"(.*)\"/>', '<meta property=\"og:novel:status\" content=\"(.*)\"/>\r\n', '', '<meta property=\"og:novel:read_url\" content=\"(.*)\"/>\r\n', 'https://www.dingdiann.com/ddk65139/', '<dd> <a style=\"\" href=\"(.*)\">(.*)</a></dd>', 'https://www.dingdiann.com/ddk65139/3436909.html', '(?Us)<div id=\"content\">(.*)</div>', 'https://www.dingdiann.com/searchbook.php?keyword={$KEYWORD}', '', '(?U)<a href=\"(.*)\" \\s* target=\"_blank\">.*</a>', NULL, 0, '', '', '', '', 0, 1531796369, 1531723140);
-INSERT INTO `app_item` VALUES (9, '起点', 1, 'utf8', 'https://www.qidian.com/', '(?U)<h4><a href=\"//(.*)\" target=\"_blank\" data-eid=\".*\" data-bid=\".*\">(.*)</a></h4>\r\n(?U)<div class=\"name-box\"><a class=\"name\" href=\"//(.*)\" target=\"_blank\" data-eid=\".*\" data-bid=\".*\">(.*)</a><i class=\"total\">.*</i></div>', 'https://book.qidian.com/info/([\\d]*)', 'https://book.qidian.com/info/{{$ID}}', 'https://book.qidian.com/info/1010191960', '(?U)<meta name=\"keywords\" content=\"(.*)\">\r\n', '(?U)<div class=\"book-intro\">(.*)</div>', '(?U)<a class=\"writer\" href=\"//.*\" target=\"_blank\" data-eid=\".*\">(.*)</a>', '<em class=\"iconfont\"></em><a href=\"//.*\" target=\"_blank\">(.*)</a>', '(?U)<p class=\"tag\"><span class=\"blue\">(.*)</span>', '完本', '', 'https://book.qidian.com/info/1010327039#Catalog', '(?Uis)<li data-rid=\"(\\d*)\"><a href=\"//(.*)\" target=\"_blank\" data-eid=\".*\" data-cid=\"//.*\" title=\".*\">(.*)</a></li>', 'https://read.qidian.com/chapter/VyR3pTTz0W7ywypLIF-xfQ2/vDlmIPJ20R1p4rPq4Fd4KQ2', '(?Uis)<div class=\"read-content j_readContent\">(.*)</div>', 'https://www.qidian.com/search?kw={$KEYWORD}', 'page', '(?isU)<h4><a href=\"//(.*)\" target=\"_blank\" data-eid=\".*\" data-bid=\".*\" data-algrid=\".*\">.*</a></h4>', 0, 0, 'https://www.qidian.com/all?orderId=&style=1&pageSize=20&siteid=1&pubflag=0&hiddenField=0&page={$RANG', '1,1000000', '(?Uis)<h4><a href=\"//(.*)\" target=\"_blank\" data-eid=\".*\" data-bid=\".*\">(.*)</a></h4>', '', 0, 1532839731, 1531804748);
+INSERT INTO `app_item` VALUES (9, '起点', 1, 'utf8', 'https://www.qidian.com/', '(?U)<h4><a href=\"//(.*)\" target=\"_blank\" data-eid=\".*\" data-bid=\".*\">(.*)</a></h4>\r\n(?U)<div class=\"name-box\"><a class=\"name\" href=\"//(.*)\" target=\"_blank\" data-eid=\".*\" data-bid=\".*\">(.*)</a><i class=\"total\">.*</i></div>', 'https://book.qidian.com/info/([\\d]*)', 'https://book.qidian.com/info/{{$ID}}', 'https://book.qidian.com/info/1004608738', '<div class=\"book-info \">\\s*<h1>\\s*<em>(.*)</em>\\s*<span>\r\n', '(?U)<div class=\"book-intro\">(.*)</div>', '(?U)<a class=\"writer\" href=\"//.*\" target=\"_blank\" data-eid=\".*\">(.*)</a>', '(?Usi)</em>\\s*<a href=\"//.*\" target=\"_blank\">(.*)</a><em class=\"iconfont\">', '(?U)<p class=\"tag\"><span class=\"blue\">(.*)</span>', '完本', '', 'https://book.qidian.com/info/1010327039#Catalog', '(?Uis)<li data-rid=\"(\\d*)\"><a href=\"//(.*)\" target=\"_blank\" data-eid=\".*\" data-cid=\"//.*\" title=\".*\">(.*)</a></li>', 'https://read.qidian.com/chapter/VyR3pTTz0W7ywypLIF-xfQ2/vDlmIPJ20R1p4rPq4Fd4KQ2', '(?Uis)<div class=\"read-content j_readContent\">(.*)</div>', 'https://www.qidian.com/search?kw={$KEYWORD}', 'page', '(?isU)<h4><a href=\"//(.*)\" target=\"_blank\" data-eid=\".*\" data-bid=\".*\" data-algrid=\".*\">.*</a></h4>', 0, 0, 'https://www.qidian.com/all?pageSize=20&page={$RANGE}', '1,1000000', '(?Uis)<h4><a href=\"//(.*)\" target=\"_blank\" data-eid=\".*\" data-bid=\".*\">(.*)</a></h4>', '', 1, 1532931812, 1531804748);
 INSERT INTO `app_item` VALUES (10, '爱尚小说网', 0, 'utf8', 'http://www.23xs.cc/', '', '', NULL, '', '', '', '', '', '', '完本', '', '', '', '', '', '', 'page', '', NULL, 0, '', '1,100', '', '', 0, 1531997113, 0);
 COMMIT;
 
@@ -128,7 +128,7 @@ CREATE TABLE `sys_func` (
   `create_time` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `pid` (`pid`)
-) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8 COMMENT='权限列表';
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8 COMMENT='权限列表';
 
 -- ----------------------------
 -- Records of sys_func
@@ -161,11 +161,12 @@ INSERT INTO `sys_func` VALUES (32, '锁定', 18, 'appitem', 'lock', 0, -1, '', '
 INSERT INTO `sys_func` VALUES (33, '删除', 18, 'appitem', 'del', 0, -1, '', '', 0, 1, 1531393695, 1515400760);
 INSERT INTO `sys_func` VALUES (38, '小说管理', 0, 'appnovel', '', 0, 1, 'glyphicon glyphicon-file', '小说列表', 3, 1, 1531394032, 1531393922);
 INSERT INTO `sys_func` VALUES (39, '列表', 38, 'appnovel', 'index', 0, 1, '', '小说列表', 0, 1, 1531394020, 1531393957);
-INSERT INTO `sys_func` VALUES (40, '验证功能', 18, 'appitem', 'verify', 0, 1, '', '验证功能', 0, 1, 1531710514, 1531710379);
+INSERT INTO `sys_func` VALUES (40, '验证功能', 18, 'appitem', 'verify', 0, -1, '', '验证功能', 0, 1, 1531710514, 1531710379);
 INSERT INTO `sys_func` VALUES (41, '基本设置', 0, 'syssetting', '', 0, 1, 'glyphicon glyphicon-edit', '基本设置', 1, 1, 1532057224, 1532056813);
 INSERT INTO `sys_func` VALUES (42, '基本信息', 41, 'syssetting', 'index', 0, 1, '', '', 0, 1, 1532057439, 1532057071);
 INSERT INTO `sys_func` VALUES (43, '邮件设置', 41, 'syssetting', 'mail', 0, 1, '', '', 0, 1, 1532065874, 1532065874);
 INSERT INTO `sys_func` VALUES (44, '删除', 38, 'appnovel', 'del', 0, -1, '', '', 0, 1, 1532083601, 1532083601);
+INSERT INTO `sys_func` VALUES (45, '全站爬取功能', 18, 'appitem', 'allspider', 0, -1, '', '权限爬取功能', 0, 1, 1532932359, 1532932290);
 COMMIT;
 
 -- ----------------------------
@@ -199,16 +200,16 @@ CREATE TABLE `sys_option` (
 -- Records of sys_option
 -- ----------------------------
 BEGIN;
-INSERT INTO `sys_option` VALUES (1, 'web_name', '小说搜索', 1532617609, 1532064476);
-INSERT INTO `sys_option` VALUES (2, 'web_keyword', '小说关键字1', 1532617609, 1532065440);
-INSERT INTO `sys_option` VALUES (3, 'web_desc', '小说描述1', 1532617609, 1532065440);
-INSERT INTO `sys_option` VALUES (4, 'web_stat', '小说统计代码11', 1532617609, 1532065440);
-INSERT INTO `sys_option` VALUES (5, 'web_notice', '', 1532850274, 1532065440);
+INSERT INTO `sys_option` VALUES (1, 'web_name', '小说搜索', 1532928203, 1532064476);
+INSERT INTO `sys_option` VALUES (2, 'web_keyword', '小说关键字', 1532928203, 1532065440);
+INSERT INTO `sys_option` VALUES (3, 'web_desc', '小说描述', 1532928203, 1532065440);
+INSERT INTO `sys_option` VALUES (4, 'web_stat', '<script>\r\nvar _hmt = _hmt || [];\r\n(function() {\r\n  var hm = document.createElement(\"script\");\r\n  hm.src = \"https://hm.baidu.com/hm.js?76d1a0e1913a4b43c42669b51ef1734b\";\r\n  var s = document.getElementsByTagName(\"script\")[0]; \r\n  s.parentNode.insertBefore(hm, s);\r\n})();\r\n</script>', 1532928203, 1532065440);
+INSERT INTO `sys_option` VALUES (5, 'web_notice', '', 1532928203, 1532065440);
 INSERT INTO `sys_option` VALUES (6, 'mail_host', 'smtp.qq.com', 1532850274, 1532066709);
 INSERT INTO `sys_option` VALUES (7, 'mail_port', '25', 1532850274, 1532066709);
 INSERT INTO `sys_option` VALUES (8, 'mail_user', '627293072@qq.com', 1532850274, 1532066709);
 INSERT INTO `sys_option` VALUES (9, 'mail_pwd', 'jnigycrzraecbfci', 1532850274, 1532066709);
-INSERT INTO `sys_option` VALUES (10, 'web_notice_mail', 'midoks@163.com', 1532617609, 1532067228);
+INSERT INTO `sys_option` VALUES (10, 'web_notice_mail', 'midoks@163.com', 1532928203, 1532067228);
 COMMIT;
 
 -- ----------------------------
@@ -230,7 +231,7 @@ CREATE TABLE `sys_role` (
 -- Records of sys_role
 -- ----------------------------
 BEGIN;
-INSERT INTO `sys_role` VALUES (1, '管理员', '系统总管理员', '2,6,7,8,9,16,3,4,5,10,15,11,12,13,14,17,42,43,19,20,29,32,33,39,44,28', 1, 1532083738, 1489429439);
+INSERT INTO `sys_role` VALUES (1, '管理员', '系统总管理员', '2,6,7,8,9,16,3,4,5,10,15,11,12,13,14,17,42,43,19,20,29,32,33,40,45,39,44,28', 1, 1532932299, 1489429439);
 INSERT INTO `sys_role` VALUES (2, '编辑', '普通编辑人员', '2,14,15,17,18,23,32', 1, 1489429439, 1489429439);
 COMMIT;
 

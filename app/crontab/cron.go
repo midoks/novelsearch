@@ -2,6 +2,7 @@ package crontab
 
 import (
 	"fmt"
+	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/toolbox"
 )
 
@@ -15,31 +16,37 @@ func Init() {
 
 	//首页更新
 	// PageIndexSpider() //test
-	tk1 := toolbox.NewTask("PageIndexSpider", "0 59 4 * * *", PageIndexSpider)
-	toolbox.AddTask("PageIndexSpider", tk1)
+	indexSpider := beego.AppConfig.String("cron.index_spider")
+	tk1 := toolbox.NewTask("indexSpider", indexSpider, PageIndexSpider)
+	toolbox.AddTask("indexSpider", tk1)
 
 	//连载更新
 	// NovelIndexSpider()
-	tk2 := toolbox.NewTask("NovelIndexSpider", "0/30 * * * * *", NovelIndexSpider)
-	toolbox.AddTask("NovelIndexSpider", tk2)
+	novelIndexSpider := beego.AppConfig.String("cron.novel_index_spider")
+	tk2 := toolbox.NewTask("novelIndexSpider", novelIndexSpider, NovelIndexSpider)
+	toolbox.AddTask("novelIndexSpider", tk2)
 
 	//全站更新
 	// WebRuleSpider()
-	tk3 := toolbox.NewTask("WebRuleSpider", "59 59 23 11 * *", WebRuleSpider)
-	toolbox.AddTask("WebRuleSpider", tk3)
+	allSpider := beego.AppConfig.String("cron.all_spider")
+	tk3 := toolbox.NewTask("allSpider", allSpider, WebRuleSpider)
+	toolbox.AddTask("allSpider", tk3)
 
 	//搜索更新
 	// SosoSpider()
-	tk4 := toolbox.NewTask("SosoSpider", "59 59 23 * * *", SosoSpider)
+	sosoSpider := beego.AppConfig.String("cron.soso_spider")
+	tk4 := toolbox.NewTask("SosoSpider", sosoSpider, SosoSpider)
 	toolbox.AddTask("SosoSpider", tk4)
 
 	//百度榜单
 	BaiduTopAll()
-	tk5 := toolbox.NewTask("BaiduBang", "59 59 23 * *", BaiduTopAll)
-	toolbox.AddTask("BaiduBang", tk5)
+	baidubangSpider := beego.AppConfig.String("cron.baidubang_spider")
+	tk5 := toolbox.NewTask("baidubangSpider", baidubangSpider, BaiduTopAll)
+	toolbox.AddTask("baidubangSpider", tk5)
 
 	//邮件发送
 	// CronSendMail()
-	tk6 := toolbox.NewTask("CronSendMail", "59 59 23 * * *", CronSendMail)
-	toolbox.AddTask("CronSendMail", tk6)
+	sendMail := beego.AppConfig.String("cron.sendmail")
+	tk6 := toolbox.NewTask("sendMail", sendMail, CronSendMail)
+	toolbox.AddTask("sendMail", tk6)
 }
