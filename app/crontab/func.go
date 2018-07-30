@@ -17,6 +17,7 @@ import (
 
 func getHttpData(url string) (string, error) {
 	req := httplib.Get(url)
+	req.Header("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/31.0.1650.57 Safari/537.36")
 
 	str, err := req.String()
 	if err != nil {

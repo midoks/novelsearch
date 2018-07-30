@@ -5,6 +5,7 @@ import (
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/httplib"
 	"github.com/astaxie/beego/orm"
+	"github.com/midoks/novelsearch/app/crontab"
 	"github.com/midoks/novelsearch/app/libs"
 	"github.com/midoks/novelsearch/app/models"
 	// "log"
@@ -253,7 +254,7 @@ func (this *AppItemController) Verify() {
 				match[i][1] = strings.Replace(path_tpl, "{$ID}", match[i][1], -1)
 			}
 		}
-		// fmt.Println(url, content, match)
+		fmt.Println(url, content, match)
 		this.retOk("验证成功", match)
 	} else {
 		this.retFail("非法请求")
@@ -269,6 +270,23 @@ func (this *AppItemController) Del() {
 			msg := fmt.Sprintf("删除item项目%s成功", num)
 			this.uLog(msg)
 			this.retOk(msg)
+		}
+	}
+	this.retFail("非法参数")
+}
+
+func (this *AppItemController) AllSpider() {
+
+	id, err := this.GetInt("id")
+	if err == nil {
+		r, err := models.ItemGetById(id)
+		if err == nil {
+			if r.SpiderExp != "" && r.SpiderRange != "" && r.SpiderRule != "" {
+				go crontab.CronWebRuleSpider(r, r.SpiderExp, r.SpiderRange, r.SpiderRule)
+			} else {
+				this.retFail("全站更新(条件不足)")
+			}
+			this.retOk("执行成功")
 		}
 	}
 	this.retFail("非法参数")

@@ -2,6 +2,7 @@ package crontab
 
 import (
 	"errors"
+	"fmt"
 	// "github.com/astaxie/beego"
 	"encoding/json"
 	// "github.com/astaxie/beego/httplib"
@@ -26,7 +27,6 @@ func CronPathInfo(v *models.AppItem, url, name string) {
 	}
 
 	if content, err := getHttpData(url); err == nil {
-
 		var (
 			name            = ""
 			author          = ""
@@ -38,9 +38,11 @@ func CronPathInfo(v *models.AppItem, url, name string) {
 			err             = errors.New("new")
 			book_status     = 0
 		)
+		fmt.Println(content)
 
 		name, err = RegNovelSigleInfo(content, v.NameRule)
 		if err != nil {
+			logs.Error("小说名获取错误", v.NameRule)
 			return
 		}
 		logs.Info("小说名:%s", name)
