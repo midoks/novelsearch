@@ -17,12 +17,23 @@
 </div>
 
 
-<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-  <div class="modal-dialog modal-sm" role="document">
+<div class="modal fade" id="msgModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
     <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title" id="myModalLabel">网站通知</h4>
+      </div>
+      <div class="modal-body">{{webNotice}}</div>
     </div>
   </div>
 </div>
+
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.js"></script>
 
 <script type="text/javascript">
 $(function () {
@@ -31,8 +42,40 @@ $('[data-toggle="popover"]').popover()
 $('[data-toggle="tooltip"]').tooltip();
 
 
+function showWebInfo(){
+  var msg = $("#msgModal .modal-body").text();
+  if ( "" != msg ){
+    var is_close = $.cookie('today_close_notice'+getNowFormatDate());
+    if (is_close != 1){
+        var status = $('#msgModal').css('display');
+        if ('block' != status){
+          $('#msgModal').modal('show');
+        }
+    } 
+  }
+}
 
+$('#msgModal').on('hidden.bs.modal', function (e) {
+    $.cookie('today_close_notice'+getNowFormatDate(), 1);
+})
 
+setInterval(showWebInfo,500);
+
+function getNowFormatDate() {
+    var date = new Date();
+    var seperator1 = "-";
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    var strDate = date.getDate();
+    if (month >= 1 && month <= 9) {
+        month = "0" + month;
+    }
+    if (strDate >= 0 && strDate <= 9) {
+        strDate = "0" + strDate;
+    }
+    var currentdate = year + seperator1 + month + seperator1 + strDate;
+    return currentdate;
+}
 
 //end
 });
