@@ -129,7 +129,7 @@ func (this *IndexController) Content() {
 		return
 	}
 
-	ruleList, err := models.ItemGetById(data.FromId)
+	webInfo, err := models.ItemGetById(data.FromId)
 	if err != nil {
 		this.redirect("/")
 		return
@@ -150,9 +150,13 @@ func (this *IndexController) Content() {
 
 	}
 
-	content, err := crontab.RegNovelSigleInfo(urlData, ruleList.ContentRule)
+	content, err := crontab.RegNovelSigleInfo(urlData, webInfo.ContentRule)
 	if err != nil {
 
+	}
+
+	if strings.EqualFold(webInfo.PageCharset, "gbk") {
+		content = libs.ConvertToString(content, "gbk", "utf8")
 	}
 
 	chapter_id_float, err := strconv.ParseFloat(chapter_id_real, 64)

@@ -19,7 +19,7 @@
           </tr>
 
           <tr>
-            <td class="text-left" colspan="3">更新:{{.info.Desc}}</td>
+            <td class="text-left" colspan="3">{{str2html .info.Desc}}</td>
           </tr>
         </table>
     </div>
@@ -32,7 +32,7 @@
        	<div class="row show-grid">
        		{{range  $k1, $v1 := .info.List}}
 	  			<div class="col-xs-6 col-md-4 text-center" >
-	  				<a  href="/c/{{$.info.Id|base64encode}}/{{$k1|base64encode}}.html" target="_blank" >{{.Name}}</a>
+	  				<a  href="/c/{{$.info.Id|base64encode}}/{{$k1|base64encode}}.html">{{.Name}}</a>
 	  			</div>
 	  		{{end}}
 		</div>

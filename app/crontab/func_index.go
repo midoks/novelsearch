@@ -97,13 +97,13 @@ func CronPathInfo(v *models.AppItem, url, name string) {
 		var last_chapter = ""
 		var last_chapter_url = ""
 		var chapter_num = 0
+		var ab_path = ""
 
 		//如果获取章节目录页规则为空，则认为目录首页里,直接匹配
 		if strings.EqualFold(v.ChapterPathRule, "") {
-
 			chapter_content = content
+			ab_path = url
 		} else {
-
 			path, err = RegNovelSigleInfo(content, v.ChapterPathRule)
 			if err != nil {
 				logs.Error("目录获取(失败):%s", err)
@@ -111,14 +111,22 @@ func CronPathInfo(v *models.AppItem, url, name string) {
 			}
 			logs.Info("小说目录页:%s", path)
 
-			chapter_content, err = getHttpData(path)
+			ab_path = GetAbsoluteAddr(url, path)
+			logs.Info("绝对路径:", ab_path)
+
+			chapter_content, err = getHttpData(ab_path)
 			if err != nil {
-				logs.Error("资源获取失败:%s", path)
+				logs.Error("资源获取失败:%s", err, ab_path)
 				return
 			}
+
+			if strings.EqualFold(v.PageCharset, "gbk") {
+				chapter_content = libs.ConvertToString(chapter_content, "gbk", "utf8")
+			}
+
 		}
 
-		chapter_list, chapter_list_err := RegNovelList(chapter_content, v.ChapterListRule)
+		chapter_list, chapter_list_err := RegNovelListAutoPath(chapter_content, v.ChapterListRule, ab_path)
 		if chapter_list_err != nil {
 			logs.Error("匹配列表失败:%s", chapter_list_err, v.ChapterListRule)
 			return
