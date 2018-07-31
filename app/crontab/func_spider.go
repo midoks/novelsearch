@@ -2,7 +2,6 @@ package crontab
 
 import (
 	"errors"
-	"fmt"
 	// "github.com/astaxie/beego"
 	// "encoding/json"
 	// "github.com/astaxie/beego/httplib"
@@ -16,7 +15,7 @@ import (
 	"time"
 )
 
-func CronWebRuleSpider(v *models.AppItem, url string, ranges string, rule string) {
+func CronWebRuleSpider(v *models.AppItem, url string, ranges string, rule string, path_tpl string) {
 
 	var (
 		start    = 1
@@ -53,16 +52,15 @@ func CronWebRuleSpider(v *models.AppItem, url string, ranges string, rule string
 			}
 
 			list, errlist := RegNovelList(content, rule)
-			fmt.Println(content, rule)
-			if errlist == nil {
 
+			if errlist == nil {
 				if len(list) > 0 {
 					for j := 0; j < len(list); j++ {
-						var url = list[j]["url"].(string)
+						url := strings.Replace(path_tpl, "{$ID}", list[j]["url"].(string), -1)
 						if !strings.HasPrefix(url, "https://") && !strings.HasPrefix(url, "http://") {
 							url = "http://" + url
 						}
-						logs.Warn("采集页:url:%s", url)
+						// logs.Warn("采集页:url:%s", url)
 						CronPathInfo(v, url, list[j]["name"].(string))
 					}
 					isEmpty = false
@@ -71,7 +69,7 @@ func CronWebRuleSpider(v *models.AppItem, url string, ranges string, rule string
 					break
 				}
 			} else {
-				logs.Error("全站采集错误:%s", errlist)
+				logs.Error("全站采集错误:%s", errlist, rule, content)
 			}
 		}
 		if isEmpty {
@@ -98,8 +96,8 @@ func WebRuleSpider() error {
 
 	for i := 0; i < len(list); i++ {
 		var r = list[i]
-		if r.SpiderExp != "" && r.SpiderRange != "" && r.SpiderRule != "" {
-			CronWebRuleSpider(r, r.SpiderExp, r.SpiderRange, r.SpiderRule)
+		if r.SpiderExp != "" && r.SpiderRange != "" && r.SpiderRule != "" && r.PathTpl != "" {
+			CronWebRuleSpider(r, r.SpiderExp, r.SpiderRange, r.SpiderRule, r.PathTpl)
 		} else {
 			logs.Info("全站更新(条件不足)---end!")
 		}

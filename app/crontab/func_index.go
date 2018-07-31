@@ -29,6 +29,11 @@ func CronPathInfo(v *models.AppItem, url, name string) {
 
 	// s_name := name
 	if content, err := getHttpData(url); err == nil {
+
+		if strings.EqualFold(v.PageCharset, "gbk") {
+			content = libs.ConvertToString(content, "gbk", "utf8")
+		}
+
 		var (
 			name            = ""
 			author          = ""
@@ -173,6 +178,10 @@ func PageIndexSpider() error {
 
 		if content, err := getHttpData(v.PageIndex); err == nil {
 
+			if strings.EqualFold(v.PageCharset, "gbk") {
+				content = libs.ConvertToString(content, "gbk", "utf8")
+			}
+
 			var tmpRule = strings.TrimSpace(v.PageIndexRule)
 			tmpRule = strings.Replace(tmpRule, "\n", "|", -1)
 			tmpRule = strings.Replace(tmpRule, "\r\n", "|", -1)
@@ -185,11 +194,8 @@ func PageIndexSpider() error {
 				if err == nil {
 					// logs.Info(pathList)
 					for _, val := range pathList {
-						if libs.IsUrlRe(val[1]) {
-							CronPathInfo(v, val[1], val[2])
-						} else {
-							CronPathInfo(v, val[2], val[1])
-						}
+						url := strings.Replace(v.PathTpl, "{$ID}", val[1], -1)
+						CronPathInfo(v, url, val[2])
 					}
 				}
 			}

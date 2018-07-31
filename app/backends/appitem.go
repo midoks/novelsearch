@@ -136,7 +136,6 @@ func (this *AppItemController) Add() {
 		data.SosoExp = vars["soso_exp"]
 		data.SosoPageArgs = vars["soso_page_args"]
 		data.SosoRule = vars["soso_rule"]
-		data.SosoModel = vars["soso_model"]
 		data.SpiderExp = vars["spider_exp"]
 		data.SpiderRange = vars["spider_range"]
 		data.SpiderRule = vars["spider_rule"]
@@ -250,7 +249,7 @@ func (this *AppItemController) Verify() {
 		// fmt.Println(model)
 		if strings.EqualFold(model, "1") {
 			for i := 0; i < len(match); i++ {
-				fmt.Println(path_tpl, "{$ID}", match[i][1])
+				// fmt.Println(path_tpl, "{$ID}", match[i][1])
 				match[i][1] = strings.Replace(path_tpl, "{$ID}", match[i][1], -1)
 			}
 		}
@@ -286,8 +285,8 @@ func (this *AppItemController) AllSpider() {
 				return
 			}
 
-			if r.SpiderExp != "" && r.SpiderRange != "" && r.SpiderRule != "" {
-				go crontab.CronWebRuleSpider(r, r.SpiderExp, r.SpiderRange, r.SpiderRule)
+			if r.SpiderExp != "" && r.SpiderRange != "" && r.SpiderRule != "" && r.PathTpl != "" {
+				go crontab.CronWebRuleSpider(r, r.SpiderExp, r.SpiderRange, r.SpiderRule, r.PathTpl)
 			} else {
 				this.retFail("全站更新(条件不足)")
 			}

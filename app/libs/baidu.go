@@ -2,7 +2,7 @@ package libs
 
 import (
 	"errors"
-	// "fmt"
+	"fmt"
 	"github.com/astaxie/beego/httplib"
 	"regexp"
 	"time"
@@ -11,6 +11,10 @@ import (
 var (
 	BAIDU_KEY = "baidu_top_key"
 )
+
+func typeof(v interface{}) string {
+	return fmt.Sprintf("%T", v)
+}
 
 //http://top.baidu.com/buzz?b=353
 //单个榜单的数据
@@ -69,8 +73,9 @@ func GetAllBaiduTop() (map[string]interface{}, error) {
 	}
 
 	c, err := GetCache(BAIDU_KEY)
-
-	// fmt.Println(c)
+	if typeof(c) == "string" {
+		return nil, errors.New("数据过期")
+	}
 	if err == nil {
 		return c.(map[string]interface{}), nil
 	}

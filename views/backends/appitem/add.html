@@ -58,7 +58,10 @@
                     <div id="reg_page_index_rule_test" class="btn btn-sm btn-primary">匹配</div>
                 </div>
 
-                <div class="col-sm-3">首页规则类型多,要支持多个规则, 用户"|"或回车分割<br> 必须匹配到地址和名字</div>
+                <div class="col-sm-3">
+                    首页规则类型多,要支持多个规则, 用户"|"或回车分割 <br /> 
+                    匹配小说地址(唯一表示ID)和名字(使用小说目录模板)
+                </div>
             </div>
 
             <div class="form-group">
@@ -261,7 +264,8 @@
                 <div class="col-sm-3">
                     搜索页样本页,<br />
                     https://xx/?k={$KEYWORD}<br/>
-                    {$KEYWORD}搜索关键字.
+                    {$KEYWORD}搜索关键字. <br/>
+                    匹配小说地址(唯一表示ID)和名字(使用小说目录模板)
                 </div>
             </div>
 
@@ -288,23 +292,6 @@
 
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
-                    搜索模式: 
-                </label>
-
-                <div class="col-sm-6">
-                    <select class="col-sm-6 select" name="vars[soso_model]">
-                        <option value="0" {{if eq "0" .data.SosoModel}}selected="selected"{{else}}{{.data.SosoModel}}selected="selected"{{end}}>正常(url和名字)</option>                        
-                        <option value="1" {{if eq "1" .data.SosoModel}}selected="selected"{{else}}{{.data.SosoModel}}{{end}}>(ID和名字,ID替换模式)</option>
-                    </select>
-                </div>
-               
-                <div class="col-sm-3">
-
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
                     小说页匹配规则: 
                 </label>
 
@@ -317,8 +304,7 @@
                 </div>
                
                 <div class="col-sm-3">
-                    模式1:匹配小说地址和名字 <br/>
-                    模式2:匹配小说ID和名字(使用小说目录模板)
+                    匹配小说地址(唯一表示ID)和名字(使用小说目录模板)
                 </div>
             </div>
 
@@ -373,7 +359,7 @@
                 </div>
                
                 <div class="col-sm-3">
-                    匹配小说地址和名字
+                    匹配小说地址(唯一表示ID)和名字(使用小说目录模板)
                 </div>
             </div>
 
@@ -477,6 +463,9 @@ function vefiy_rule(url, rule, charset, model, path_tpl){
 $('#reg_page_index_rule_test').click(function(){
     var url = $(".form-group :input[name='vars[page_index]']").val();
     var rule = $(".form-group :input[name='vars[page_index_rule]']").val();
+    var charset = $(".form-group :input[name='vars[page_charset]']").val();
+    var path_tpl = $(".form-group :input[name='vars[path_tpl]']").val();
+    var model = 1;
 
     rule = rule.trim();
     rule = rule.replace("\n", "|");
@@ -487,10 +476,10 @@ $('#reg_page_index_rule_test').click(function(){
         if (i>0){
             var tmp_rule = rule_list[i];
             setTimeout(function(){
-                vefiy_rule(url,tmp_rule);
+                vefiy_rule(url,tmp_rule,charset,model, path_tpl);
             },i*1000); 
         } else {
-            vefiy_rule(url,rule_list[i]);
+            vefiy_rule(url,rule_list[i],charset,model, path_tpl);
         }
     }
 });
@@ -582,13 +571,14 @@ $('#reg_soso_rule_test').click(function(){
 
     url = url.replace(/{\$KEYWORD}/,keyword);
     if (url.indexOf('?') !== -1){
-        url += '&'+page+'='+page_val; 
+        url += '&'+page+'='+page_val;
     } else {
-        url += '?'+page+'='+page_val; 
+        url += '?'+page+'='+page_val;
     }
 
     var path_tpl = $(".form-group :input[name='vars[path_tpl]']").val();
-    var model = $(".form-group :input[name='vars[soso_model]']").val();
+    // var model = $(".form-group :input[name='vars[soso_model]']").val();
+    var model = 1;
     var rule = $(".form-group :input[name='vars[soso_rule]']").val();
     console.log(url, rule, charset, model, path_tpl);
 
@@ -600,11 +590,15 @@ $('#reg_soso_rule_test').click(function(){
 });
 
 
-//验证soso内容
+//爬取测试
 $('#reg_spider_rule_test').click(function(){
     var url = $(".form-group :input[name='vars[spider_exp]']").val();
     var page_start = $(".form-group :input[name='vars[spider_range_start]']").val();
     var charset = $(".form-group :input[name='vars[page_charset]']").val();
+    var path_tpl = $(".form-group :input[name='vars[path_tpl]']").val();
+    var rule = $(".form-group :input[name='vars[spider_rule]']").val();
+    var model = 1;
+
     url = url.replace(/{\$RANGE}/,page_start);
 
     if (url == ""){
@@ -612,8 +606,7 @@ $('#reg_spider_rule_test').click(function(){
     }
 
     console.log(url, page_start);
-    var rule = $(".form-group :input[name='vars[spider_rule]']").val();
-    vefiy_rule(url, rule, charset);
+    vefiy_rule(url, rule, charset,model, path_tpl);
 });
 
 //end

@@ -13,7 +13,6 @@ import (
 func CronSosoSpider(v *models.AppItem, url string,
 	page_arg string,
 	rule string,
-	model string,
 	path_tpl string,
 	keyword string) {
 
@@ -31,28 +30,16 @@ func CronSosoSpider(v *models.AppItem, url string,
 			list, errlist := RegNovelList(content, rule)
 			if errlist == nil {
 
-				if strings.EqualFold(model, "1") {
-					if len(list) > 0 {
-						for j := 0; j < len(list); j++ {
-							url := strings.Replace(path_tpl, "{$ID}", list[j]["url"].(string), -1)
-							name := list[j]["name"].(string)
-							CronPathInfo(v, url, name)
-						}
-						isEmpty = false
-					} else {
-						logs.Info("搜索爬取(没有数据):url:%s", cur_page_url)
-						break
+				if len(list) > 0 {
+					for j := 0; j < len(list); j++ {
+						url := strings.Replace(path_tpl, "{$ID}", list[j]["url"].(string), -1)
+						name := list[j]["name"].(string)
+						CronPathInfo(v, url, name)
 					}
+					isEmpty = false
 				} else {
-					if len(list) > 0 {
-						for j := 0; j < len(list); j++ {
-							CronPathInfo(v, list[j]["url"].(string), list[j]["name"].(string))
-						}
-						isEmpty = false
-					} else {
-						logs.Info("搜索爬取(没有数据):url:%s", cur_page_url)
-						break
-					}
+					logs.Info("搜索爬取(没有数据):url:%s", cur_page_url)
+					break
 				}
 			}
 		}
@@ -83,9 +70,8 @@ func SosoSpider() error {
 		var r = list[i]
 		if r.SosoExp != "" && r.SosoRule != "" &&
 			r.SosoPageArgs != "" &&
-			r.SosoModel != "" &&
 			r.PathTpl != "" {
-			CronSosoSpider(r, r.SosoExp, r.SosoPageArgs, r.SosoRule, r.SosoModel, r.PathTpl, "凡人")
+			CronSosoSpider(r, r.SosoExp, r.SosoPageArgs, r.SosoRule, r.PathTpl, "凡人")
 		} else {
 			logs.Info("搜索内容派爬取(条件不足)---end!")
 		}

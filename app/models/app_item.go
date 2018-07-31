@@ -30,7 +30,6 @@ type AppItem struct {
 	SosoExp         string
 	SosoPageArgs    string
 	SosoRule        string
-	SosoModel       string
 	SpiderExp       string
 	SpiderRange     string
 	SpiderRule      string
