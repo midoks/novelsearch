@@ -48,7 +48,7 @@ func CronWebRuleSpider(v *models.AppItem, url string, ranges string, rule string
 					if !strings.HasPrefix(url, "https://") && !strings.HasPrefix(url, "http://") {
 						url = "http://" + url
 					}
-					CronPathInfo(v, url, list[j]["name"].(string))
+					go CronPathInfo(v, url, list[j]["name"].(string))
 				}
 			} else {
 				v.SpiderProgress = 0

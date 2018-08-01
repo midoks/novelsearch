@@ -23,7 +23,7 @@ func CronPathInfo(v *models.AppItem, url, name string) {
 	vId := strconv.Itoa(v.Id)
 	_, errFind := models.CronNovelGetByNameAndFromId(name, vId)
 	if errFind == nil {
-		logs.Info("已经采集了")
+		logs.Info("已经采集了(%s)", url)
 		return
 	}
 
@@ -46,33 +46,33 @@ func CronPathInfo(v *models.AppItem, url, name string) {
 
 		name, err = RegNovelSigleInfo(content, v.NameRule)
 		if err != nil {
-			logs.Error("小说名获取错误:", v.NameRule)
+			logs.Error("小说名获取错误:", url, v.NameRule)
 			return
 		}
 		logs.Info("小说名:%s", name)
 		_, errFind := models.CronNovelGetByNameAndFromId(name, vId)
 		if errFind == nil {
-			logs.Error("已经采集了(名字不一致哟)")
+			logs.Error("已经采集了(名字不一致哟):", url)
 			return
 		}
 
 		author, err = RegNovelSigleInfo(content, v.AuthorRule)
 		if err != nil {
-			logs.Error("作者获取(失败):%s", err)
+			logs.Error("作者获取(失败[%s]):%s", url, err)
 			return
 		}
 		logs.Info("作者:%s", author)
 
 		desc, err = RegNovelSigleInfo(content, v.DescRule)
 		if err != nil {
-			logs.Error("描述获取(失败[%s]):%s", name, err)
+			logs.Error("描述获取(失败[%s]):%s", url, err)
 			return
 		}
 		logs.Info("描述:%s", desc)
 
 		status, err = RegNovelSigleInfo(content, v.StatusRule)
 		if err != nil {
-			logs.Error("状态获取(失败):%s", err)
+			logs.Error("状态获取(失败[%s]):%s", url, err)
 			return
 		}
 		logs.Info("状态:%s", status)
@@ -84,7 +84,7 @@ func CronPathInfo(v *models.AppItem, url, name string) {
 
 		category, err = RegNovelSigleInfo(content, v.CategoryRule)
 		if err != nil {
-			logs.Error("分类获取(失败):%s", err)
+			logs.Error("分类获取(失败[%s]):%s", url, err)
 			return
 		}
 		logs.Info("分类:%s", category)
@@ -102,7 +102,7 @@ func CronPathInfo(v *models.AppItem, url, name string) {
 		} else {
 			path, err = RegNovelSigleInfo(content, v.ChapterPathRule)
 			if err != nil {
-				logs.Error("目录获取(失败):%s", err)
+				logs.Error("目录获取(失败[%s]):%s", url, err)
 				return
 			}
 
