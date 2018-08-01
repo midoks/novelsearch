@@ -38,6 +38,7 @@
                     <th class="col-sm-1">网站地址</th>
                     <th class="col-sm-1">时间</th>
                     <th class="col-sm-1">状态</th>
+                    <th class="col-sm-1">爬取进度</th>
                     <th class="col-sm-2">
                         <a class="blue" title="新增项目" href="/{{adminPath}}/{{.curController}}/add">
                             <i class="glyphicon glyphicon-plus bigger-130"></i>
@@ -71,6 +72,7 @@
                                 <span title="点击解锁" class="badge">锁定</span></a>
                             {{end}}
                         </td>
+                        <td>{{.SpiderProgress}}</td>
                         <td>
                             <div class="action-buttons">
                                 <a class="blue" title="编辑" href="/{{adminPath}}/{{$.curController}}/add?id={{$v.Id}}">

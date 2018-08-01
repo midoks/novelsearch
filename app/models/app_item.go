@@ -33,6 +33,7 @@ type AppItem struct {
 	SpiderExp       string
 	SpiderRange     string
 	SpiderRule      string
+	SpiderProgress  int
 	ErrMsg          string
 	Status          int
 	CronUpTime      int64

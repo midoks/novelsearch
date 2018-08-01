@@ -51,6 +51,7 @@ func (this *AppItemController) Index() {
 		row["PageIndex"] = v.PageIndex
 		row["IsOfficial"] = v.IsOfficial
 		row["Status"] = v.Status
+		row["SpiderProgress"] = v.SpiderProgress
 		row["UpdateTime"] = beego.Date(time.Unix(v.UpdateTime, 0), "Y-m-d H:i:s")
 		row["CreateTime"] = beego.Date(time.Unix(v.CreateTime, 0), "Y-m-d H:i:s")
 
