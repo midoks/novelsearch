@@ -27,7 +27,7 @@ const (
 func Init() {
 	fmt.Println("db init")
 
-	beego.SetLogger("file", `{"filename":"logs/00/test.log"}`)
+	beego.SetLogger("file", `{"filename":"logs/test.log"}`)
 
 	dbhost := beego.AppConfig.String("db.host")
 	dbport := beego.AppConfig.String("db.port")
