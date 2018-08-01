@@ -159,6 +159,10 @@ func (this *IndexController) Content() {
 		content = libs.ConvertToString(content, "gbk", "utf8")
 	}
 
+	this.Data["Info"] = data
+	this.Data["Title"] = info.Name
+	this.Data["Content"] = content
+
 	chapter_id_float, err := strconv.ParseFloat(chapter_id_real, 64)
 	count_list := strconv.Itoa(len(bli))
 	count_list_float, err := strconv.ParseFloat(count_list, 64)
@@ -174,9 +178,6 @@ func (this *IndexController) Content() {
 		this.Data["Next"] = tmpNext
 	}
 
-	this.Data["Info"] = data
-	this.Data["Title"] = info.Name
-	this.Data["Content"] = content
 	this.display()
 }
 

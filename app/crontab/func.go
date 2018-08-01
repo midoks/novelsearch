@@ -2,12 +2,28 @@ package crontab
 
 import (
 	"errors"
+	"fmt"
+	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/httplib"
+	"github.com/astaxie/beego/logs"
 	"github.com/midoks/novelsearch/app/libs"
+	"os"
 	"path/filepath"
 	"regexp"
 	"strings"
 )
+
+func setLog() error {
+
+	if b, _ := libs.PathExists("logs"); b == false {
+		os.Mkdir("logs", os.ModePerm)
+	}
+	logs.Async()
+	maxsize := 1024 * 1024 * 4
+	setting := fmt.Sprintf(`{"filename":"logs/novelsearch.log","maxsize":%d, "maxdays":31}`, maxsize)
+	beego.SetLogger("file", setting)
+	return nil
+}
 
 func getHttpData(url string) (string, error) {
 	req := httplib.Get(url)

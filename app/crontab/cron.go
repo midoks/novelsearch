@@ -15,6 +15,11 @@ func Init() {
 	// tk0 := toolbox.NewTask("test", "0 * * * * *", func() error { fmt.Println("begin--cron"); return nil })
 	// toolbox.AddTask("test", tk0)
 
+	//设置beego日志地址
+	setLog()
+	tkLog := toolbox.NewTask("tkLog", "59 * * * * *", setLog)
+	toolbox.AddTask("tkLog", tkLog)
+
 	//首页更新
 	// PageIndexSpider()
 	indexSpider := beego.AppConfig.String("cron.index_spider")
