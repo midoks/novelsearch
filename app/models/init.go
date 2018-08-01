@@ -7,7 +7,6 @@ import (
 	// "github.com/astaxie/beego/logs"
 	"github.com/astaxie/beego/orm"
 	"net/url"
-	// "time"
 )
 
 const (
@@ -27,6 +26,8 @@ const (
 
 func Init() {
 	fmt.Println("db init")
+
+	beego.SetLogger("file", `{"filename":"logs/00/test.log"}`)
 
 	dbhost := beego.AppConfig.String("db.host")
 	dbport := beego.AppConfig.String("db.port")

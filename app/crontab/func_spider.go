@@ -7,7 +7,6 @@ import (
 	// "github.com/astaxie/beego/httplib"
 	"github.com/astaxie/beego/logs"
 	// "github.com/astaxie/beego/orm"
-	"github.com/midoks/novelsearch/app/libs"
 	"github.com/midoks/novelsearch/app/models"
 	// "regexp"
 	"strconv"
@@ -16,9 +15,8 @@ import (
 )
 
 func CronWebRuleSpider(v *models.AppItem, url string, ranges string, rule string, path_tpl string) {
-
+	timeStart := time.Now().Unix()
 	var (
-		start    = 1
 		end      = 1
 		err      = errors.New("nil")
 		cur      = "0"
@@ -27,82 +25,66 @@ func CronWebRuleSpider(v *models.AppItem, url string, ranges string, rule string
 
 	list := strings.Split(ranges, ",")
 
-	start, err = strconv.Atoi(list[0])
-	if err != nil {
-		logs.Error("start:%s", list[0])
-		return
-	}
-
 	end, err = strconv.Atoi(list[1])
 	if err != nil {
 		return
 	}
 
-	for i := start; i < end; i++ {
-		cur = strconv.Itoa(i)
-		cur_page = strings.Replace(url, "{$RANGE}", cur, -1)
+	v.SpiderProgress = v.SpiderProgress + 1
+	logs.Info("网站(%s)采集:进度:%d, 结束在:%d", v.Name, v.SpiderProgress, end)
 
-		logs.Warn("全站采集开始:url:%s", cur_page)
+	cur = strconv.Itoa(v.SpiderProgress)
+	cur_page = strings.Replace(url, "{$RANGE}", cur, -1)
 
-		var isEmpty = true
-		if content, errcur := getHttpData(cur_page); errcur == nil {
+	logs.Warn("全站采集开始:url:%s", cur_page)
 
-			if strings.EqualFold(v.PageCharset, "gbk") {
-				content = libs.ConvertToString(content, "gbk", "utf8")
-			}
+	if content, errcur := getHttpData2Code(cur_page, v.PageCharset); errcur == nil {
+		list, errlist := RegNovelList(content, rule)
 
-			list, errlist := RegNovelList(content, rule)
-
-			if errlist == nil {
-				if len(list) > 0 {
-					for j := 0; j < len(list); j++ {
-						url := strings.Replace(path_tpl, "{$ID}", list[j]["url"].(string), -1)
-						if !strings.HasPrefix(url, "https://") && !strings.HasPrefix(url, "http://") {
-							url = "http://" + url
-						}
-						// logs.Warn("采集页:url:%s", url)
-						CronPathInfo(v, url, list[j]["name"].(string))
+		if errlist == nil {
+			if len(list) > 0 {
+				for j := 0; j < len(list); j++ {
+					url := strings.Replace(path_tpl, "{$ID}", list[j]["url"].(string), -1)
+					if !strings.HasPrefix(url, "https://") && !strings.HasPrefix(url, "http://") {
+						url = "http://" + url
 					}
-					isEmpty = false
-				} else {
-					logs.Error("全站采集结束(没有数据)url:%s", cur_page)
-					break
+					CronPathInfo(v, url, list[j]["name"].(string))
 				}
 			} else {
-				logs.Error("全站采集错误:%s", errlist, rule, content)
+				v.SpiderProgress = 0
+				v.Update("SpiderProgress")
+				logs.Error("全站采集结束(重置)url:%s", cur_page)
+				return
 			}
+		} else {
+			logs.Error("全站采集错误:%s", cur_page, errlist, rule)
 		}
-		if isEmpty {
-			break
-		}
-
-		logs.Warn("全站采集结束:url:%s", cur_page)
 	}
+
+	timeEnd := time.Now().Unix()
+	v.Update("SpiderProgress")
+	logs.Warn("全站采集结束:url:%s耗时:%d", cur_page, timeEnd-timeStart)
 }
 
 //首页爬取数据
 func WebRuleSpider() error {
-	timeStart := time.Now().Unix()
-	logs.Info("全站更新---start!")
 
 	filters := make([]interface{}, 0)
 	filters = append(filters, "status", "1")
-	list, _ := models.ItemGetList(1, 10, filters...)
+	list, _ := models.ItemGetList(1, 10000, filters...)
 
 	if len(list) == 0 {
-		logs.Info("全站更新(无更新数据)---end!")
+		logs.Info("全站更新(无更新数据):end!")
 		return nil
 	}
 
 	for i := 0; i < len(list); i++ {
 		var r = list[i]
 		if r.SpiderExp != "" && r.SpiderRange != "" && r.SpiderRule != "" && r.PathTpl != "" {
-			CronWebRuleSpider(r, r.SpiderExp, r.SpiderRange, r.SpiderRule, r.PathTpl)
+			go CronWebRuleSpider(r, r.SpiderExp, r.SpiderRange, r.SpiderRule, r.PathTpl)
 		} else {
-			logs.Info("全站更新(条件不足)---end!")
+			logs.Info("全站更新(条件不足):end!")
 		}
 	}
-	timeEnd := time.Now().Unix()
-	logs.Info("全站更新---end!", timeEnd-timeStart)
 	return nil
 }

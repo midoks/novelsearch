@@ -6,16 +6,17 @@ import (
 	"github.com/astaxie/beego/toolbox"
 )
 
-//	 minute hour day month week   command
-//顺序：分    时   日   月    周
+//	 second minute hour day month week   command
+//顺序：秒      分    时   日   月    周      命令
 func Init() {
 	fmt.Println("crontab init")
 
-	tk0 := toolbox.NewTask("test", "0 * * * * *", func() error { fmt.Println("begin--cron"); return nil })
-	toolbox.AddTask("test", tk0)
+	//测试使用
+	// tk0 := toolbox.NewTask("test", "0 * * * * *", func() error { fmt.Println("begin--cron"); return nil })
+	// toolbox.AddTask("test", tk0)
 
 	//首页更新
-	// PageIndexSpider() //test
+	// PageIndexSpider()
 	indexSpider := beego.AppConfig.String("cron.index_spider")
 	tk1 := toolbox.NewTask("indexSpider", indexSpider, PageIndexSpider)
 	toolbox.AddTask("indexSpider", tk1)

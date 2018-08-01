@@ -28,11 +28,7 @@ func CronPathInfo(v *models.AppItem, url, name string) {
 	}
 
 	// s_name := name
-	if content, err := getHttpData(url); err == nil {
-
-		if strings.EqualFold(v.PageCharset, "gbk") {
-			content = libs.ConvertToString(content, "gbk", "utf8")
-		}
+	if content, err := getHttpData2Code(url, v.PageCharset); err == nil {
 
 		var (
 			name            = ""
@@ -109,19 +105,14 @@ func CronPathInfo(v *models.AppItem, url, name string) {
 				logs.Error("目录获取(失败):%s", err)
 				return
 			}
-			logs.Info("小说目录页:%s", path)
 
 			ab_path = GetAbsoluteAddr(url, path)
 			logs.Info("绝对路径:", ab_path)
 
-			chapter_content, err = getHttpData(ab_path)
+			chapter_content, err = getHttpData2Code(ab_path, v.PageCharset)
 			if err != nil {
 				logs.Error("资源获取失败:%s", err, ab_path)
 				return
-			}
-
-			if strings.EqualFold(v.PageCharset, "gbk") {
-				chapter_content = libs.ConvertToString(chapter_content, "gbk", "utf8")
 			}
 
 		}
@@ -184,11 +175,7 @@ func PageIndexSpider() error {
 
 	for _, v := range list {
 
-		if content, err := getHttpData(v.PageIndex); err == nil {
-
-			if strings.EqualFold(v.PageCharset, "gbk") {
-				content = libs.ConvertToString(content, "gbk", "utf8")
-			}
+		if content, err := getHttpData2Code(v.PageIndex, v.PageCharset); err == nil {
 
 			var tmpRule = strings.TrimSpace(v.PageIndexRule)
 			tmpRule = strings.Replace(tmpRule, "\n", "|", -1)
@@ -196,11 +183,9 @@ func PageIndexSpider() error {
 			tmpRuleList := strings.Split(tmpRule, "|")
 
 			for i := 0; i < len(tmpRuleList); i++ {
-				// logs.Info(tmpRuleList[i])
 
 				pathList, err := RegPathInfo(content, tmpRuleList[i])
 				if err == nil {
-					// logs.Info(pathList)
 					for _, val := range pathList {
 						url := strings.Replace(v.PathTpl, "{$ID}", val[1], -1)
 						CronPathInfo(v, url, val[2])

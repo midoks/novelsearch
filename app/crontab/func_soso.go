@@ -25,7 +25,7 @@ func CronSosoSpider(v *models.AppItem, url string,
 		cur_page_url := fmt.Sprintf("%s&%s=%d", page_url, page_arg, page_num)
 		logs.Info("搜索爬取开始:url:%s", cur_page_url)
 
-		if content, errcur := getHttpData(cur_page_url); errcur == nil {
+		if content, errcur := getHttpData2Code(cur_page_url, v.PageCharset); errcur == nil {
 
 			list, errlist := RegNovelList(content, rule)
 			if errlist == nil {

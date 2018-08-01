@@ -24,6 +24,23 @@ func getHttpData(url string) (string, error) {
 	return str, nil
 }
 
+func getHttpData2Code(url string, pageCode string) (string, error) {
+	req := httplib.Get(url)
+	req.Header("Accept-Encoding", "gzip,deflate,sdch")
+	req.Header("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36")
+
+	content, err := req.String()
+	if err != nil {
+		return "", err
+	}
+
+	if strings.EqualFold(pageCode, "gbk") {
+		content = libs.ConvertToString(content, "gbk", "utf8")
+	}
+
+	return content, nil
+}
+
 //匹配路径
 func RegPathInfo(content, reg string) ([][]string, error) {
 	match_exp := regexp.MustCompile(reg)
@@ -55,7 +72,11 @@ func GetAbsoluteAddr(cur, result string) string {
 	}
 	main := strings.Replace(filepath.Dir(cur), "http:/", "http://", -1)
 	main = strings.Replace(main, "https:/", "https://", -1)
-	return main + "/" + result
+	if strings.HasPrefix(result, "/") {
+		return main + result
+	} else {
+		return main + "/" + result
+	}
 }
 
 //匹配当个信息
