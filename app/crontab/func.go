@@ -2,9 +2,7 @@ package crontab
 
 import (
 	"errors"
-	// "fmt"
 	"github.com/astaxie/beego/httplib"
-	// "github.com/astaxie/beego/logs"
 	"github.com/midoks/novelsearch/app/libs"
 	"path/filepath"
 	"regexp"
@@ -16,28 +14,22 @@ func getHttpData(url string) (string, error) {
 	req.Header("Accept-Encoding", "gzip,deflate,sdch")
 	req.Header("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36")
 
-	str, err := req.String()
+	content, err := req.String()
 	if err != nil {
-		return "", err
+		return content, err
 	}
-
-	return str, nil
+	return content, nil
 }
 
 func getHttpData2Code(url string, pageCode string) (string, error) {
-	req := httplib.Get(url)
-	req.Header("Accept-Encoding", "gzip,deflate,sdch")
-	req.Header("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36")
-
-	content, err := req.String()
+	content, err := getHttpData(url)
 	if err != nil {
-		return "", err
+		return content, err
 	}
 
 	if strings.EqualFold(pageCode, "gbk") {
 		content = libs.ConvertToString(content, "gbk", "utf8")
 	}
-
 	return content, nil
 }
 
@@ -94,7 +86,7 @@ func RegNovelListAutoPath(content, reg string, curPage string) ([]map[string]int
 	for k, v := range name {
 		tmp := make(map[string]interface{})
 
-		tmp["name"] = v[2]
+		tmp["name"] = libs.TrimHtml(v[2])
 		ab_path := GetAbsoluteAddr(curPage, v[1])
 		tmp["url"] = ab_path
 		list[k] = tmp

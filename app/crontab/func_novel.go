@@ -1,13 +1,10 @@
 package crontab
 
 import (
-	"errors"
-	// "github.com/astaxie/beego"
 	"encoding/json"
-	// "github.com/astaxie/beego/httplib"
+	"errors"
 	"github.com/astaxie/beego/logs"
-	// "github.com/astaxie/beego/orm"
-	// "github.com/midoks/novelsearch/app/libs"
+	"github.com/midoks/novelsearch/app/libs"
 	"github.com/midoks/novelsearch/app/models"
 	"strings"
 )
@@ -22,6 +19,7 @@ func CronNovelUpdate(v *models.AppItem, n *models.AppNovel, url, name string) {
 		var (
 			status          = ""
 			path            = ""
+			desc            = ""
 			chapter_content = ""
 			err             = errors.New("new")
 			book_status     = 0
@@ -33,6 +31,14 @@ func CronNovelUpdate(v *models.AppItem, n *models.AppNovel, url, name string) {
 			return
 		}
 		logs.Info("状态:%s", status)
+
+		desc, err = RegNovelSigleInfo(content, v.DescRule)
+		if err != nil {
+			logs.Error("描述获取(失败[%s]):%s", url, err)
+			return
+		}
+		desc = libs.TrimHtml(desc)
+		logs.Info("描述:%s", desc)
 
 		//判断是否已经结束
 		if strings.EqualFold(status, v.StatusEndMark) {
@@ -68,6 +74,7 @@ func CronNovelUpdate(v *models.AppItem, n *models.AppNovel, url, name string) {
 
 		chapter_list, chapter_list_err := RegNovelListAutoPath(chapter_content, v.ChapterListRule, ab_path)
 		if chapter_list_err != nil {
+			logs.Error("小说列表获取错误:%s", err, ab_path)
 			return
 		}
 
@@ -91,8 +98,9 @@ func CronNovelUpdate(v *models.AppItem, n *models.AppNovel, url, name string) {
 		n.LastChapter = last_chapter
 		n.LastChapterUrl = last_chapter_url
 		n.BookStatus = book_status
+		n.Desc = desc
 		n.List = list
-		err = n.Update("ChapterNum", "LastChapter", "LastChapterUrl", "BookStatus", "UpdateTime")
+		err = n.Update("Desc", "ChapterNum", "LastChapter", "LastChapterUrl", "BookStatus", "UpdateTime")
 		if err == nil {
 			logs.Info("更新结束:fromid:%d,novel:%d,%s:%s", v.Id, n.Id, name, url)
 		} else {

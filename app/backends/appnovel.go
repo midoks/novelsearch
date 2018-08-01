@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
+	"github.com/midoks/novelsearch/app/crontab"
 	"github.com/midoks/novelsearch/app/libs"
 	"github.com/midoks/novelsearch/app/models"
 	"strconv"
-	"strings"
 	"time"
 )
 
@@ -26,7 +26,7 @@ func (this *AppNovelController) Index() {
 	filters := make([]interface{}, 0)
 
 	if searchType != "" {
-		if strings.EqualFold(searchType, "msg") {
+		if libs.CheckStringIsExist(searchType, []string{"name", "author"}) {
 			searchType2 := fmt.Sprintf("%s__icontains", searchType)
 			filters = append(filters, searchType2, searchWord)
 		} else {
@@ -153,33 +153,50 @@ func (this *AppNovelController) Lock() {
 
 	id, err := this.GetInt("id")
 	if err == nil {
-		data, _ := models.ItemGetById(id)
+		data, _ := models.NovelGetById(id)
 
 		if data.Status > 0 {
 			data.Status = -1
-			this.uLog("Item锁定成功")
 		} else {
 			data.Status = 1
-			this.uLog("Item解锁成功")
 		}
 		err = data.Update()
-
 		if err == nil {
-			this.retOk("修改成功")
+			this.retOk("锁定成功")
 		}
 	}
-	this.retFail("修改失败")
+	this.retFail("锁定失败")
 }
 
 func (this *AppNovelController) Del() {
 
 	id, err := this.GetInt("id")
 	if err == nil {
-		num, err := models.ItemDelById(id)
+		num, err := models.NovelGetById(id)
 		if err == nil {
-			msg := fmt.Sprintf("删除item项目%s成功", num)
-			this.uLog(msg)
-			this.retOk(msg)
+			this.retOk(fmt.Sprintf("删除ID:%s成功", num))
+		}
+	}
+	this.retFail("非法参数")
+}
+
+func (this *AppNovelController) Spider() {
+
+	id, err := this.GetInt("id")
+	if err == nil {
+		novel, err := models.NovelGetById(id)
+		r, err := models.ItemGetById(novel.FromId)
+		if err == nil {
+			if r.Status != 1 {
+				this.retFail("状态锁定中,无法操作!!")
+			}
+
+			if novel.Name != "" && novel.Url != "" {
+				go crontab.CronNovelUpdate(r, novel, novel.Url, novel.Name)
+			} else {
+				this.retFail("全站更新(条件不足)")
+			}
+			this.retOk("执行成功")
 		}
 	}
 	this.retFail("非法参数")

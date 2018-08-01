@@ -1,1 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>404</title>
+</head>
+<body>
 {{.content}}
+<div id="ShowDiv"></div>
+<script language="javascript">
+var secs = 3; //倒计时的秒数
+URL = "/"; 
+Load(URL);
+function doUpdate(num)  { 
+	document.getElementById('ShowDiv').innerHTML = '将在'+num+'秒后自动跳转到主页' ;
+	if(num == 0) { 
+		window.location = URL; 
+	}
+}
+
+function Load(url){
+	var URL = url;
+	console.log(URL);
+	
+	for (var i = secs; i>=0; i--) { 
+	   window.setTimeout('doUpdate(' + i + ')', (secs-i) * 1000); 
+	}
+}
+</script>
+</body>
+</html>
+
+

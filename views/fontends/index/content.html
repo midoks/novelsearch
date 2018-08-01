@@ -22,7 +22,7 @@
 <div class="container">
   <nav aria-label="...">
     <ul class="pager">
-    {{if .Prev}}
+    {{if ge .Prev 0}}
       	<li class="previous">
 		<a href="/c/{{.Info.Id|base64encode}}/{{.Prev|base64encode}}.html">
 			<span aria-hidden="true">&larr;</span>上一页

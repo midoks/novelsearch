@@ -6,7 +6,9 @@
                 <tr>
                     <td class="col-xs-3 col-sm-1">
                         <select id="search_type" name="search_type">
-                            <option value="id" {{if eq "id" .search_type}}selected="selected"{{end}}>项目ID</option>
+                            <option value="id" {{if eq "id" .search_type}}selected="selected"{{end}}>序号ID</option>
+                            <option value="name" {{if eq "name" .search_type}}selected="selected"{{end}}>小说名</option>
+                            <option value="author" {{if eq "author" .search_type}}selected="selected"{{end}}>作者</option>
                         </select>
                     </td>
 
@@ -41,6 +43,7 @@
                     <th class="col-sm-2">更新时间</th>
                     <th class="col-sm-1">状态</th>
                     <th class="col-sm-2">操作</th>
+                    <th class="col-sm-1">其他操作</th>
                 </tr>
                 </thead>
 
@@ -52,7 +55,7 @@
                         <td>{{$v.FromId}}</td>
                         <td><span class="btn btn-sm" data-rel="tooltip" title="{{$v.Desc}}" data-original-title="">{{$v.Name}}</span></td>
                         <td>{{$v.Author}}</td>
-                        <td><a target="_blank" href="{{$v.LastChapterUrl}}" class="label label-success arrowed">{{$v.LastChapter}}</a></td>
+                        <td><a target="_blank" href="{{$v.LastChapterUrl}}" class="label label-success arrowed" data-rel="tooltip" title="{{$v.LastChapter}}">查看</a></td>
                         <td><a title="共{{$v.ChapterNum}}章节" data-rel="tooltip" value="{{$v.List}}" href="javascript:;" onclick="lookChapter(this);" class="btn btn-purple btn-sm">查看</a></td>
                         <td>{{$v.UpdateTime}}</td>
                         <td>
@@ -82,6 +85,15 @@
                                    href="javascript:req('/{{adminPath}}/{{$.curController}}/del?id={{$v.Id}}')">
                                     <i class="fa fa-trash-o bigger-130"></i>
                                 </a>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="action-buttons">
+                                <a class="blue" title="章节重新爬取"
+                                   href="javascript:req('/{{adminPath}}/{{$.curController}}/spider?id={{$v.Id}}')">
+                                    <i class="fa fa-bolt bigger-130"></i>
+                                </a>
+                            </div>
                         </td>
                     </tr>
                     {{end}}

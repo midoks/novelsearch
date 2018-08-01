@@ -1,11 +1,8 @@
 package crontab
 
 import (
-	"errors"
-	_ "fmt"
-	// "github.com/astaxie/beego"
 	"encoding/json"
-	// "github.com/astaxie/beego/httplib"
+	"errors"
 	"github.com/astaxie/beego/logs"
 	"github.com/astaxie/beego/orm"
 	"github.com/midoks/novelsearch/app/libs"
@@ -41,7 +38,7 @@ func CronPathInfo(v *models.AppItem, url, name string) {
 			err             = errors.New("new")
 			book_status     = 0
 		)
-		//fmt.Println(content)
+		// fmt.Println(content)
 		// ioutil.WriteFile("t/"+s_name+".html", []byte(content), 0644)
 
 		name, err = RegNovelSigleInfo(content, v.NameRule)
@@ -68,6 +65,7 @@ func CronPathInfo(v *models.AppItem, url, name string) {
 			logs.Error("描述获取(失败[%s]):%s", url, err)
 			return
 		}
+		desc = libs.TrimHtml(desc)
 		logs.Info("描述:%s", desc)
 
 		status, err = RegNovelSigleInfo(content, v.StatusRule)
@@ -152,12 +150,12 @@ func CronPathInfo(v *models.AppItem, url, name string) {
 		data.CreateTime = time.Now().Unix()
 		_, err = orm.NewOrm().Insert(data)
 		if err == nil {
-			logs.Warn("目录页采集结束:%s", url)
+			logs.Warn("目录页采集结束(%s)", url)
 		} else {
-			logs.Error("目录页采集发生错误:%s", err)
+			logs.Error("目录页采集发生错误(%s):%s", url, err)
 		}
 	} else {
-		logs.Warn("目录页采集结束(没有获取到资源):%s", url)
+		logs.Error("目录页采集没有获取到资源(%s):%s", url, err)
 	}
 }
 

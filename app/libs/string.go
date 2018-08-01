@@ -8,6 +8,7 @@ import (
 	"github.com/astaxie/beego/httplib"
 	"github.com/axgle/mahonia"
 	"os"
+	"strings"
 )
 
 func Md5(buf []byte) string {
@@ -18,6 +19,16 @@ func Md5(buf []byte) string {
 
 func Md5str(s string) string {
 	return Md5([]byte(s))
+}
+
+func CheckStringIsExist(source string, check []string) bool {
+
+	for _, s := range check {
+		if strings.EqualFold(source, s) {
+			return true
+		}
+	}
+	return false
 }
 
 func SizeFormat(size float64) string {

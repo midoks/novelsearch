@@ -1,11 +1,7 @@
 package fontends
 
 import (
-	// "fmt"
 	"github.com/astaxie/beego"
-	_ "github.com/astaxie/beego/logs"
-	// "github.com/midoks/novelsearch/app/libs"
-	// "github.com/midoks/novelsearch/app/models"
 	"strconv"
 	"strings"
 	"time"

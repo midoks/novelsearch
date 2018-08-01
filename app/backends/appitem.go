@@ -8,7 +8,6 @@ import (
 	"github.com/midoks/novelsearch/app/crontab"
 	"github.com/midoks/novelsearch/app/libs"
 	"github.com/midoks/novelsearch/app/models"
-	// "log"
 	"regexp"
 	"strconv"
 	"strings"
