@@ -3,11 +3,72 @@ package crontab
 import (
 	"encoding/json"
 	"errors"
+	// "fmt"
 	"github.com/astaxie/beego/logs"
 	"github.com/midoks/novelsearch/app/libs"
 	"github.com/midoks/novelsearch/app/models"
+	"html"
+	"strconv"
 	"strings"
+	"time"
 )
+
+type BookLinkInfo struct {
+	Name string
+	Url  string
+}
+
+//小说内容更新
+func CronNovelContentList(v *models.AppItem, n *models.AppNovel) {
+	var bli []BookLinkInfo
+	err := json.Unmarshal([]byte(n.List), &bli)
+
+	key := "lock_" + strconv.Itoa(n.Id)
+	lock_val := "1"
+	//加锁
+	lockData, _ := libs.GetCache(key)
+	if strings.EqualFold(lockData.(string), lock_val) {
+		// logs.Warn("小说内容更新,正在执行中...!")
+		return
+	}
+
+	if err == nil {
+		for _, data := range bli {
+			var url = data.Url
+			go CronNovelContent(url, v.ContentRule, v.PageCharset)
+		}
+	}
+	libs.SetCache(key, lock_val, 60*60*time.Second)
+}
+
+//小说内容更新
+func CronNovelContent(url, rule string, charset string) (string, error) {
+	key := "novel_" + url
+	if libs.CacheIsExist(key) {
+		content, err := libs.GetCache(key)
+		return content.(string), err
+	}
+	logs.Info("请求缓存(%s)不存在,向目标地址发送请求", url)
+
+	urlData, err := libs.GetHttpData(url)
+	if err != nil {
+		return "", err
+	}
+
+	content, err := RegNovelSigleInfo(urlData, rule)
+	if err != nil {
+		return "", err
+	}
+
+	if strings.EqualFold(charset, "gbk") {
+		content = libs.ConvertToString(content, "gbk", "utf8")
+	}
+
+	content = html.UnescapeString(content)
+
+	libs.SetCache(key, content, 3*24*60*60*time.Second)
+	return content, nil
+}
 
 //获取小说path页数据
 func CronNovelUpdate(v *models.AppItem, n *models.AppNovel, url, name string) {

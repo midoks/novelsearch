@@ -56,6 +56,8 @@ func (this *IndexController) Baidutop() {
 	list, err := libs.GetAllBaiduTop()
 	if err == nil {
 		this.Data["list"] = list
+	} else {
+		go crontab.BaiduTopAll()
 	}
 	this.display()
 }
@@ -122,59 +124,46 @@ func (this *IndexController) Content() {
 		return
 	}
 
-	data, err := models.NovelGetByIdStr(id_real)
+	novel, err := models.NovelGetByIdStr(id_real)
 
 	if err != nil {
 		this.redirect("/")
 		return
 	}
 
-	webInfo, err := models.ItemGetById(data.FromId)
+	item, err := models.ItemGetById(novel.FromId)
 	if err != nil {
-		this.redirect("/")
 		return
 	}
 
 	var bli []BookLinkInfo
-	err = json.Unmarshal([]byte(data.List), &bli)
+	err = json.Unmarshal([]byte(novel.List), &bli)
 	if err != nil {
-		this.redirect("/")
 		return
 	}
 
 	info := bli[chapter_id_int]
 	url := info.Url
 
-	urlData, err := libs.GetHttpData(url)
+	content, err := crontab.CronNovelContent(url, item.ContentRule, item.PageCharset)
 	if err != nil {
-
+		this.redirect("/")
 	}
 
-	content, err := crontab.RegNovelSigleInfo(urlData, webInfo.ContentRule)
-	if err != nil {
-
-	}
-
-	if strings.EqualFold(webInfo.PageCharset, "gbk") {
-		content = libs.ConvertToString(content, "gbk", "utf8")
-	}
-
-	this.Data["Info"] = data
+	this.Data["Info"] = novel
 	this.Data["Title"] = info.Name
 	this.Data["Content"] = content
 
 	chapter_id_float, err := strconv.ParseFloat(chapter_id_real, 64)
-	count_list := strconv.Itoa(len(bli))
+	count_list := strconv.Itoa(len(bli) - 1)
 	count_list_float, err := strconv.ParseFloat(count_list, 64)
 	this.Data["Percent"] = fmt.Sprintf("%.2f", (chapter_id_float/count_list_float)*100)
 
 	tmpPrev := chapter_id_int - 1
-	if tmpPrev >= 0 {
-		this.Data["Prev"] = tmpPrev
-	}
+	this.Data["Prev"] = tmpPrev
 
 	tmpNext := chapter_id_int + 1
-	if tmpNext <= len(bli) {
+	if tmpNext <= (len(bli) - 1) {
 		this.Data["Next"] = tmpNext
 	}
 
@@ -182,30 +171,33 @@ func (this *IndexController) Content() {
 }
 
 func (this *IndexController) List() {
-	var err error
+
 	unique_id := this.Ctx.Input.Param(":unique_id")
-	data, err := models.NovelGetByUniqueId(unique_id)
+	novel, err := models.NovelGetByUniqueId(unique_id)
 	if err == nil {
 		row := make(map[string]interface{})
-		fName := models.ItemGetNameById(data.FromId)
-		row["Id"] = data.Id
-		row["Name"] = data.Name
-		row["Desc"] = data.Desc
-		row["Author"] = data.Author
-		row["Category"] = data.Category
-		row["FromId"] = data.FromId
+		item, _ := models.ItemGetById(novel.FromId)
+		fName := item.Name
+		row["Id"] = novel.Id
+		row["Name"] = novel.Name
+		row["Desc"] = novel.Desc
+		row["Author"] = novel.Author
+		row["Category"] = novel.Category
+		row["FromId"] = novel.FromId
 		row["FromName"] = fName
-		row["UniqueId"] = data.UniqueId
-		row["Status"] = data.Status
-		row["UpdateTime"] = beego.Date(time.Unix(data.UpdateTime, 0), "Y-m-d H:i:s")
+		row["UniqueId"] = novel.UniqueId
+		row["Status"] = novel.Status
+		row["UpdateTime"] = beego.Date(time.Unix(novel.UpdateTime, 0), "Y-m-d H:i:s")
 		var bli []BookLinkInfo
-		err := json.Unmarshal([]byte(data.List), &bli)
+		err := json.Unmarshal([]byte(novel.List), &bli)
 		if err == nil {
 			row["List"] = bli
 		}
 		this.Data["info"] = row
+		go crontab.CronNovelContentList(item, novel)
 	} else {
 		this.redirect("/")
 	}
+
 	this.display()
 }

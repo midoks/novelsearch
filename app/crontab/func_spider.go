@@ -17,6 +17,7 @@ import (
 func CronWebRuleSpider(v *models.AppItem, url string, ranges string, rule string, path_tpl string) {
 	timeStart := time.Now().Unix()
 	var (
+		start    = 0
 		end      = 1
 		err      = errors.New("nil")
 		cur      = "0"
@@ -24,17 +25,23 @@ func CronWebRuleSpider(v *models.AppItem, url string, ranges string, rule string
 	)
 
 	list := strings.Split(ranges, ",")
-
+	start, err = strconv.Atoi(list[0])
+	if err != nil {
+		return
+	}
 	end, err = strconv.Atoi(list[1])
 	if err != nil {
 		return
 	}
 
-	v.SpiderProgress = v.SpiderProgress + 1
-	logs.Info("网站(%s)采集:进度:%d, 结束在:%d", v.Name, v.SpiderProgress, end)
+	//单页爬取
+	if start != end {
+		v.SpiderProgress = v.SpiderProgress + 1
+		logs.Info("网站(%s)采集:进度:%d, 结束在:%d", v.Name, v.SpiderProgress, end)
 
-	cur = strconv.Itoa(v.SpiderProgress)
-	cur_page = strings.Replace(url, "{$RANGE}", cur, -1)
+		cur = strconv.Itoa(v.SpiderProgress)
+		cur_page = strings.Replace(url, "{$RANGE}", cur, -1)
+	}
 
 	logs.Warn("全站采集开始:url:%s", cur_page)
 

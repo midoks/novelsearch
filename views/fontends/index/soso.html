@@ -21,9 +21,9 @@
       <tr>
         <td>名字</td>
         <td>作者</td>
-        <td>最新章节</td>
+        <td class="hidden-xs">最新章节</td>
         <td>来源</td>
-        <td>更新时间</td>
+        <td class="hidden-xs">更新时间</td>
       </tr>
 
       {{if .list}}
@@ -31,9 +31,9 @@
         <tr>
           <td><a target="_blank" href="/b/{{$v.UniqueId}}.html">{{$v.Name}}</a></td>
           <td><a href="/s?wd={{$v.Author}}">{{$v.Author}}</a></td>
-          <td><a target="_blank" href="{{$v.LastChapterUrl}}">{{$v.LastChapter}}</a></td>
+          <td class="hidden-xs"><a target="_blank" href="{{$v.LastChapterUrl}}">{{$v.LastChapter}}</a></td>
           <td>{{$v.FromName}}</td>
-          <td>{{$v.UpdateTime}}</td>
+          <td class="hidden-xs">{{$v.UpdateTime}}</td>
         </tr>
         {{end}}
       {{end}}

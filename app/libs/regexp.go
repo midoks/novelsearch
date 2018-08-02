@@ -1,10 +1,7 @@
 package libs
 
 import (
-	// "crypto/md5"
-	// "fmt"
-	// "github.com/axgle/mahonia"
-	// "os"
+	"html"
 	"regexp"
 	"strings"
 )
@@ -30,6 +27,8 @@ func IsCodeRe(b string) bool {
 }
 
 func TrimHtml(src string) string {
+	src = html.UnescapeString(src)
+
 	//将HTML标签全转换成小写
 	re, _ := regexp.Compile("\\<[\\S\\s]+?\\>")
 	src = re.ReplaceAllStringFunc(src, strings.ToLower)

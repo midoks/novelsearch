@@ -295,3 +295,31 @@ func (this *AppItemController) AllSpider() {
 	}
 	this.retFail("非法参数")
 }
+
+func (this *AppItemController) OneSpider() {
+
+	id, err := this.GetInt("id")
+	url := this.GetString("url", "")
+	name := this.GetString("name", "")
+	if err == nil {
+		r, err := models.ItemGetById(id)
+		if err == nil {
+
+			if r.Status != 1 {
+				this.retFail("状态锁定中,无法操作!!")
+				return
+			}
+
+			if !libs.IsUrlRe(url) {
+				this.retFail("url地址不合法!")
+			}
+
+			if url != "" && name != "" {
+				crontab.CronPathInfo(r, url, name)
+			} else {
+				this.retFail("全站更新(条件不足)")
+			}
+			this.retOk("执行成功")
+		}
+	}
+}

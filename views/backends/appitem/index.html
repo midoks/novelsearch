@@ -99,6 +99,11 @@
                                    href="javascript:req('/{{adminPath}}/{{$.curController}}/allspider?id={{$v.Id}}')">
                                     <i class="fa fa-bolt bigger-130"></i>
                                 </a>
+
+                                <a class="blue a_onespider" title="单页爬取"
+                                   href="javascript:;" idval="{{$v.Id}}">
+                                    <i class="fa fa-book bigger-130"></i>
+                                </a>
                             </div>
                         </td>
                     </tr>
@@ -114,7 +119,68 @@
     </div>
 </div>
 
+
+<div id="dialog-confirm" class="hide">
+    <p class="bigger-110 bolder center grey">
+        <input id="one_url" type="text" placeholder="请输入爬取URL" class="form-control ui-autocomplete-input" autocomplete="off">
+    </p>
+    <div class="space-6"></div>
+    <p class="bigger-110 bolder center grey">
+        <input id="one_name" type="text" placeholder="请输入小说名" class="form-control ui-autocomplete-input" autocomplete="off">
+    </p>
+</div>
+
 <script>
 jQuery(function($) {
+//jQuery start
+
+$( ".a_onespider" ).on('click', function(e) {
+    e.preventDefault();
+    var id = $(this).attr("idval");
+    // console.log(id);
+    $( "#dialog-confirm" ).removeClass('hide').dialog({
+        resizable: false,
+        width: '320',
+        modal: true,
+        title: "<div class='widget-header'><h4 class='smaller'><i class='ace-icon blue'></i>请输入要爬取的地址[要符合规范]</h4></div>",
+        title_html: true,
+        buttons: [
+            {
+                text: "OK",
+                "class" : "btn btn-danger btn-minier",
+                click: function() {
+                    var spider = '/{{adminPath}}/{{$.curController}}/onespider?id='+id;
+                    var one_url = $("#one_url").val();
+                    var one_name = $("#one_name").val();
+                    if (one_url == "" || one_name == "") {
+                        alert("必须输入全参数");
+                        return;
+                    }
+
+                    spider += "&url="+one_url;
+                    spider += "&name="+one_name;
+
+                    $.getJSON(spider, function (data) {
+                        if (data['code'] == 0) {
+                            alert('操作成功！');
+                            $( this ).dialog( "close" );
+                            refresh();
+                        } else{
+                            alert(data["msg"]);
+                        }
+                    });
+                }
+            },{
+                html: "<i class='ace-icon fa fa-times bigger-110'></i>&nbsp;取消",
+                "class" : "btn btn-minier",
+                click: function() {
+                    $( this ).dialog( "close" );
+                }
+            }
+        ]
+    });
+});
+
+//jQuery end
 });
 </script>
