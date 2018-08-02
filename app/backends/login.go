@@ -1,13 +1,12 @@
 package backends
 
 import (
+	"fmt"
 	"github.com/astaxie/beego"
 	"github.com/midoks/novelsearch/app/libs"
 	"github.com/midoks/novelsearch/app/models"
-	_ "runtime"
 	"strconv"
 	"strings"
-	_ "time"
 )
 
 type LoginController struct {
@@ -42,7 +41,14 @@ func (this *LoginController) Index() {
 
 				this.user = user
 				this.uLog("登录成功!")
-				this.redirect(beego.URLFor("IndexController.Index"))
+
+				var admin_path = "admin"
+				ok, _ := libs.PathExists("conf/app.conf")
+				if ok {
+					admin_name := beego.AppConfig.String("admin_path")
+					admin_path = fmt.Sprintf("/%s", admin_name)
+				}
+				this.redirect(admin_path)
 			}
 		}
 		//this.D(username, password, remember)
