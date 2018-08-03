@@ -2,13 +2,16 @@ package libs
 
 import (
 	"errors"
+	"fmt"
+	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/cache"
 	"time"
 )
 
 func GetCacheConnId() (cache.Cache, error) {
-	bm, err := cache.NewCache("file",
-		`{"CachePath":"./.cache","FileSuffix":".cache","DirectoryLevel":2,"EmbedExpiry":0}`)
+	file_cache := beego.AppConfig.String("file_cache")
+	info := fmt.Sprintf(`{"CachePath":".cache","FileSuffix":"%s","DirectoryLevel":2,"EmbedExpiry":0}`, file_cache)
+	bm, err := cache.NewCache("file", info)
 	return bm, err
 }
 

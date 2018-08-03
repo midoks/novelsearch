@@ -23,7 +23,7 @@ func Init() {
 
 	checkFile := beego.AppConfig.String("cron.check_file")
 	if !strings.EqualFold(checkFile, "") {
-		checkFileFunc()
+		// checkFileFunc()
 		tkCheckFile := toolbox.NewTask("tkCheckFile", checkFile, checkFileFunc)
 		toolbox.AddTask("tkCheckFile", tkCheckFile)
 	}
