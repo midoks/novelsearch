@@ -48,6 +48,7 @@ func CronWebRuleSpider(v *models.AppItem, url string, ranges string, rule string
 	if content, errcur := getHttpData2Code(cur_page, v.PageCharset); errcur == nil {
 		list, errlist := RegNovelList(content, rule)
 
+		// logs.Warn(content, rule)
 		if errlist == nil {
 			if len(list) > 0 {
 				for j := 0; j < len(list); j++ {
@@ -65,6 +66,9 @@ func CronWebRuleSpider(v *models.AppItem, url string, ranges string, rule string
 			}
 		} else {
 			logs.Error("全站采集错误:%s", cur_page, errlist, rule)
+			v.SpiderProgress = 0
+			v.Update("SpiderProgress")
+			logs.Error("全站采集结束(重置)url:%s", cur_page)
 		}
 	}
 
