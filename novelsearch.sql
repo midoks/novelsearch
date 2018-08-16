@@ -102,6 +102,7 @@ CREATE TABLE `app_novel` (
   `create_time` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `t1` (`from_id`,`name`),
+  UNIQUE KEY `t2` (`name`, `author`),
   UNIQUE KEY `unique_id` (`unique_id`),
   KEY `author` (`author`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
