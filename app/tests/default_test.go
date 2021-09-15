@@ -7,7 +7,7 @@ import (
 	"runtime"
 	"testing"
 
-	_ "github.com/midoks/webcron/routers"
+	// "github.com/midoks/webcron/routers"
 
 	"github.com/astaxie/beego"
 	. "github.com/smartystreets/goconvey/convey"
