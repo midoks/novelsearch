@@ -45,6 +45,7 @@ func Init() {
 	orm.RegisterModel(new(SysUser), new(SysFunc), new(SysRole), new(SysLog), new(SysOption),
 		new(AppItem), new(AppDebug), new(AppNovel))
 
+	orm.RunSyncdb("default", false, true)
 	if beego.AppConfig.String("runmode") == "dev" {
 		orm.Debug = true
 	}
