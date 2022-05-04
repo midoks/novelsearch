@@ -1,0 +1,27 @@
+title: zzz
+frequency: 3
+dirfilter:
+- tmp
+- .git
+- public
+- scripts
+- assets
+- vendor
+- logs
+- templates
+ext:
+- go
+enablerun: true
+action:
+  before:
+  - find . -name ".DS_Store" -print -delete
+  - go generate internal/assets/conf/conf.go
+  - go generate internal/assets/public/public.go
+  - go generate internal/assets/templates/templates.go
+  - go mod tidy
+  - go mod vendor
+  after:
+  - echo "zzz end"
+  exit:
+  - echo "exit"
+link: https://github.com/midoks/zzz

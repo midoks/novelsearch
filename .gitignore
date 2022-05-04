@@ -14,5 +14,5 @@ novelsearch
 *.DS_Store
 mem-47284.memprof
 *.cache
+vendor
 *.log
-vendor/*

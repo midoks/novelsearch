@@ -1,0 +1,71 @@
+<div class="row">
+    <div class="col-xs-12">
+        <div class="table-responsive">
+            <table id="function-table"
+                   class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th class="col-sm-1">序号</th>
+                    <th class="col-sm-2">角色名称</th>
+                    <th class="col-sm-3">角色描述</th>
+                    <th style="width: 80px;">状态</th>
+                    <th>
+                        <a class="blue" title="添加新角色" href="/{{adminPath}}/{{$.curController}}/add">
+                            <i class="glyphicon glyphicon-plus bigger-130">
+                            </i>
+                        </a>
+                    </th>
+                </tr>
+                </thead>
+
+                <tbody>
+                {{range  $k, $v := .list}}
+                <tr>
+                    <td>{{$v.Id}}</th>
+                    <td>{{$v.Name}}</th>
+                    <td>
+                        {{$v.Desc}}
+                    </td>
+                    <td>
+                        {{if eq 1 $v.Status}}
+                            <a class="blue" href="javascript:req('/{{adminPath}}/{{$.curController}}/lock?id={{$v.Id}}')">
+                            <span title="点击锁定" class="badge badge-warning">正常</span></a>
+                        {{else}}
+                            <a class="blue" href="javascript:req('/{{adminPath}}/{{$.curController}}/lock?id={{$v.Id}}')">
+                            <span title="点击解锁" class="badge">锁定</span></a>
+                        {{end}}
+                    </td>
+                    <td>
+                        <div class="visible-md visible-lg action-buttons">
+                        <a class="blue" title="编辑" href="/{{adminPath}}/{{$.curController}}/add?id={{$v.Id}}">
+                            <i class="fa fa-pencil bigger-130"></i>
+                        </a>
+
+
+                        <a class="blue" title="删除"
+                           href="javascript:req('/{{adminPath}}/{{$.curController}}/del?id={{$v.Id}}')">
+                            <i class="fa fa-trash-o bigger-130"></i>
+                        </a>
+                        </div>
+                    </td>
+                </tr>
+                {{end}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{{/* 
+<div class="row">
+    <div class="col-xs-12">
+        <div class="dataTables_paginate paging_bootstrap">{{$pageLink}}</div>
+    </div>
+</div>
+*/}}
+
+<script>
+jQuery(function($) {
+
+});
+</script>

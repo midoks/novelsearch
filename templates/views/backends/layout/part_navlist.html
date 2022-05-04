@@ -1,0 +1,34 @@
+
+<li class="active">
+    <a href="/{{adminPath}}">
+        <i class="menu-icon fa fa-tachometer"></i>
+        <span class="menu-text">控制台</span>
+    </a>
+    <b class="arrow"></b>
+</li>
+
+{{range $k,$v := .menuNav}}
+	<li class="{{if .MenuOpen}}open{{end}}">
+        <a href="#" class="dropdown-toggle">
+            <i class="menu-icon {{.Info.Icon}}"></i>
+            <span class="menu-text">{{.Info.Name}}</span>
+            <b class="arrow fa fa-angle-down"></b>
+        </a>
+
+        <b class="arrow"></b>
+        <ul class="submenu">
+        	{{range $k1, $v1 := $v.List}}
+
+        		{{if eq 1 .IsMenu}}
+	           	<li class="">
+	                <a href="/{{adminPath}}/{{.Controller}}/{{.Action}}">
+	                    <i class="menu-icon fa fa-caret-right"></i>
+	                    {{.Name}}
+	                </a>
+	                <b class="arrow"></b>
+	            </li>
+            	{{end}}
+            {{end}}
+        </ul>
+    </li>
+{{end}}

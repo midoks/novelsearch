@@ -1,0 +1,84 @@
+<div class="row">
+    <div class="col-xs-12">
+        <!-- PAGE CONTENT BEGINS -->
+        <form class="form-horizontal" method="post" role="form">
+            <!-- #section:elements.form -->
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">用户名: </label>
+                <div class="col-sm-9">
+                    {{/* 不能修改 */}}
+                    <input readonly="true" name="vars[username]" class="col-xs-8 col-sm-2" type="text" value="{{.user.Username}}" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">密码: </label>
+                <div class="col-sm-9">
+                    <input name="vars[password]" class="col-xs-8 col-sm-2" type="password">
+                </div>
+            </div>
+
+            <div class="space-4"></div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">昵称: </label>
+                <div class="col-sm-9">
+                    <input name="vars[nick]" class="col-xs-8 col-sm-3" type="text" value="{{.user.Nick}}" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">性别: </label>
+                <div class="col-sm-9">
+
+                    <label class="inline">
+                        <input name="vars[sex]" class="ace" type="radio" value="1" {{if eq 1 .user.Sex}}checked{{end}}>
+                        <span class="lbl middle">男</span>
+                    </label>
+                    &nbsp; &nbsp; &nbsp;
+                    <label class="inline">
+                        <input name="vars[sex]" class="ace" type="radio"  value="0" {{if eq 0 .user.Sex}}checked{{end}}>
+                        <span class="lbl middle">女</span>
+                    </label>
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">手机: </label>
+                <div class="col-sm-9">
+                    <input name="vars[tel]" maxlength="11" class="col-xs-8 col-sm-2" type="number" value="{{.user.Tel}}" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">邮箱:</label>
+                <div class="col-sm-9">
+                    <span class="input-icon input-icon-right">
+                        <input name="vars[mail]"  value="{{.user.Mail}}"  type="email" required>
+                        <i class="ace-icon fa fa-envelope"></i>
+                    </span>
+                </div>
+            </div>
+
+            <div class="space-4"></div>
+
+            <div class="clearfix form-actions">
+                <div class="col-md-offset-3 col-md-9">
+                    <button class="btn btn-info" type="submit">
+                        <i class="ace-icon fa fa-check bigger-110"></i>提交
+                    </button>
+                    &nbsp; &nbsp; &nbsp;
+                    <button class="btn" type="reset">
+                        <i class="ace-icon fa fa-undo bigger-110"></i>重置
+                    </button>
+                </div>
+            </div>
+
+        </form>
+    </div><!-- /.col -->
+</div>
+<script>
+jQuery(function($) {
+
+})
+</script>
