@@ -2,6 +2,7 @@ title: zzz
 frequency: 3
 dirfilter:
 - tmp
+- .github
 - .git
 - public
 - scripts
@@ -17,11 +18,11 @@ action:
   - find . -name ".DS_Store" -print -delete
   - go generate internal/assets/conf/conf.go
   - go generate internal/assets/public/public.go
-  - go generate internal/assets/templates/templates.go
   - go mod tidy
   - go mod vendor
+  - ps -ef|grep 'novelsearch service'| grep -v grep | awk '{print $2}' | xargs kill -9 
   after:
-  - echo "zzz end"
+  - ./novelsearch service &
   exit:
-  - echo "exit"
+  - ps -ef|grep 'novelsearch service'| grep -v grep | awk '{print $2}' | xargs kill -9 
 link: https://github.com/midoks/zzz

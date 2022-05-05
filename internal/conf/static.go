@@ -1,8 +1,9 @@
 package conf
 
 import (
-// "net/url"
-// "os"
+	// "net/url"
+	// "os"
+	"embed"
 )
 
 // CustomConf returns the absolute path of custom configuration file that is used.
@@ -25,6 +26,8 @@ var (
 		BrandName string
 		RunUser   string
 		RunMode   string
+
+		TemplateFs embed.FS
 	}
 
 	Debug struct {

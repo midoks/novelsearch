@@ -15,4 +15,6 @@ novelsearch
 mem-47284.memprof
 *.cache
 vendor
+custom
 *.log
+.*.sh

@@ -1,16 +1,16 @@
 package cmd
 
 import (
+	"fmt"
+	"html/template"
+	"net/http"
+
+	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/template/html"
 	"github.com/urfave/cli"
-	// "github.com/midoks/novelsearch/internal/app"
-	// "github.com/midoks/novelsearch/internal/app/router"
-	// "github.com/midoks/novelsearch/internal/conf"
 
-	"github.com/astaxie/beego"
-
-	"github.com/midoks/novelsearch/app/crontab"
-	"github.com/midoks/novelsearch/app/libs"
-	_ "github.com/midoks/novelsearch/app/routers"
+	"github.com/midoks/novelsearch/internal/conf"
+	"github.com/midoks/novelsearch/internal/router"
 )
 
 var Service = cli.Command{
@@ -25,16 +25,29 @@ var Service = cli.Command{
 
 func runAllService(c *cli.Context) error {
 
-	// err := router.Init("")
-	// if err != nil {
-	// 	return err
-	// }
+	// libs.Init()
+	// crontab.Init()
+	// beego.Run()
 
-	// app.Start(conf.Web.HttpPort)
+	// engine := html.New("templates", ".html")
+	engine := html.NewFileSystem(http.FS(conf.App.TemplateFs), ".html")
+	engine.AddFunc(
+		// add unescape function
+		"unescape", func(s string) template.HTML {
+			return template.HTML(s)
+		},
+	)
 
-	libs.Init()
-	crontab.Init()
-	beego.Run()
+	app := fiber.New(fiber.Config{
+		Views: engine,
+	})
+
+	app.Static("/", "public")
+
+	app.Get("/", router.Home)
+	app.Get("/hl", router.Hello)
+
+	app.Listen(fmt.Sprintf(":%s", conf.Web.HttpPort))
 
 	return nil
 }

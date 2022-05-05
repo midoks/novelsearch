@@ -1,6 +1,7 @@
 package main
 
 import (
+	"embed"
 	"os"
 
 	"github.com/urfave/cli"
@@ -12,9 +13,13 @@ import (
 const Version = "2.0.0"
 const AppName = "novelsearch"
 
+//go:embed templates/*
+var viewsfs embed.FS
+
 func init() {
 	conf.App.Version = Version
 	conf.App.Name = AppName
+	conf.App.TemplateFs = viewsfs
 }
 
 func main() {
@@ -25,6 +30,7 @@ func main() {
 	app.Usage = "A NovalSearch service"
 	app.Commands = []cli.Command{
 		cmd.Service,
+		cmd.Robot,
 	}
 
 	app.Run(os.Args)
