@@ -30,6 +30,7 @@ func runAllService(c *cli.Context) error {
 	// beego.Run()
 
 	// engine := html.New("templates", ".html")
+	// fmt.Println("tmp:", conf.App.TemplateFs)
 	engine := html.NewFileSystem(http.FS(conf.App.TemplateFs), ".html")
 	engine.AddFunc(
 		// add unescape function

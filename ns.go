@@ -13,7 +13,7 @@ import (
 const Version = "2.0.0"
 const AppName = "novelsearch"
 
-//go:embed templates/*
+//go:embed templates
 var viewsfs embed.FS
 
 func init() {

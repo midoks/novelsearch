@@ -416,7 +416,7 @@ jQuery(function($) {
 //start
 
 function vefiy_rule(url, rule, charset, model, path_tpl){
-    $.post("/{{adminPath}}/{{$.curController}}/verify", { url: url, rule: rule ,charset: charset, model:model, path_tpl:path_tpl}, function(data){
+    $.post("/admin/{{$.curController}}/verify", { url: url, rule: rule ,charset: charset, model:model, path_tpl:path_tpl}, function(data){
         var content = "";
         if (data['code'] < 0){
             content = data['msg'];
