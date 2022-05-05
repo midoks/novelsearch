@@ -1,4 +1,6 @@
 
+{{template "templates/fontends/base/header" .}}
+
 
 <div class="container">
   <div class="jumbotron"> 
@@ -13,7 +15,6 @@
 
   </div>
 </div>
-
 
 
 <div class="container">
@@ -39,7 +40,7 @@
       {{end}}
     </table>
 
-    <nav aria-label="Page navigation" class="text-center">{{str2html .pageLink}}</nav>
+    <nav aria-label="Page navigation" class="text-center">{{ .pageLink}}</nav>
     <!-- <nav aria-label="Page navigation" class="text-center">
   		<ul class="pagination">
 		    <li>
@@ -60,3 +61,6 @@
 		  </ul> -->
 	<!-- </nav> -->
 </div>
+
+
+{{template "templates/fontends/base/footer" .}}

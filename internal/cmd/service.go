@@ -46,6 +46,7 @@ func runAllService(c *cli.Context) error {
 	app.Static("/", "public")
 
 	app.Get("/", router.Home)
+	app.Get("/s", router.Soso)
 	app.Get("/hl", router.Hello)
 
 	app.Listen(fmt.Sprintf(":%s", conf.Web.HttpPort))
