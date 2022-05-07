@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"html/template"
 	"net/http"
+	_ "net/http/pprof"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/template/html"
@@ -25,9 +26,11 @@ var Service = cli.Command{
 
 func runAllService(c *cli.Context) error {
 
-	// libs.Init()
-	// crontab.Init()
-	// beego.Run()
+	if conf.App.RunMode != "prod" {
+		go func() {
+			http.ListenAndServe(":"+conf.Debug.Port, nil)
+		}()
+	}
 
 	// engine := html.New("templates", ".html")
 	// fmt.Println("tmp:", conf.App.TemplateFs)
