@@ -6,7 +6,7 @@ require (
 	github.com/astaxie/beego v1.12.3
 	github.com/axgle/mahonia v0.0.0-20180208002826-3358181d7394
 	github.com/go-sql-driver/mysql v1.6.0
-	github.com/gofiber/fiber/v2 v2.32.0
+	github.com/gofiber/fiber/v2 v2.33.0
 	github.com/gofiber/template v1.6.27
 	github.com/phachon/go-logger v0.0.0-20191215032019-86e4227f71ea
 	github.com/pkg/errors v0.9.1
