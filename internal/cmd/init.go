@@ -8,7 +8,7 @@ import (
 	"gopkg.in/ini.v1"
 
 	"github.com/midoks/novelsearch/internal/conf"
-	"github.com/midoks/novelsearch/internal/logs"
+	"github.com/midoks/novelsearch/internal/log"
 	"github.com/midoks/novelsearch/internal/mgdb"
 	"github.com/midoks/novelsearch/internal/tools"
 )
@@ -66,7 +66,7 @@ func Init(customConf string) error {
 	}
 
 	conf.Init(customConf)
-	logs.Init()
+	log.Init()
 	mgdb.Init()
 
 	return nil

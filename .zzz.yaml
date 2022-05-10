@@ -23,7 +23,7 @@ action:
   after:
   - ps -ef|grep 'novelsearch service'| grep -v grep | awk '{print $2}' | xargs kill -9
   # brew install upx
-  - upx -9 novelsearch
+  # - upx -9 novelsearch
   - ./novelsearch service &
   exit:
   - ps -ef|grep 'novelsearch service'| grep -v grep | awk '{print $2}' | xargs kill -9 
