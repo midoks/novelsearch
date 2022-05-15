@@ -56,7 +56,7 @@ func Init(customConf string) error {
 	} else {
 		customConf, err = filepath.Abs(customConf)
 		if err != nil {
-			return fmt.Errorf("custom conf file get absolute path: %s", err)
+			return fmt.Errorf("custom conf file get absolute path: %v", err)
 		}
 	}
 
