@@ -4,12 +4,10 @@ import (
 	"bytes"
 	"crypto/md5"
 	"encoding/base64"
-	"errors"
 	"fmt"
 	"io/ioutil"
 	"math"
 	"math/rand"
-	"net/http"
 	"net/mail"
 	"os"
 	"strconv"
@@ -210,17 +208,6 @@ func RemoveDuplicatesAndEmpty(a []string) (ret []string) {
 		ret = append(ret, a[i])
 	}
 	return
-}
-
-func GetHttpData(url string) (string, error) {
-	resp, err := http.Get(url)
-	if err != nil {
-		return "", errors.New("资源获取错误!")
-	}
-	defer resp.Body.Close()
-
-	body, err := ioutil.ReadAll(resp.Body)
-	return string(body), err
 }
 
 func PathExists(path string) (bool, error) {

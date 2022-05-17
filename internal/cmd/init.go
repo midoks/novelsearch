@@ -10,6 +10,7 @@ import (
 	"github.com/midoks/novelsearch/internal/conf"
 	"github.com/midoks/novelsearch/internal/log"
 	"github.com/midoks/novelsearch/internal/mgdb"
+	"github.com/midoks/novelsearch/internal/spider"
 	"github.com/midoks/novelsearch/internal/tools"
 )
 
@@ -48,7 +49,7 @@ func autoMakeCustomConf(customConf string) error {
 	return nil
 }
 
-func Init(customConf string) error {
+func InitApp(customConf string) error {
 	var err error
 
 	if customConf == "" {
@@ -67,11 +68,18 @@ func Init(customConf string) error {
 
 	conf.Init(customConf)
 	log.Init()
-	mgdb.Init()
+
+	err = mgdb.Init()
+	if err != nil {
+		return err
+	}
+	spider.Init(customConf)
 
 	return nil
 }
 
 func init() {
-	Init("")
+	if err := InitApp(""); err != nil {
+		return
+	}
 }

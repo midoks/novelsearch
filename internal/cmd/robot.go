@@ -18,7 +18,6 @@ var Robot = cli.Command{
 }
 
 func runRobotService(c *cli.Context) error {
-
 	// robot.RunCSDN()
 	return nil
 }

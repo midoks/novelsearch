@@ -26,5 +26,6 @@ action:
   # - upx -9 novelsearch
   - ./novelsearch service &
   exit:
-  - ps -ef|grep 'novelsearch service'| grep -v grep | awk '{print $2}' | xargs kill -9 
+  - ps -ef|grep 'novelsearch service'| grep -v grep | awk '{print $2}' | xargs kill -9
+  - rm -rf ./novelsearch
 link: https://github.com/midoks/zzz
