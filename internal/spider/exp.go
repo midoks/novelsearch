@@ -8,10 +8,11 @@ import (
 
 type WdataNovel struct {
 	Rule     string `json:"rule"`
-	RootRule string `json:"rule"`
+	RootRule string `json:"root_rule"`
 }
 
 type Wdata struct {
+	Tag     string     `json:"tag"`
 	Website string     `json:"website"`
 	Novel   WdataNovel `json:"novel"`
 }
@@ -19,8 +20,12 @@ type Wdata struct {
 func expInit() {
 
 	t := &Wdata{}
+
+	t.Tag = "ddxsku"
 	t.Website = "http://www.ddxsku.com"
-	t.Novel.Rule = "href=\"(.*)\""
+	t.Novel = WdataNovel{}
+
+	t.Novel.Rule = "href=\"(.*?)\""
 	t.Novel.RootRule = "http://www.ddxsku.com/xiaoshuo/(.*).html"
 
 	if err := VailWdata(t); err != nil {
