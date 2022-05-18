@@ -1,6 +1,7 @@
 package spider
 
 import (
+	"errors"
 	"fmt"
 
 	"github.com/midoks/novelsearch/internal/lazyregexp"
@@ -15,16 +16,57 @@ func VailWdata(d *Wdata) error {
 		return err
 	}
 
+	//home
 	novelHomeUrl := lazyregexp.New(d.Novel.Rule).FindAllStringSubmatch(data, -1)
 
+	alist := []string{}
 	for _, v := range novelHomeUrl {
-
 		if lazyregexp.New(d.Novel.RootRule).Match(tools.StringToBytes(v[1])) {
-			fmt.Println(v[1])
+			alist = append(alist, v[1])
 		}
 	}
 
-	// fmt.Println(novelHomeUrl)
+	if len(alist) < 1 {
+		return errors.New("alist is empty!")
+	}
+
+	//vaild article list page
+	oneArtPage := alist[0]
+
+	artData, err := tools.GetHttpData(oneArtPage)
+	if err != nil {
+		return err
+	}
+
+	llist := []string{}
+	novelListUrl := lazyregexp.New(d.List.Rule).FindAllStringSubmatch(artData, -1)
+
+	for _, v := range novelListUrl {
+		if lazyregexp.New(d.List.RootRule).Match(tools.StringToBytes(v[1])) {
+			llist = append(llist, v[1])
+		}
+	}
+
+	if len(llist) < 1 {
+		return errors.New("llist is empty!")
+	}
+
+	//chapter
+	chapterPage := llist[0]
+
+	chapterData, err := tools.GetHttpData(chapterPage)
+	if err != nil {
+		return err
+	}
+
+	chapterListUrl := lazyregexp.New(d.Chapter.Rule).FindAllStringSubmatch(chapterData, -1)
+	for _, v := range chapterListUrl {
+		// if lazyregexp.New(d.List.RootRule).Match(tools.StringToBytes(v[1])) {
+		// 	llist = append(llist, v[1])
+		// }
+
+		fmt.Println(v)
+	}
 
 	return nil
 }
