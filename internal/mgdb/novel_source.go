@@ -33,7 +33,6 @@ func NovelSourceAdd(data NovelSource) (result *qmgo.InsertOneResult, err error) 
 	one := NovelSource{}
 	err = cliContent.Find(ctx, M{"name": data.Name}).One(&one)
 
-	fmt.Println("NovelSourceAdd:", err)
 	if err != nil {
 		return NovelSourceOriginAdd(data)
 	}
