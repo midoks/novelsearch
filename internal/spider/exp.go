@@ -1,9 +1,10 @@
 package spider
 
 import (
+	"encoding/json"
 	"fmt"
 
-	"encoding/json"
+	"github.com/midoks/novelsearch/internal/tools"
 )
 
 type WdataNovel struct {
@@ -21,15 +22,20 @@ type WdataChapter struct {
 	RootRule string `json:"root_rule"`
 }
 
+type WdataContent struct {
+	RootRule string `json:"root_rule"`
+}
+
 type Wdata struct {
 	Tag     string       `json:"tag"`
 	Website string       `json:"website"`
 	Novel   WdataNovel   `json:"novel"`
 	List    WdataList    `json:"list"`
 	Chapter WdataChapter `json:"chapter"`
+	Content WdataContent `json:"content"`
 }
 
-func expInit() {
+func expInit(ruleDir string) {
 
 	t := &Wdata{}
 
@@ -46,13 +52,23 @@ func expInit() {
 
 	t.Chapter = WdataChapter{}
 	t.Chapter.Rule = "<td class=\"L\"><a href=\"(.*?)\">(.*?)</a></td>"
-	t.Chapter.RootRule = "http://www.ddxsku.com/files/article/html/(.*?)/(.*?)/index.html"
+	t.Chapter.RootRule = "http://www.ddxsku.com/files/article/html/(.*?)/(.*?)/(.*?).html"
+
+	t.Content = WdataContent{}
+	t.Content.RootRule = `(?ims)<dd\s*id=\"contents\">(.*?)<\/dd>`
 
 	if err := VailWdata(t); err != nil {
+		fmt.Println(err)
 		return
 	}
 
 	rawBytes, err := json.MarshalIndent(t, "", "")
-	fmt.Println(string(rawBytes), err)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
 
+	f := ruleDir + "/" + t.Tag + ".json"
+	tools.WriteFile(f, string(rawBytes))
+	// fmt.Println(string(rawBytes))
 }

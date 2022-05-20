@@ -13,5 +13,5 @@ func Init(customConf string) {
 	appDir := filepath.Dir(customDir) + "/" + RULE_DIR
 	os.MkdirAll(appDir, os.ModePerm)
 
-	expInit()
+	expInit(appDir)
 }
