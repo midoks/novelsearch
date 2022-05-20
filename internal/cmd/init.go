@@ -80,6 +80,7 @@ func InitApp(customConf string) error {
 
 func init() {
 	if err := InitApp(""); err != nil {
+		fmt.Println("init error: ", err)
 		return
 	}
 }

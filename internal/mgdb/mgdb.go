@@ -2,6 +2,8 @@ package mgdb
 
 import (
 	"context"
+	"fmt"
+	"sync"
 
 	"github.com/qiniu/qmgo"
 	"go.mongodb.org/mongo-driver/bson"
@@ -17,6 +19,8 @@ var (
 	collection *qmgo.Collection
 
 	cliContent *qmgo.QmgoClient
+
+	mutex sync.RWMutex
 )
 
 type (
@@ -37,15 +41,15 @@ func Init() error {
 	client, err = qmgo.NewClient(ctx, &qmgo.Config{Uri: link})
 
 	if err != nil {
-		return err
+		return fmt.Errorf("mgdb client connect err: %v", err)
 	}
 
 	db = client.Database(conf.Mongodb.Db)
-	collection = db.Collection("list")
+	collection = db.Collection("novel_source")
 
-	cliContent, err = qmgo.Open(ctx, &qmgo.Config{Uri: link, Database: conf.Mongodb.Db, Coll: "list"})
+	cliContent, err = qmgo.Open(ctx, &qmgo.Config{Uri: link, Database: conf.Mongodb.Db, Coll: "novel_source"})
 	if err != nil {
-		return err
+		return fmt.Errorf("mgdb cli err: %v", err)
 	}
 
 	return nil

@@ -2,7 +2,7 @@ package spider
 
 import (
 	"errors"
-	// "fmt"
+	"fmt"
 
 	"github.com/midoks/novelsearch/internal/lazyregexp"
 	"github.com/midoks/novelsearch/internal/tools"
@@ -13,7 +13,7 @@ func VailWdata(d *Wdata) error {
 	data, err := tools.GetHttpData(d.Website)
 
 	if err != nil {
-		return err
+		return fmt.Errorf("index page error: %v", err)
 	}
 
 	//home
@@ -35,7 +35,7 @@ func VailWdata(d *Wdata) error {
 
 	artData, err := tools.GetHttpData(oneArtPage)
 	if err != nil {
-		return err
+		return fmt.Errorf("home page error: %v", err)
 	}
 
 	llist := []string{}
@@ -55,7 +55,7 @@ func VailWdata(d *Wdata) error {
 	chapterPage := llist[0]
 	chapterData, err := tools.GetHttpData(chapterPage)
 	if err != nil {
-		return err
+		return fmt.Errorf("chapter page error: %v", err)
 	}
 
 	chapterListUrl := lazyregexp.New(d.Chapter.Rule).FindAllStringSubmatch(chapterData, -1)
@@ -68,7 +68,7 @@ func VailWdata(d *Wdata) error {
 	contentUrl := chapterListUrl[0][1]
 	contentData, err := tools.GetHttpData(contentUrl)
 	if err != nil {
-		return err
+		return fmt.Errorf("content page error: %v", err)
 	}
 
 	//content

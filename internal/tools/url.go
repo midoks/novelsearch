@@ -9,7 +9,7 @@ import (
 func GetHttpData(url string) (string, error) {
 	resp, err := http.Get(url)
 	if err != nil {
-		return "", errors.New("资源获取错误!")
+		return "", errors.New("resource http get error!")
 	}
 	defer resp.Body.Close()
 

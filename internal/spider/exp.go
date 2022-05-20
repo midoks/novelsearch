@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 
+	"github.com/midoks/novelsearch/internal/mgdb"
 	"github.com/midoks/novelsearch/internal/tools"
 )
 
@@ -57,10 +58,10 @@ func expInit(ruleDir string) {
 	t.Content = WdataContent{}
 	t.Content.RootRule = `(?ims)<dd\s*id=\"contents\">(.*?)<\/dd>`
 
-	if err := VailWdata(t); err != nil {
-		fmt.Println(err)
-		return
-	}
+	// if err := VailWdata(t); err != nil {
+	// 	fmt.Println(err)
+	// 	return
+	// }
 
 	rawBytes, err := json.MarshalIndent(t, "", "")
 	if err != nil {
@@ -70,5 +71,7 @@ func expInit(ruleDir string) {
 
 	f := ruleDir + "/" + t.Tag + ".json"
 	tools.WriteFile(f, string(rawBytes))
+
+	mgdb.NovelSourceAdd(mgdb.NovelSource{Name: t.Tag, RuleJson: tools.BytesToString(rawBytes)})
 	// fmt.Println(string(rawBytes))
 }
