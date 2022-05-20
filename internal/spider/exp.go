@@ -58,10 +58,11 @@ func expInit(ruleDir string) {
 	t.Content = WdataContent{}
 	t.Content.RootRule = `(?ims)<dd\s*id=\"contents\">(.*?)<\/dd>`
 
-	// if err := VailWdata(t); err != nil {
-	// 	fmt.Println(err)
-	// 	return
-	// }
+	//验证功能测试
+	if err := VailWdata(t); err != nil {
+		fmt.Println(err)
+		return
+	}
 
 	rawBytes, err := json.MarshalIndent(t, "", "")
 	if err != nil {

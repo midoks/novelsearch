@@ -9,6 +9,8 @@ import (
 	"github.com/qiniu/qmgo"
 	// "github.com/qiniu/qmgo/operator"
 	// "go.mongodb.org/mongo-driver/bson/primitive"
+
+	"github.com/midoks/novelsearch/internal/conf"
 )
 
 type NovelSource struct {
@@ -29,6 +31,11 @@ type NovelSourceBid struct {
 func NovelSourceAdd(data NovelSource) (result *qmgo.InsertOneResult, err error) {
 	mutex.Lock()
 	defer mutex.Unlock()
+
+	cliContent, err := qmgo.Open(ctx, &qmgo.Config{Uri: link, Database: conf.Mongodb.Db, Coll: "novel_source"})
+	if err != nil {
+		return nil, fmt.Errorf("mgdb open table err: %v", err)
+	}
 
 	one := NovelSource{}
 	err = cliContent.Find(ctx, M{"name": data.Name}).One(&one)
@@ -55,7 +62,7 @@ func NovelSourceOriginAdd(data NovelSource) (result *qmgo.InsertOneResult, err e
 	data.Updatetime = time.Now()
 	data.Createtime = time.Now()
 
-	result, err = collection.InsertOne(ctx, data)
+	result, err = db.Collection("novel_source").InsertOne(ctx, data)
 	if err != nil {
 		return nil, fmt.Errorf("add error: %T", err)
 	}

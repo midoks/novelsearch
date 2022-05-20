@@ -12,13 +12,12 @@ import (
 )
 
 var (
-	err        error
-	ctx        context.Context
-	client     *qmgo.Client
-	db         *qmgo.Database
-	collection *qmgo.Collection
+	link string
+	err  error
 
-	cliContent *qmgo.QmgoClient
+	ctx    context.Context
+	client *qmgo.Client
+	db     *qmgo.Database
 
 	mutex sync.RWMutex
 )
@@ -35,22 +34,16 @@ type (
 )
 
 func Init() error {
-	link := "mongodb://" + conf.Mongodb.Addr
+	link = "mongodb://" + conf.Mongodb.Addr
 
 	ctx = context.Background()
 	client, err = qmgo.NewClient(ctx, &qmgo.Config{Uri: link})
 
 	if err != nil {
-		return fmt.Errorf("mgdb client connect err: %v", err)
+		return fmt.Errorf("mgdb client connect error: %v", err)
 	}
 
 	db = client.Database(conf.Mongodb.Db)
-	collection = db.Collection("novel_source")
-
-	cliContent, err = qmgo.Open(ctx, &qmgo.Config{Uri: link, Database: conf.Mongodb.Db, Coll: "novel_source"})
-	if err != nil {
-		return fmt.Errorf("mgdb cli err: %v", err)
-	}
 
 	return nil
 }
