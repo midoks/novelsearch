@@ -19,8 +19,12 @@ type WdataList struct {
 }
 
 type WdataChapter struct {
-	Rule     string `json:"rule"`
-	RootRule string `json:"root_rule"`
+	Rule          string `json:"rule"`
+	RootRule      string `json:"root_rule"`
+	TitleRule     string `json:"title_rule"`
+	TitleTrimBool bool   `json:"title_trim_rule"`
+	TitleTrim     string `json:"title_space_rule"`
+	AuthorRule    string `json:"author_rule"`
 }
 
 type WdataContent struct {
@@ -54,6 +58,10 @@ func expInit(ruleDir string) {
 	t.Chapter = WdataChapter{}
 	t.Chapter.Rule = "<td class=\"L\"><a href=\"(.*?)\">(.*?)</a></td>"
 	t.Chapter.RootRule = "http://www.ddxsku.com/files/article/html/(.*?)/(.*?)/(.*?).html"
+	t.Chapter.TitleRule = "<dd><h1>(.*?)</h1></dd>"
+	t.Chapter.TitleTrimBool = true
+	t.Chapter.TitleTrim = "最新章节"
+	t.Chapter.AuthorRule = "<dd><h3>作者：(.*?)</h3><br>"
 
 	t.Content = WdataContent{}
 	t.Content.RootRule = `(?ims)<dd\s*id=\"contents\">(.*?)<\/dd>`
@@ -71,7 +79,7 @@ func expInit(ruleDir string) {
 	}
 
 	f := ruleDir + "/" + t.Tag + ".json"
-	tools.WriteFile(f, string(rawBytes))
+	tools.WriteFile(f, tools.BytesToString(rawBytes))
 
 	mgdb.NovelSourceAdd(mgdb.NovelSource{Name: t.Tag, RuleJson: tools.BytesToString(rawBytes)})
 	// fmt.Println(string(rawBytes))

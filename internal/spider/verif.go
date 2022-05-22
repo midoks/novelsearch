@@ -3,6 +3,7 @@ package spider
 import (
 	"errors"
 	"fmt"
+	"strings"
 
 	"github.com/midoks/novelsearch/internal/lazyregexp"
 	"github.com/midoks/novelsearch/internal/tools"
@@ -60,9 +61,26 @@ func VailWdata(d *Wdata) error {
 
 	chapterListUrl := lazyregexp.New(d.Chapter.Rule).FindAllStringSubmatch(chapterData, -1)
 	for _, v := range chapterListUrl {
-		if !lazyregexp.New(d.Chapter.RootRule).Match(tools.StringToBytes(v[1])) {
+		if !lazyregexp.New(d.Chapter.RootRule).MatchString(v[1]) {
 			return errors.New("chapter has error match!")
 		}
+	}
+
+	title := lazyregexp.New(d.Chapter.TitleRule).FindAllStringSubmatch(chapterData, -1)
+	if len(title) < 1 {
+		return errors.New("chapter title has error match!")
+	}
+
+	if d.Chapter.TitleTrimBool {
+		titleTrim := strings.Trim(title[0][1], d.Chapter.TitleTrim)
+		if len(titleTrim) < 1 {
+			return errors.New("chapter title trim has error match!")
+		}
+	}
+
+	author := lazyregexp.New(d.Chapter.AuthorRule).FindAllStringSubmatch(chapterData, -1)
+	if len(author) < 1 {
+		return errors.New("chapter author has error match!")
 	}
 
 	contentUrl := chapterListUrl[0][1]
