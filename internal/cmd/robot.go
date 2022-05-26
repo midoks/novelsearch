@@ -88,7 +88,20 @@ func runRobotService(c *cli.Context) error {
 					realChapter = append(realChapter, tmp)
 				}
 
-				fmt.Println(realChapter)
+				dataLen := len(realChapter)
+
+				newsest, _ := json.Marshal(realChapter[dataLen-1])
+				rDataChapter, _ := json.Marshal(realChapter)
+
+				n := mgdb.Novel{
+					Name:    realTitle,
+					Author:  realAuthor,
+					Newsest: string(newsest),
+					Chapter: string(rDataChapter),
+					Source:  w.Tag,
+				}
+				mgdb.NovelAdd(n)
+
 				fmt.Println(realTitle)
 				fmt.Println(realAuthor)
 
