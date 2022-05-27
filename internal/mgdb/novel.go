@@ -13,25 +13,29 @@ import (
 )
 
 type Novel struct {
-	Name       string    `bson:"name"`
-	Author     string    `bson:"author"`
-	Newsest    string    `bson:"newsest"`
-	Chapter    string    `bson:"chapter"`
-	Source     string    `bson:"source"`
-	Updatetime time.Time `bson:"updatetime,omitempty" json:"updatetime"`
-	Createtime time.Time `bson:"createtime,omitempty" json:"createtime"`
+	Name          string    `bson:"name"`
+	Author        string    `bson:"author"`
+	NewChapter    string    `bson:"new_chapter"`
+	NewChapterUrl string    `bson:"new_chapter_url"`
+	Chapter       string    `bson:"chapter"`
+	Source        string    `bson:"source"`
+	Url           string    `bson:"url"`
+	Updatetime    time.Time `bson:"updatetime,omitempty" json:"updatetime"`
+	Createtime    time.Time `bson:"createtime,omitempty" json:"createtime"`
 }
 
 type NovelBid struct {
 	MgID string `bson:"_id"`
 
-	Name       string    `bson:"name"`
-	Author     string    `bson:"author"`
-	Newsest    string    `bson:"newsest"`
-	Chapter    string    `bson:"chapter"`
-	Source     string    `bson:"source"`
-	Updatetime time.Time `bson:"updatetime,omitempty" json:"updatetime"`
-	Createtime time.Time `bson:"createtime,omitempty" json:"createtime"`
+	Name          string    `bson:"name"`
+	Author        string    `bson:"author"`
+	NewChapter    string    `bson:"new_chapter"`
+	NewChapterUrl string    `bson:"new_chapter_url"`
+	Chapter       string    `bson:"chapter"`
+	Source        string    `bson:"source"`
+	Url           string    `bson:"url"`
+	Updatetime    time.Time `bson:"updatetime,omitempty" json:"updatetime"`
+	Createtime    time.Time `bson:"createtime,omitempty" json:"createtime"`
 }
 
 func NovelAdd(data Novel) (result *qmgo.InsertOneResult, err error) {
@@ -51,11 +55,13 @@ func NovelAdd(data Novel) (result *qmgo.InsertOneResult, err error) {
 	}
 
 	oneData := M{"$set": M{
-		"name":       data.Name,
-		"newsest":    data.Newsest,
-		"chapter":    data.Chapter,
-		"source":     data.Source,
-		"updatetime": time.Now(),
+		"name":            data.Name,
+		"new_chapter":     data.NewChapter,
+		"new_chapter_url": data.NewChapterUrl,
+		"chapter":         data.Chapter,
+		"source":          data.Source,
+		"url":             data.Url,
+		"updatetime":      time.Now(),
 	}}
 
 	err = cli.UpdateOne(ctx, M{"name": data.Name}, oneData)

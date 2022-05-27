@@ -90,15 +90,17 @@ func runRobotService(c *cli.Context) error {
 
 				dataLen := len(realChapter)
 
-				newsest, _ := json.Marshal(realChapter[dataLen-1])
+				newsest := realChapter[dataLen-1]
 				rDataChapter, _ := json.Marshal(realChapter)
 
 				n := mgdb.Novel{
-					Name:    realTitle,
-					Author:  realAuthor,
-					Newsest: string(newsest),
-					Chapter: string(rDataChapter),
-					Source:  w.Tag,
+					Name:          realTitle,
+					Author:        realAuthor,
+					NewChapter:    newsest[0],
+					NewChapterUrl: newsest[1],
+					Chapter:       string(rDataChapter),
+					Source:        w.Tag,
+					Url:           vlist,
 				}
 				mgdb.NovelAdd(n)
 
