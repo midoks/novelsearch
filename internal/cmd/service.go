@@ -12,6 +12,7 @@ import (
 
 	"github.com/midoks/novelsearch/internal/conf"
 	"github.com/midoks/novelsearch/internal/router"
+	"github.com/midoks/novelsearch/internal/router/admin"
 )
 
 var Service = cli.Command{
@@ -51,6 +52,12 @@ func runAllService(c *cli.Context) error {
 	app.Get("/", router.Home)
 	app.Get("/s", router.Soso)
 	app.Get("/hl", router.Hello)
+
+	//admin
+	adminPath := conf.Admin.AdminPath
+
+	fmt.Println(adminPath)
+	app.Get("/"+adminPath, admin.Admin)
 
 	app.Listen(fmt.Sprintf(":%s", conf.Web.HttpPort))
 

@@ -30,6 +30,10 @@ var (
 		TemplateFs embed.FS
 	}
 
+	Admin struct {
+		AdminPath string
+	}
+
 	Debug struct {
 		Port string
 	}

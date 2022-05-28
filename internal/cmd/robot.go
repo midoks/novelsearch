@@ -105,7 +105,6 @@ func runRobotService(c *cli.Context) error {
 				mgdb.NovelAdd(n)
 
 				fmt.Println(realTitle)
-				fmt.Println(realAuthor)
 
 				time.Sleep(time.Second * 1)
 			}

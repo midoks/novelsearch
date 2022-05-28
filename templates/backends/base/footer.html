@@ -1,0 +1,61 @@
+            </div>
+        </div>
+    </div><!-- /.main-content -->
+
+    <div class="footer">
+        {{template "templates/backends/layout/part_footer" .}}
+    </div>
+
+    <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+        <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+    </a>
+</div><!-- /.main-container -->
+
+
+<!-- inline scripts related to this page -->
+<script type="text/javascript">
+
+jQuery(function($) {
+    $.widget("ui.dialog", $.extend({}, $.ui.dialog.prototype, {
+        _title: function(title) {
+            var $title = this.options.title || '&nbsp;'
+            if( ("title_html" in this.options) && this.options.title_html == true ){
+                title.html($title);
+            } else {
+                title.text($title);
+            }
+        }
+    }));
+
+    $('.glyphicon.glyphicon-plus').each(function(){
+        $(this).on('click', function(){
+            $(this).toggleClass('glyphicon-minus');
+        });
+    });
+
+    $('[data-rel=tooltip]').tooltip();
+    $('[data-rel=popover]').popover({html:true});
+
+    //CSS3 spinner
+    $.fn.spin = function(opts) {
+        this.each(function() {
+          var $this = $(this),
+              data = $this.data();
+
+          if (data.spinner) {
+            data.spinner.stop();
+            delete data.spinner;
+          }
+          if (opts !== false) {
+            data.spinner = new Spinner($.extend({color: $this.css('color')}, opts)).spin(this);
+          }
+        });
+        return this;
+    };
+
+});
+
+</script>
+
+</body>
+</html>

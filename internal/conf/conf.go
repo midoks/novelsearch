@@ -65,6 +65,13 @@ func Init(customConf string) error {
 	}
 
 	// ***************************
+	// ----- admin settings -----
+	// ***************************
+	if err = File.Section("admin").MapTo(&Admin); err != nil {
+		return errors.Wrap(err, "mapping [log] section")
+	}
+
+	// ***************************
 	// ----- Log settings -----
 	// ***************************
 	if err = File.Section("log").MapTo(&Log); err != nil {
