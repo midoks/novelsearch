@@ -16,6 +16,7 @@ import (
 type NovelSource struct {
 	Name       string    `bson:"name"`
 	RuleJson   string    `bson:"rule_json"`
+	Status     bool      `bson:"status"`
 	Updatetime time.Time `bson:"updatetime,omitempty" json:"updatetime"`
 	Createtime time.Time `bson:"createtime,omitempty" json:"createtime"`
 }
@@ -24,6 +25,7 @@ type NovelSourceBid struct {
 	MgID       string    `bson:"_id"`
 	Name       string    `bson:"name"`
 	RuleJson   string    `bson:"rule_json"`
+	Status     bool      `bson:"status"`
 	Updatetime time.Time `bson:"updatetime,omitempty" json:"updatetime"`
 	Createtime time.Time `bson:"createtime,omitempty" json:"createtime"`
 }
@@ -87,7 +89,7 @@ func NovelSourceOriginFind(limit ...int64) (result []NovelSourceBid, err error) 
 	return batch, err
 }
 
-func NovelSourceOriginAddFindId(id, sort string, limit ...int64) (result []NovelSourceBid, err error) {
+func NovelSourceSearch(id, sort string, limit ...int64) (result []NovelSourceBid, err error) {
 	var batch []NovelSourceBid
 
 	cliContent, err := qmgo.Open(ctx, &qmgo.Config{Uri: link, Database: conf.Mongodb.Db, Coll: "novel_source"})

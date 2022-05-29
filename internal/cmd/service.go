@@ -2,9 +2,9 @@ package cmd
 
 import (
 	"fmt"
-	"html/template"
 	"net/http"
 	_ "net/http/pprof"
+	"strings"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/template/html"
@@ -13,6 +13,7 @@ import (
 	"github.com/midoks/novelsearch/internal/conf"
 	"github.com/midoks/novelsearch/internal/router"
 	"github.com/midoks/novelsearch/internal/router/admin"
+	"github.com/midoks/novelsearch/internal/tmpl"
 )
 
 var Service = cli.Command{
@@ -36,12 +37,11 @@ func runAllService(c *cli.Context) error {
 	// engine := html.New("templates", ".html")
 	// fmt.Println("tmp:", conf.App.TemplateFs)
 	engine := html.NewFileSystem(http.FS(conf.App.TemplateFs), ".html")
-	engine.AddFunc(
-		// add unescape function
-		"unescape", func(s string) template.HTML {
-			return template.HTML(s)
-		},
-	)
+
+	engine.AddFunc("unescape", tmpl.Unescape)
+	engine.AddFunc("adminPath", tmpl.AdminPath)
+	engine.AddFunc("join", strings.Join)
+	engine.AddFunc("str2html", tmpl.Str2HTML)
 
 	app := fiber.New(fiber.Config{
 		Views: engine,
@@ -55,9 +55,9 @@ func runAllService(c *cli.Context) error {
 
 	//admin
 	adminPath := conf.Admin.AdminPath
-
-	fmt.Println(adminPath)
 	app.Get("/"+adminPath, admin.Admin)
+	app.Get("/"+adminPath+"/spider/index", admin.SpiderList)
+	app.Get("/"+adminPath+"/spider/add", admin.SpiderAdd)
 
 	app.Listen(fmt.Sprintf(":%s", conf.Web.HttpPort))
 

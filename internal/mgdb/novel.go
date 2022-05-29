@@ -83,7 +83,7 @@ func NovelOriginAdd(data Novel) (result *qmgo.InsertOneResult, err error) {
 	return result, nil
 }
 
-func NovelOriginAddFindId(id, sort string, limit ...int64) (result []NovelSourceBid, err error) {
+func NovelSearch(id, sort string, limit ...int64) (result []NovelSourceBid, err error) {
 	var batch []NovelSourceBid
 
 	cli, err := qmgo.Open(ctx, &qmgo.Config{Uri: link, Database: conf.Mongodb.Db, Coll: "novel"})
