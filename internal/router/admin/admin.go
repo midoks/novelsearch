@@ -14,6 +14,12 @@ func Admin(c *fiber.Ctx) error {
 	})
 }
 
+func Login(c *fiber.Ctx) error {
+	return c.Render("templates/backends/login/index", fiber.Map{
+		"Title": "Hello, World!",
+	})
+}
+
 func SpiderList(c *fiber.Ctx) error {
 
 	result, err := mgdb.NovelSourceSearch("", "-")

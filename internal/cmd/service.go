@@ -55,6 +55,8 @@ func runAllService(c *cli.Context) error {
 
 	//admin
 	adminPath := conf.Admin.AdminPath
+
+	app.Get("/login", admin.Login)
 	app.Get("/"+adminPath, admin.Admin)
 	app.Get("/"+adminPath+"/spider/index", admin.SpiderList)
 	app.Get("/"+adminPath+"/spider/add", admin.SpiderAdd)
