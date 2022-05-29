@@ -10,7 +10,7 @@
             <div class="form-group">
                 <label class="col-sm-2 control-label no-padding-right" for="form-field-1">项目名: </label>
                 <div class="col-sm-6">
-                    <input name="vars[name]" class="col-xs-8 col-sm-6" type="text" value="{{.data.Name}}" required>
+                    <input name="vars[name]" class="col-xs-8 col-sm-6" type="text" value="{{.data.Name}}">
                 </div>
                 <div class="col-sm-4">
                     网站名称
@@ -33,7 +33,7 @@
             <div class="form-group">
                 <label class="col-sm-2 control-label no-padding-right" for="form-field-1">网站地址: </label>
                 <div class="col-sm-6">
-                    <input name="vars[page_index]" class="col-xs-8 col-sm-6" type="text" value="{{.data.PageIndex}}" required>
+                    <input name="vars[page_index]" class="col-xs-8 col-sm-6" type="text" value="{{.data.PageIndex}}">
                 </div>
                 <div class="col-sm-4">
                     网站地址
@@ -43,7 +43,7 @@
             <div class="form-group">
                 <label class="col-sm-2 control-label no-padding-right" for="form-field-1">页面编码:</label>
                 <div class="col-sm-6" >
-                    <input  class="col-sm-6" type="text" name="vars[page_charset]" value='{{if eq "" .data.PageCharset}}utf8{{else}}{{.data.PageCharset}}{{end}}' required>
+                    <input  class="col-sm-6" type="text" name="vars[page_charset]" value='{{if eq "" .data.PageCharset}}utf8{{else}}{{.data.PageCharset}}{{end}}'>
                 </div>
                 <div class="col-sm-4">
                     网站编码(仅支持utf8和gbk编码)
@@ -53,7 +53,7 @@
             <div class="form-group">
                 <label class="col-sm-2 control-label no-padding-right" for="form-field-1">首页规则: </label>
                 <div class="col-sm-5">
-                    <textarea class="col-sm-12" rows="5" name="vars[page_index_rule]" required>{{.data.PageIndexRule}}</textarea>
+                    <textarea class="col-sm-12" rows="5" name="vars[page_index_rule]">{{.data.PageIndexRule}}</textarea>
                 </div>
                 <div class="col-sm-1">
                     <div id="reg_page_index_rule_test" class="btn btn-sm btn-primary">匹配</div>
@@ -68,7 +68,7 @@
             <div class="form-group">
                 <label class="col-sm-2 control-label no-padding-right" for="form-field-1">小说介绍页规则: </label>
                 <div class="col-sm-5">
-                    <input type="text" class="col-sm-12" name="vars[path_rule]" value="{{.data.PathRule}}" required>
+                    <input type="text" class="col-sm-12" name="vars[path_rule]" value="{{.data.PathRule}}">
                 </div>
                 <div class="col-sm-1">
                     <div id="reg_path_rule_test" class="btn btn-sm btn-primary">匹配</div>
@@ -82,7 +82,7 @@
             <div class="form-group">
                 <label class="col-sm-2 control-label no-padding-right" for="form-field-1">小说目录模板: </label>
                 <div class="col-sm-6">
-                    <input class="col-sm-12" type="text" name="vars[path_tpl]" value="{{.data.PathTpl}}" required/>
+                    <input class="col-sm-12" type="text" name="vars[path_tpl]" value="{{.data.PathTpl}}"/>
                 </div>
 
                 <div class="col-sm-4">
@@ -381,7 +381,6 @@
                     </button>
                 </div>
             </div>
-
         </form>
     </div><!-- /.col -->
 </div>
@@ -417,7 +416,7 @@ jQuery(function($) {
 //start
 
 function vefiy_rule(url, rule, charset, model, path_tpl){
-    $.post("/admin/{{$.curController}}/verify", { url: url, rule: rule ,charset: charset, model:model, path_tpl:path_tpl}, function(data){
+    $.post("/{{adminPath}}/spider/verify", { url: url, rule: rule ,charset: charset, model:model, path_tpl:path_tpl}, function(data){
         var content = "";
         if (data['code'] < 0){
             content = data['msg'];
