@@ -36,8 +36,10 @@ func SpiderList(c *fiber.Ctx) error {
 
 func SpiderAdd(c *fiber.Ctx) error {
 
-	return c.Render("templates/backends/spider/add", fiber.Map{
+	m := fiber.Map{
 		"menu_title":     "爬虫设置",
 		"menu_sub_title": "添加",
-	})
+	}
+
+	return c.Render("templates/backends/spider/add", m)
 }
