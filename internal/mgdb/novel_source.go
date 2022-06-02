@@ -34,13 +34,13 @@ func NovelSourceAdd(data NovelSource) (result *qmgo.InsertOneResult, err error) 
 	mutex.Lock()
 	defer mutex.Unlock()
 
-	cliContent, err := qmgo.Open(ctx, &qmgo.Config{Uri: link, Database: conf.Mongodb.Db, Coll: "novel_source"})
+	cli, err := qmgo.Open(ctx, &qmgo.Config{Uri: link, Database: conf.Mongodb.Db, Coll: "novel_source"})
 	if err != nil {
-		return nil, fmt.Errorf("mgdb open table err: %v", err)
+		return nil, fmt.Errorf("mgdb open table error: %v", err)
 	}
 
 	one := NovelSource{}
-	err = cliContent.Find(ctx, M{"name": data.Name}).One(&one)
+	err = cli.Find(ctx, M{"name": data.Name}).One(&one)
 
 	if err != nil {
 		return NovelSourceOriginAdd(data)
@@ -52,7 +52,7 @@ func NovelSourceAdd(data NovelSource) (result *qmgo.InsertOneResult, err error) 
 		"updatetime": time.Now(),
 	}}
 
-	err = cliContent.UpdateOne(ctx, M{"name": data.Name}, oneData)
+	err = cli.UpdateOne(ctx, M{"name": data.Name}, oneData)
 	if err != nil {
 		return nil, fmt.Errorf("content update error: %v", err)
 	}
@@ -74,9 +74,9 @@ func NovelSourceOriginAdd(data NovelSource) (result *qmgo.InsertOneResult, err e
 func NovelSourceOriginFind(limit ...int64) (result []NovelSourceBid, err error) {
 	var batch []NovelSourceBid
 
-	cliContent, err := qmgo.Open(ctx, &qmgo.Config{Uri: link, Database: conf.Mongodb.Db, Coll: "novel_source"})
+	cli, err := qmgo.Open(ctx, &qmgo.Config{Uri: link, Database: conf.Mongodb.Db, Coll: "novel_source"})
 	if err != nil {
-		return nil, fmt.Errorf("mgdb open table err: %v", err)
+		return nil, fmt.Errorf("mgdb open table error: %v", err)
 	}
 
 	var bNum int64
@@ -85,16 +85,34 @@ func NovelSourceOriginFind(limit ...int64) (result []NovelSourceBid, err error) 
 	} else {
 		bNum = 15
 	}
-	err = cliContent.Find(ctx, D{}).Sort("-_id").Limit(bNum).All(&batch)
+	err = cli.Find(ctx, D{}).Sort("-_id").Limit(bNum).All(&batch)
 	return batch, err
+}
+
+func NovelSourceId(id string) (result NovelSourceBid, err error) {
+	var ns NovelSourceBid
+
+	cli, err := qmgo.Open(ctx, &qmgo.Config{Uri: link, Database: conf.Mongodb.Db, Coll: "novel_source"})
+	if err != nil {
+		return ns, fmt.Errorf("mgdb open table error: %v", err)
+	}
+
+	mgId, err := primitive.ObjectIDFromHex(id)
+	if err != nil {
+		return ns, err
+	}
+
+	opt := M{"_id": M{operator.Eq: mgId}}
+	err = cli.Find(ctx, opt).One(&ns)
+	return ns, err
 }
 
 func NovelSourceSearch(id, sort string, limit ...int64) (result []NovelSourceBid, err error) {
 	var batch []NovelSourceBid
 
-	cliContent, err := qmgo.Open(ctx, &qmgo.Config{Uri: link, Database: conf.Mongodb.Db, Coll: "novel_source"})
+	cli, err := qmgo.Open(ctx, &qmgo.Config{Uri: link, Database: conf.Mongodb.Db, Coll: "novel_source"})
 	if err != nil {
-		return nil, fmt.Errorf("mgdb open table err: %v", err)
+		return nil, fmt.Errorf("mgdb open table error: %v", err)
 	}
 
 	var bNum int64
@@ -106,7 +124,7 @@ func NovelSourceSearch(id, sort string, limit ...int64) (result []NovelSourceBid
 
 	sortField := fmt.Sprintf("%s_id", sort)
 	if strings.EqualFold(id, "") {
-		err = cliContent.Find(ctx, D{}).Sort(sortField).Limit(bNum).All(&batch)
+		err = cli.Find(ctx, D{}).Sort(sortField).Limit(bNum).All(&batch)
 		return batch, err
 	}
 
@@ -116,6 +134,6 @@ func NovelSourceSearch(id, sort string, limit ...int64) (result []NovelSourceBid
 	}
 
 	opt := M{"_id": M{operator.Lt: mgId}}
-	err = cliContent.Find(ctx, opt).Sort(sortField).Limit(bNum).All(&batch)
+	err = cli.Find(ctx, opt).Sort(sortField).Limit(bNum).All(&batch)
 	return batch, err
 }

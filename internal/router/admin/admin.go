@@ -41,5 +41,14 @@ func SpiderAdd(c *fiber.Ctx) error {
 		"menu_sub_title": "添加",
 	}
 
+	id := c.Get("id", "629068edd986eea3095b75bd")
+
+	result, err := mgdb.NovelSourceId(id)
+	if err != nil {
+		fmt.Println(result)
+
+		m["result"] = result
+	}
+
 	return c.Render("templates/backends/spider/add", m)
 }
