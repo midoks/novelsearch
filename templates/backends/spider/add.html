@@ -51,316 +51,362 @@
             </div>
 
             <div class="form-group">
-                <label class="col-sm-2 control-label no-padding-right" for="form-field-1">首页规则: </label>
-                <div class="col-sm-5">
-                    <textarea class="col-sm-12" rows="5" name="vars[page_index_rule]">{{.data.PageIndexRule}}</textarea>
-                </div>
-                <div class="col-sm-1">
-                    <div id="reg_page_index_rule_test" class="btn btn-sm btn-primary">匹配</div>
-                </div>
+                <div class="tabbable">
+                    <ul class="nav nav-tabs" id="myTab">
+                        <li class="active">
+                            <a data-toggle="tab" href="#home">
+                                <i class="green ace-icon fa fa-home bigger-120"></i>
+                                首页
+                            </a>
+                        </li>
 
-                <div class="col-sm-4">
-                    首页规则类型多,要支持多个规则, 用户"|"或回车分割 <br /> 
-                    匹配小说地址(唯一表示ID)和名字(使用小说目录模板)
-                </div>
-            </div>
+                        <li>
+                            <a data-toggle="tab" href="#soso">
+                                搜索
+                                <span class="badge badge-danger">4</span>
+                            </a>
+                        </li>
 
-            <div class="form-group">
-                <label class="col-sm-2 control-label no-padding-right" for="form-field-1">小说介绍页规则: </label>
-                <div class="col-sm-5">
-                    <input type="text" class="col-sm-12" name="vars[path_rule]" value="{{.data.PathRule}}">
-                </div>
-                <div class="col-sm-1">
-                    <div id="reg_path_rule_test" class="btn btn-sm btn-primary">匹配</div>
-                </div>
+                        <li>
+                            <a data-toggle="tab" href="#chapter">
+                                章节
+                                <span class="green ace-icon fa fa-home bigger-120">4</span>
+                            </a>
+                        </li>
 
-                <div class="col-sm-4">
-                    首页上匹配章节首页规则,<br/> 例如:https://xx.com/(\d*).(html)
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-sm-2 control-label no-padding-right" for="form-field-1">小说目录模板: </label>
-                <div class="col-sm-6">
-                    <input class="col-sm-12" type="text" name="vars[path_tpl]" value="{{.data.PathTpl}}"/>
-                </div>
-
-                <div class="col-sm-4">
-                    小说目录模板<br/> 例如:https://xx.com/{$ID}.html
-                </div>
-            </div>
-
-            <hr />
-
-            <div class="form-group">
-                <label class="col-sm-2 control-label no-padding-right" for="form-field-1">目录页样本页: </label>
-                <div class="col-sm-6">
-                    <input class="col-sm-12" type="text" name="vars[path_page_exp]" value="{{.data.PathPageExp}}">
-                </div>
-
-                <div class="col-sm-4">
-                    目录页样本页
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-sm-2 control-label no-padding-right" for="form-field-1">小说名规则: </label>
-                <div class="col-sm-5">
-                    <textarea class="col-sm-12" rows="3" name="vars[name_rule]">{{.data.NameRule}}</textarea>
-                </div>
-                <div class="col-sm-1">
-                    <div id="reg_name_rule_test" class="btn btn-sm btn-primary">匹配</div>
-                </div>
-
-                <div class="col-sm-4">
-                    匹配小说名规则
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-sm-2 control-label no-padding-right" for="form-field-1">作者规则: </label>
-                <div class="col-sm-5">
-                    <textarea class="col-sm-12" rows="3" name="vars[author_rule]">{{.data.AuthorRule}}</textarea>
-                </div>
-                <div class="col-sm-1">
-                    <div id="reg_author_rule_test" class="btn btn-sm btn-primary">匹配</div>
-                </div>
-
-                <div class="col-sm-4">
-                    匹配作者规则
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-sm-2 control-label no-padding-right" for="form-field-1">简介(描述)规则: </label>
-                <div class="col-sm-5">
-                    <textarea class="col-sm-12" rows="3" name="vars[desc_rule]">{{.data.DescRule}}</textarea>
-                </div>
-                <div class="col-sm-1">
-                    <div id="reg_desc_rule_test" class="btn btn-sm btn-primary">匹配</div>
-                </div>
-
-                <div class="col-sm-4">
-                    简介(描述)规则
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-sm-2 control-label no-padding-right" for="form-field-1">小说分类规则: </label>
-                <div class="col-sm-5">
-                    <textarea class="col-sm-12"rows="3" name="vars[category_rule]">{{.data.CategoryRule}}</textarea>
-                </div>
-                <div class="col-sm-1">
-                    <div id="reg_category_rule_test" class="btn btn-sm btn-primary">匹配</div>
-                </div>
-
-                <div class="col-sm-4">
-                    匹配分类规则
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-sm-2 control-label no-padding-right" for="form-field-1">
-                    小说状态规则: 
-                </label>
-                <div class="col-sm-5">
-                    <textarea class="col-sm-12" rows="3" name="vars[status_rule]">{{.data.StatusRule}}</textarea>
-                </div>
-                <div class="col-sm-1">
-                    <div id="reg_status_rule_test" class="btn btn-sm btn-primary">匹配</div>
-                </div>
-
-                <div class="col-sm-4">
-                    匹配状态规则
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-sm-2 control-label no-padding-right" for="form-field-1">
-                    小说完本标志: 
-                </label>
-                <div class="col-sm-1">
-                    <input  class="col-sm-12" type="text" name="vars[status_end_mark]" value='{{if eq "" .data.StatusEndMark}}完本{{else}}{{.data.StatusEndMark}}{{end}}'>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-sm-2 control-label no-padding-right" for="form-field-1">
-                     章节首页规则: 
-                </label>
-                <div class="col-sm-5">
-                    <textarea class="col-sm-12" rows="3" name="vars[chapter_path_rule]">{{.data.ChapterPathRule}}</textarea>
-                </div>
-                <div class="col-sm-1">
-                    <div id="reg_chapter_path_rule_test" class="btn btn-sm btn-primary">匹配</div>
-                </div>
-
-                <div class="col-sm-4">
-                    匹配章节首页规则(如果为空,则任务信息页和列表在一起)
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 章节首页样本页: </label>
-                <div class="col-sm-6">
-                    <input class="col-sm-12" type="text" name="vars[chapter_path_exp]" value="{{.data.ChapterPathExp}}">
-                </div>
-
-                <div class="col-sm-4">
-                    章节首页样本页
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-sm-2 control-label no-padding-right" for="form-field-1">
-                    章节列表规则: 
-                </label>
-                <div class="col-sm-5">
-                    <textarea class="col-sm-12" rows="3" name="vars[chapter_list_rule]">{{.data.ChapterListRule}}</textarea>
-                </div>
-                <div class="col-sm-1">
-                    <div id="reg_chapter_list_rule_test" class="btn btn-sm btn-primary">匹配</div>
-                </div>
-
-                <div class="col-sm-4">
-                    匹配章节列表规则
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 章节内容样本页: </label>
-                <div class="col-sm-6">
-                    <input class="col-sm-12" class="col-xs-8 col-sm-4" type="text" name="vars[content_exp]" value="{{.data.ContentExp}}">
-                </div>
-
-                <div class="col-sm-4">
-                     章节内容样本页
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-sm-2 control-label no-padding-right" for="form-field-1">
-                    章节内容规则: 
-                </label>
-                <div class="col-sm-5">
-                    <textarea class="col-sm-12" rows="3" name="vars[content_rule]">{{.data.ContentRule}}</textarea>
-                </div>
-                <div class="col-sm-1">
-                    <div id="reg_content_rule_test" class="btn btn-sm btn-primary">匹配</div>
-                </div>
-
-                <div class="col-sm-4">
-                    章节内容规则
-                </div>
-            </div>
-            <hr />
-            <div class="form-group">
-                <label class="col-sm-2 control-label no-padding-right" for="form-field-1">
-                    搜索页样本页: 
-                </label>
-                <div class="col-sm-6">
-                    <input class="col-sm-12" type="text" name="vars[soso_exp]" value="{{.data.SosoExp}}">
-                </div>
-               
-                <div class="col-sm-3">
-                    搜索页样本页,<br />
-                    https://xx/?k={$KEYWORD}<br/>
-                    {$KEYWORD}搜索关键字. <br/>
-                    匹配小说地址(唯一表示ID)和名字(使用小说目录模板)
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-sm-2 control-label no-padding-right" for="form-field-1">
-                    参数(关键字): 
-                </label>
-                <div class="col-sm-2">
-                    <input class="col-sm-12" type="text" name="vars[soso_exp_keyword]" value="凡人修仙传">
-                </div>
-
-                <label class="col-sm-1 control-label no-padding-right" for="form-field-1">
-                    参数(分页): 
-                </label>
-                <div class="col-sm-1">
-                    <input  class="col-sm-12" type="text" name="vars[soso_page_args]" value='{{if eq "" .data.SosoPageArgs}}page{{else}}{{.data.SosoPageArgs}}{{end}}'>
-                </div>
-
-                <div class="col-sm-1">
-                    <input  class="col-sm-12" type="text" name="vars[soso_page_val]" value='1'>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-sm-2 control-label no-padding-right" for="form-field-1">
-                    小说页匹配规则: 
-                </label>
-
-                <div class="col-sm-5">
-                    <textarea class="col-sm-12" rows="3" name="vars[soso_rule]">{{.data.SosoRule}}</textarea>
-                </div>
-
-                <div class="col-sm-1">
-                    <div id="reg_soso_rule_test" class="btn btn-sm btn-primary">匹配</div>
-                </div>
-               
-                <div class="col-sm-4">
-                    匹配小说地址(唯一表示ID)和名字(使用小说目录模板)
-                </div>
-            </div>
-
-            <hr/>
-
-            <div class="form-group">
-                <label class="col-sm-2 control-label no-padding-right" for="form-field-1">
-                    全站爬取页样本页: 
-                </label>
-                <div class="col-sm-6">
-                    <input class="col-sm-12" type="text" name="vars[spider_exp]" value="{{.data.SpiderExp}}">
-                </div>
-               
-                <div class="col-sm-4">
-                    http://xx/{$RANGE}.html|
-                    {$RANGE}是一个数据范围,比如:(1,2).
-                </div>
-            </div>
+                        <li>
+                            <a data-toggle="tab" href="#content">
+                                内容
+                                <span class="green ace-icon fa fa-home bigger-120">4</span>
+                            </a>
+                        </li>
 
 
-            <div class="form-group">
-                <label class="col-sm-2 control-label no-padding-right" for="form-field-1">
-                    参数(range): 
-                </label>
-                <div class="col-sm-1">
-                    <input class="col-sm-12" type="text" name="vars[spider_range]" value='{{if eq "" .data.SpiderRange}}1,100{{else}}{{.data.SpiderRange}}{{end}}'>
-                </div>
+                    </ul>
 
-                <label class="col-sm-2 control-label no-padding-right" for="form-field-2">
-                    参数(开始页): 
-                </label>
-                <div class="col-sm-1">
-                    <input  class="col-sm-12" type="text" name="vars[spider_range_start]" value='1'>
-                </div>
+                    <div class="tab-content">
+                        <div id="home" class="tab-pane fade in active">
+                              <div class="form-group">
+                                <label class="col-sm-2 control-label no-padding-right" for="form-field-1">首页规则: </label>
+                                <div class="col-sm-5">
+                                    <textarea class="col-sm-12" rows="5" name="vars[page_index_rule]">{{.data.PageIndexRule}}</textarea>
+                                </div>
+                                <div class="col-sm-1">
+                                    <div id="reg_page_index_rule_test" class="btn btn-sm btn-primary">匹配</div>
+                                </div>
 
-                <label title="仅支持utf8和gbk编码" class="col-sm-2 control-label no-padding-right" for="form-field-1">
-                    参数(公用上面编码)
-                    如果range中开始和结束相等,则认为是单页爬取
-                </label>
-            </div>
+                                <div class="col-sm-4">
+                                    首页规则类型多,要支持多个规则, 用户"|"或回车分割 <br /> 
+                                    匹配小说地址(唯一表示ID)和名字(使用小说目录模板)
+                                </div>
+                            </div>
 
-            <div class="form-group">
-                <label class="col-sm-2 control-label no-padding-right" for="form-field-1">
-                    全站爬取匹配规则: 
-                </label>
 
-                <div class="col-sm-5">
-                    <textarea class="col-sm-12" rows="3" name="vars[spider_rule]">{{.data.SpiderRule}}</textarea>
-                </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label no-padding-right" for="form-field-1">小说介绍页规则: </label>
+                                <div class="col-sm-5">
+                                    <input type="text" class="col-sm-12" name="vars[path_rule]" value="{{.data.PathRule}}">
+                                </div>
+                                <div class="col-sm-1">
+                                    <div id="reg_path_rule_test" class="btn btn-sm btn-primary">匹配</div>
+                                </div>
 
-                <div class="col-sm-1">
-                    <div id="reg_spider_rule_test" class="btn btn-sm btn-primary">匹配</div>
-                </div>
-               
-                <div class="col-sm-4">
-                    匹配小说地址(唯一表示ID)和名字(使用小说目录模板)
+                                <div class="col-sm-4">
+                                    首页上匹配章节首页规则,<br/> 例如:https://xx.com/(\d*).(html)
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label no-padding-right" for="form-field-1">小说目录模板: </label>
+                                <div class="col-sm-6">
+                                    <input class="col-sm-12" type="text" name="vars[path_tpl]" value="{{.data.PathTpl}}"/>
+                                </div>
+
+                                <div class="col-sm-4">
+                                    小说目录模板<br/> 例如:https://xx.com/{$ID}.html
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="content" class="tab-pane fade">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label no-padding-right" for="form-field-1">
+                                    全站爬取页样本页: 
+                                </label>
+                                <div class="col-sm-6">
+                                    <input class="col-sm-12" type="text" name="vars[spider_exp]" value="{{.data.SpiderExp}}">
+                                </div>
+                               
+                                <div class="col-sm-4">
+                                    http://xx/{$RANGE}.html|
+                                    {$RANGE}是一个数据范围,比如:(1,2).
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label no-padding-right" for="form-field-1">
+                                    参数(range): 
+                                </label>
+                                <div class="col-sm-1">
+                                    <input class="col-sm-12" type="text" name="vars[spider_range]" value='{{if eq "" .data.SpiderRange}}1,100{{else}}{{.data.SpiderRange}}{{end}}'>
+                                </div>
+
+                                <label class="col-sm-2 control-label no-padding-right" for="form-field-2">
+                                    参数(开始页): 
+                                </label>
+                                <div class="col-sm-1">
+                                    <input  class="col-sm-12" type="text" name="vars[spider_range_start]" value='1'>
+                                </div>
+
+                                <label title="仅支持utf8和gbk编码" class="col-sm-2 control-label no-padding-right" for="form-field-1">
+                                    参数(公用上面编码)
+                                    如果range中开始和结束相等,则认为是单页爬取
+                                </label>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label no-padding-right" for="form-field-1">
+                                    全站爬取匹配规则: 
+                                </label>
+
+                                <div class="col-sm-5">
+                                    <textarea class="col-sm-12" rows="3" name="vars[spider_rule]">{{.data.SpiderRule}}</textarea>
+                                </div>
+
+                                <div class="col-sm-1">
+                                    <div id="reg_spider_rule_test" class="btn btn-sm btn-primary">匹配</div>
+                                </div>
+                               
+                                <div class="col-sm-4">
+                                    匹配小说地址(唯一表示ID)和名字(使用小说目录模板)
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label no-padding-right" for="form-field-1">目录页样本页: </label>
+                                <div class="col-sm-6">
+                                    <input class="col-sm-12" type="text" name="vars[path_page_exp]" value="{{.data.PathPageExp}}">
+                                </div>
+
+                                <div class="col-sm-4">
+                                    目录页样本页
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label no-padding-right" for="form-field-1">小说名规则: </label>
+                                <div class="col-sm-5">
+                                    <textarea class="col-sm-12" rows="3" name="vars[name_rule]">{{.data.NameRule}}</textarea>
+                                </div>
+                                <div class="col-sm-1">
+                                    <div id="reg_name_rule_test" class="btn btn-sm btn-primary">匹配</div>
+                                </div>
+
+                                <div class="col-sm-4">
+                                    匹配小说名规则
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label no-padding-right" for="form-field-1">作者规则: </label>
+                                <div class="col-sm-5">
+                                    <textarea class="col-sm-12" rows="3" name="vars[author_rule]">{{.data.AuthorRule}}</textarea>
+                                </div>
+                                <div class="col-sm-1">
+                                    <div id="reg_author_rule_test" class="btn btn-sm btn-primary">匹配</div>
+                                </div>
+
+                                <div class="col-sm-4">
+                                    匹配作者规则
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label no-padding-right" for="form-field-1">简介(描述)规则: </label>
+                                <div class="col-sm-5">
+                                    <textarea class="col-sm-12" rows="3" name="vars[desc_rule]">{{.data.DescRule}}</textarea>
+                                </div>
+                                <div class="col-sm-1">
+                                    <div id="reg_desc_rule_test" class="btn btn-sm btn-primary">匹配</div>
+                                </div>
+
+                                <div class="col-sm-4">
+                                    简介(描述)规则
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label no-padding-right" for="form-field-1">小说分类规则: </label>
+                                <div class="col-sm-5">
+                                    <textarea class="col-sm-12"rows="3" name="vars[category_rule]">{{.data.CategoryRule}}</textarea>
+                                </div>
+                                <div class="col-sm-1">
+                                    <div id="reg_category_rule_test" class="btn btn-sm btn-primary">匹配</div>
+                                </div>
+
+                                <div class="col-sm-4">
+                                    匹配分类规则
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label no-padding-right" for="form-field-1">
+                                    小说状态规则: 
+                                </label>
+                                <div class="col-sm-5">
+                                    <textarea class="col-sm-12" rows="3" name="vars[status_rule]">{{.data.StatusRule}}</textarea>
+                                </div>
+                                <div class="col-sm-1">
+                                    <div id="reg_status_rule_test" class="btn btn-sm btn-primary">匹配</div>
+                                </div>
+
+                                <div class="col-sm-4">
+                                    匹配状态规则
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label no-padding-right" for="form-field-1">
+                                    小说完本标志: 
+                                </label>
+                                <div class="col-sm-1">
+                                    <input  class="col-sm-12" type="text" name="vars[status_end_mark]" value='{{if eq "" .data.StatusEndMark}}完本{{else}}{{.data.StatusEndMark}}{{end}}'>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label no-padding-right" for="form-field-1">
+                                     章节首页规则: 
+                                </label>
+                                <div class="col-sm-5">
+                                    <textarea class="col-sm-12" rows="3" name="vars[chapter_path_rule]">{{.data.ChapterPathRule}}</textarea>
+                                </div>
+                                <div class="col-sm-1">
+                                    <div id="reg_chapter_path_rule_test" class="btn btn-sm btn-primary">匹配</div>
+                                </div>
+
+                                <div class="col-sm-4">
+                                    匹配章节首页规则(如果为空,则任务信息页和列表在一起)
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 章节首页样本页: </label>
+                                <div class="col-sm-6">
+                                    <input class="col-sm-12" type="text" name="vars[chapter_path_exp]" value="{{.data.ChapterPathExp}}">
+                                </div>
+
+                                <div class="col-sm-4">
+                                    章节首页样本页
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label no-padding-right" for="form-field-1">
+                                    章节列表规则: 
+                                </label>
+                                <div class="col-sm-5">
+                                    <textarea class="col-sm-12" rows="3" name="vars[chapter_list_rule]">{{.data.ChapterListRule}}</textarea>
+                                </div>
+                                <div class="col-sm-1">
+                                    <div id="reg_chapter_list_rule_test" class="btn btn-sm btn-primary">匹配</div>
+                                </div>
+
+                                <div class="col-sm-4">
+                                    匹配章节列表规则
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 章节内容样本页: </label>
+                                <div class="col-sm-6">
+                                    <input class="col-sm-12" class="col-xs-8 col-sm-4" type="text" name="vars[content_exp]" value="{{.data.ContentExp}}">
+                                </div>
+
+                                <div class="col-sm-4">
+                                     章节内容样本页
+                                </div>
+                            </div>
+
+                         
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label no-padding-right" for="form-field-1">
+                                    小说页匹配规则: 
+                                </label>
+
+                                <div class="col-sm-5">
+                                    <textarea class="col-sm-12" rows="3" name="vars[soso_rule]">{{.data.SosoRule}}</textarea>
+                                </div>
+
+                                <div class="col-sm-1">
+                                    <div id="reg_soso_rule_test" class="btn btn-sm btn-primary">匹配</div>
+                                </div>
+                               
+                                <div class="col-sm-4">
+                                    匹配小说地址(唯一表示ID)和名字(使用小说目录模板)
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="soso" class="tab-pane fade">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label no-padding-right" for="form-field-1">
+                                    章节内容规则: 
+                                </label>
+                                <div class="col-sm-5">
+                                    <textarea class="col-sm-12" rows="3" name="vars[content_rule]">{{.data.ContentRule}}</textarea>
+                                </div>
+                                <div class="col-sm-1">
+                                    <div id="reg_content_rule_test" class="btn btn-sm btn-primary">匹配</div>
+                                </div>
+
+                                <div class="col-sm-4">
+                                    章节内容规则
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label no-padding-right" for="form-field-1">
+                                    搜索页样本页: 
+                                </label>
+                                <div class="col-sm-6">
+                                    <input class="col-sm-12" type="text" name="vars[soso_exp]" value="{{.data.SosoExp}}">
+                                </div>
+                               
+                                <div class="col-sm-3">
+                                    搜索页样本页,<br />
+                                    https://xx/?k={$KEYWORD}<br/>
+                                    {$KEYWORD}搜索关键字. <br/>
+                                    匹配小说地址(唯一表示ID)和名字(使用小说目录模板)
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label no-padding-right" for="form-field-1">
+                                    参数(关键字): 
+                                </label>
+                                <div class="col-sm-2">
+                                    <input class="col-sm-12" type="text" name="vars[soso_exp_keyword]" value="凡人修仙传">
+                                </div>
+
+                                <label class="col-sm-1 control-label no-padding-right" for="form-field-1">
+                                    参数(分页): 
+                                </label>
+                                <div class="col-sm-1">
+                                    <input  class="col-sm-12" type="text" name="vars[soso_page_args]" value='{{if eq "" .data.SosoPageArgs}}page{{else}}{{.data.SosoPageArgs}}{{end}}'>
+                                </div>
+
+                                <div class="col-sm-1">
+                                    <input  class="col-sm-12" type="text" name="vars[soso_page_val]" value='1'>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+                    </div>
                 </div>
             </div>
 

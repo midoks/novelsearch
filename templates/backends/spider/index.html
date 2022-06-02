@@ -44,7 +44,7 @@
                             <i class="glyphicon glyphicon-plus bigger-130"></i>
                         </a>
                     </th>
-                    <th class="col-sm-1">其他操作</th>
+                    <!-- <th class="col-sm-1">其他操作</th> -->
                 </tr>
                 </thead>
 
@@ -54,7 +54,7 @@
                     <tr>
                         <td>{{$v.MgID}}</td>
                         <td>{{$v.Name}}</td>          
-                        <td><span class="btn btn-sm" data-rel="tooltip" title="更新时间:{{$v.Createtime}}|创建时间:{{$v.Updatetime}}">查看</span></td>
+                        <td><span class="btn btn-sm" data-rel="tooltip" title="更新时间:{{$v.Createtime}}<br/>创建时间:{{$v.Updatetime}}">查看</span></td>
                         <td>
                             {{if $v.Status}}
                             <a class="blue" href="javascript:req('/{{adminPath}}/spider/lock?id={{$v.MgID}}')">
@@ -82,10 +82,7 @@
                                    href="javascript:req('/{{adminPath}}/spider/del?id={{$v.MgID}}')">
                                     <i class="fa fa-trash-o bigger-130"></i>
                                 </a>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="action-buttons">
+
                                 <a class="blue" title="全站爬取"
                                    href="javascript:req('/{{adminPath}}/spider/allspider?id={{$v.MgID}}')">
                                     <i class="fa fa-bolt bigger-130"></i>
