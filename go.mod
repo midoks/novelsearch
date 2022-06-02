@@ -7,7 +7,7 @@ require (
 	github.com/axgle/mahonia v0.0.0-20180208002826-3358181d7394
 	github.com/go-sql-driver/mysql v1.6.0
 	github.com/gofiber/fiber/v2 v2.34.0
-	github.com/gofiber/template v1.6.27
+	github.com/gofiber/template v1.6.28
 	github.com/google/go-cmp v0.5.7 // indirect
 	github.com/gopherjs/gopherjs v0.0.0-20190430165422-3e4dfb77656c // indirect
 	github.com/lib/pq v1.3.0 // indirect
@@ -21,5 +21,5 @@ require (
 	go.mongodb.org/mongo-driver v1.9.1
 	gopkg.in/alexcesaro/quotedprintable.v3 v3.0.0-20150716171945-2caba252f4dc // indirect
 	gopkg.in/gomail.v2 v2.0.0-20160411212932-81ebce5c23df
-	gopkg.in/ini.v1 v1.66.4
+	gopkg.in/ini.v1 v1.66.5
 )
