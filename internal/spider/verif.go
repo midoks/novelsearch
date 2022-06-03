@@ -14,7 +14,7 @@ func VailWdata(d *Wdata) error {
 	data, err := tools.GetHttpData(d.Website)
 
 	if err != nil {
-		return fmt.Errorf("index page error: %v", err)
+		return fmt.Errorf("index page error: [%s]%v", d.Website, err)
 	}
 
 	//home
