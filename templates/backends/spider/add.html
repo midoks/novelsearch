@@ -10,34 +10,17 @@
             <div class="form-group">
                 <label class="col-sm-2 control-label no-padding-right" for="form-field-1">项目名: </label>
                 <div class="col-sm-6">
-                    <input name="vars[name]" class="col-xs-8 col-sm-6" type="text" value="{{.data.Name}}">
+                    <input name="vars[name]" class="col-xs-8 col-sm-6" type="text" value="{{.json.Tag}}">
                 </div>
-                <div class="col-sm-4">
-                    网站名称
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-sm-2 control-label no-padding-right" for="form-field-1">官方网站: </label>
-                <div class="col-sm-6">
-                    <select class="col-sm-3 select" name="vars[is_official]">
-                        <option value="0" {{if eq "0" .data.IsOfficial}}selected="selected"{{else}}{{.data.IsOfficial}}selected="selected"{{end}}>否</option>                        
-                        <option value="1" {{if eq "1" .data.IsOfficial}}selected="selected"{{else}}{{.data.IsOfficial}}{{end}}>是</option>
-                    </select>
-                </div>
-                <div class="col-sm-4">
-                    是否是官方网站
-                </div>
+                <div class="col-sm-4">网站名称</div>
             </div>
 
             <div class="form-group">
                 <label class="col-sm-2 control-label no-padding-right" for="form-field-1">网站地址: </label>
                 <div class="col-sm-6">
-                    <input name="vars[page_index]" class="col-xs-8 col-sm-6" type="text" value="{{.data.PageIndex}}">
+                    <input name="vars[website]" class="col-xs-8 col-sm-6" type="text" value="{{.json.Website}}">
                 </div>
-                <div class="col-sm-4">
-                    网站地址
-                </div>
+                <div class="col-sm-4">网站地址</div>
             </div>
 
             <div class="form-group">

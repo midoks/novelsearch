@@ -1,12 +1,13 @@
 package admin
 
 import (
-	// "encoding/json"
+	"encoding/json"
 	"fmt"
 	"strings"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/midoks/novelsearch/internal/mgdb"
+	"github.com/midoks/novelsearch/internal/spider"
 )
 
 func Admin(c *fiber.Ctx) error {
@@ -43,21 +44,15 @@ func SpiderAdd(c *fiber.Ctx) error {
 		"menu_sub_title": "添加",
 	}
 
-	id := c.Get("id", "")
-
-	fmt.Println(id)
+	id := c.Query("id", "")
 	if !strings.EqualFold(id, "") {
-
 		result, err := mgdb.NovelSourceId(id)
-
-		fmt.Println(result, err)
-		if err != nil {
-
+		if err == nil {
 			m["result"] = result
-
-			// data, _ := json.Unmarshal(result["RuleJson"])
-			// m["json"] = data
-
+			// fmt.Println(result)
+			var data spider.Wdata
+			_ = json.Unmarshal([]byte(result.RuleJson), &data)
+			m["json"] = data
 		}
 	}
 
