@@ -59,7 +59,10 @@ func runAllService(c *cli.Context) error {
 	app.Get("/login", admin.Login)
 	app.Get("/"+adminPath, admin.Admin)
 	app.Get("/"+adminPath+"/spider/index", admin.SpiderList)
-	app.Get("/"+adminPath+"/spider/add", admin.SpiderAdd)
+
+	routeSpiderAddPath := "/" + adminPath + "/spider/add"
+	app.Get(routeSpiderAddPath, admin.SpiderAdd)
+	app.Post(routeSpiderAddPath, admin.SpiderAdd)
 
 	app.Listen(fmt.Sprintf(":%s", conf.Web.HttpPort))
 
