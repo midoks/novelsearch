@@ -14,7 +14,7 @@ require (
 	github.com/microcosm-cc/bluemonday v1.0.18
 	github.com/phachon/go-logger v0.0.0-20191215032019-86e4227f71ea
 	github.com/pkg/errors v0.9.1
-	github.com/qiniu/qmgo v1.1.0
+	github.com/qiniu/qmgo v1.1.1
 	github.com/smartystreets/goconvey v1.7.2
 	github.com/stretchr/testify v1.7.1 // indirect
 	github.com/urfave/cli v1.22.9
