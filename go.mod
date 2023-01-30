@@ -11,7 +11,7 @@ require (
 	github.com/google/go-cmp v0.5.7 // indirect
 	github.com/gopherjs/gopherjs v0.0.0-20190430165422-3e4dfb77656c // indirect
 	github.com/lib/pq v1.3.0 // indirect
-	github.com/microcosm-cc/bluemonday v1.0.18
+	github.com/microcosm-cc/bluemonday v1.0.22
 	github.com/phachon/go-logger v0.0.0-20191215032019-86e4227f71ea
 	github.com/pkg/errors v0.9.1
 	github.com/qiniu/qmgo v1.1.0
